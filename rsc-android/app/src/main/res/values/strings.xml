@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">RSC</string>
+
+    <!-- login and registration form -->
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="submit">Submit</string>
+
+    <!-- errors -->
+    <string name="username_error">Username can only contain letters (min 5, max 45)</string>
+    <string name="password_error">"Password too short or too long (min 5, max 45)"</string>
+    <string name="firstname_error">First name can only contain letters (min 3, max 45)</string>
+    <string name="lastname_error">Last name can only contain letters (min 3, max 45)</string>
+    <string name="matching_password_error">Passwords do not match</string>
+
+    <!-- various -->
+    <string name="signin">Sign in</string>
+    <string name="logoapp">logoapp</string>
+    <string name="register">Register</string>
+    <string name="drawer_open">Open menu</string>
+    <string name="drawer_close">Close menu</string>
+    <string name="signout_question">Sign out from application?</string>
+    <string name="cancel">Cancel</string>
+    <string name="sign_out">Sign out</string>
+    <string name="update_profile">Update your profile?</string>
+    <string name="update">Update</string>
+    <string name="map">Map</string>
+</resources>

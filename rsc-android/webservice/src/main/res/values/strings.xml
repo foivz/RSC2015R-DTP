@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">webservice</string>
+    <string name="log_keyword">hr.foi.debug</string>
+
+    <!-- paths -->
+    <string name="persons_path">/person/</string>
+    <string name="login_path">/person/login</string>
+    <string name="signup_path">/person/signup</string>
+</resources>
