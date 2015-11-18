@@ -22,11 +22,7 @@ angular.module('webAngularTemplateApp')
 			client_secret:'davinci2015',
 			client_id:'angular' 
 		};
-		var encoded = window.btoa('angular:davinci2015');
-          var serializedData = $.param(credentials);
-          serializedData = serializedData.replace('+', ' ');
-          console.log(serializedData);
-
+		
 		auth.login(credentials)
 			.then(function(data){
 				$location.path('/main');
