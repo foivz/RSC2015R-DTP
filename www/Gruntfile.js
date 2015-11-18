@@ -7,10 +7,15 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+
+
 module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
+  
+  grunt.loadNpmTasks('grunt-bower-concat');
+  grunt.loadNpmTasks('grunt-include-source');
 
   // Automatically load required Grunt tasks
   require('jit-grunt')(grunt, {
@@ -18,6 +23,7 @@ module.exports = function (grunt) {
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn'
   });
+
 
   // Configurable paths for the application
   var appConfig = {
@@ -30,6 +36,31 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+
+    //1.
+    app: {
+    // Application variables
+    scripts: [
+           // JS files to be included by includeSource task into index.html
+           'scripts/actions/{,*/}*.js',
+         ]
+    },
+    //1.-------
+
+
+    includeSource: {
+        // Task to include files into index.html
+      options: {
+          basePath: 'app',
+          baseUrl: '/',
+      },
+      app: {
+          files: {
+              '<%= yeoman.app %>/index.html': '<%= yeoman.app %>/index.html'
+              // you can add karma config as well here if want inject to karma as well
+          }
+      }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -64,6 +95,13 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      includeSource: {
+        files: '<%= yeoman.app %>/scripts/actions/{,*/}*.js',
+        tasks: ['includeSource'],
+            options: {
+                event: ['added', 'deleted']
+            }
       }
     },
 
@@ -233,7 +271,7 @@ module.exports = function (grunt) {
         cssDir: '.tmp/styles',
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: '<%= yeoman.app %>/images',
-        javascriptsDir: '<%= yeoman.app %>/scripts',
+        javascriptsDir: ['<%= yeoman.app %>/scripts', '<%= yeoman.app %>/scripts/actions'],
         fontsDir: '<%= yeoman.app %>/styles/fonts',
         importPath: './bower_components',
         httpImagesPath: '/images',
@@ -471,6 +509,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'postcss:server',
       'connect:livereload',
+      'includeSource',
       'watch'
     ]);
   });
@@ -489,8 +528,10 @@ module.exports = function (grunt) {
     'karma'
   ]);
 
+
   grunt.registerTask('build', [
     'clean:dist',
+    'includeSource',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',

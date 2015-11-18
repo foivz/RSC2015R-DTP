@@ -7,7 +7,6 @@
     "angular-cookies": "^1.4.0",
     "angular-route": "^1.4.0",
     "angular-sanitize": "^1.4.0",
-    "font-awesome": "~4.4.0",
     "grunt": "~0.4.5"
   },
   "devDependencies": {
@@ -31,7 +30,7 @@
   "main": "",
   "moduleType": [],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/hhrvoic/RSC2015",
   "ignore": [
     "**/.*",
     "node_modules",

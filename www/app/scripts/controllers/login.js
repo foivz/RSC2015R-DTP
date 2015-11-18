@@ -8,16 +8,25 @@
  * Controller of the webAngularTemplateApp
  */
 angular.module('webAngularTemplateApp')
-  .controller('LoginCtrl', ['auth', '$location', '$window', function (auth, $location, $window) {
+  .controller('LoginCtrl', ['auth', '$location', '$window', '$http', function (auth, $location, $window, $http) {
     
   	var controller = this;
 		
 	controller.CheckUser = function()
 	{
 		var credentials = {
-			username:controller.username, 
-			password:controller.password
+			password:controller.password,
+			username:controller.username,
+			grant_type:'password',
+			scope:'read write',
+			client_secret:'davinci2015',
+			client_id:'angular' 
 		};
+		var encoded = window.btoa('angular:davinci2015');
+          var serializedData = $.param(credentials);
+          serializedData = serializedData.replace('+', ' ');
+          console.log(serializedData);
+
 		auth.login(credentials)
 			.then(function(data){
 				$location.path('/main');

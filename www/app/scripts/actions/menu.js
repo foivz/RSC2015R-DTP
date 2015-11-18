@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
 			$iconBottom: $('.menu-icon--bottom'),
 			$innerContent: $('.flip-inner'),
 			$menuLinks: $('nav ul li a')
-		},
+		},   
 
 		init: function()
 		{

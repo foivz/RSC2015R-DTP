@@ -1,7 +1,5 @@
 // bower:scss
-@import "font-awesome/scss/font-awesome.scss";
 // endbower
-
 
 $white: #d8dbe2; //rgba(216, 219, 226, 100)
 $grey: #a9bcd0; //rgba(169, 188, 208, 100)
@@ -33,6 +31,32 @@ html, body{
 .footer {
   padding-left: 15px;
   padding-right: 15px;
+}
+
+
+/* login */
+.login button{
+  background-color: $blue;
+  border: solid 1px $blue;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  transition: all 200ms linear;
+  &:hover{
+    background-color: $blueGrey;
+    opacity: 0.9;
+  }
+}
+
+
+
+
+
+/* Registration */
+.pass-opacity {
+  cursor: pointer;
+}
+
+.registration input{
 }
 
 

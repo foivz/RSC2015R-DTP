@@ -12,18 +12,32 @@ angular.module('webAngularTemplateApp')
     
     var login = function (credentials){ 
           var deferred = $q.defer();
+          var encoded = window.btoa('angular:davinci2015');
+          
           var serializedData = $.param(credentials);
+          serializedData = serializedData.replace('+', ' ');
+          console.log(serializedData);
           $http({
             method: 'POST',
-            url: 'UNESI URL ZA ZAHTJEV', 
+            url: 'http://46.101.173.23:8080/oauth/token', 
             data: serializedData,
             headers: {
-              'Content-Type' : 'application/x-www-form-urlencoded'
+              'Content-Type' : 'application/x-www-form-urlencoded',
+              'Authorization' : 'Basic ' + encoded
             }
           }).then(function(result){
-            $window.sessionStorage['token'] = result.data.token;
+            
+            console.log("Prošao auth");
+            console.log(result);
+            console.log(result.access_token);
+
+            //$window.sessionStorage['token'] = result.data.token;
+            
             deferred.resolve(result);
           }, function(data){
+            
+            console.log("Nije prošao auth");
+
             deferred.reject(data);
           });
           return deferred.promise;

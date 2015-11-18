@@ -16,7 +16,10 @@ angular
   ])
   .config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
     
-    $httpProvider.interceptors.push('loginInterceptor');
+   //$httpProvider.interceptors.push('loginInterceptor');
+    
+     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
 
     $routeProvider
       .when('/', {
@@ -34,6 +37,11 @@ angular
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'login'
+      })
+      .when('/register', {
+        templateUrl: 'views/register.html',
+        controller: 'RegisterCtrl',
+        controllerAs: 'register'
       })
       .otherwise({
         redirectTo: '/'
