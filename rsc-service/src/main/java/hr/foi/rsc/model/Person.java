@@ -6,14 +6,21 @@
 package hr.foi.rsc.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -27,20 +34,34 @@ public class Person implements Serializable {
     
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_person")
+    @Column(name = "idperson")
     long idPerson;
     
-    @Column(name="firstname")
+    @Column(name="name")
     String name;
     
-    @Column(name="lastname")
+    @Column(name="surname")
     String surname;
    
-    
     @Embedded
     Credentials credentials;
  
-    // String token
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "person_role", joinColumns = { @JoinColumn(name = "person_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") })
+    Set<Role> roles = new HashSet<>();
+
+    public Person() {
+    }
+
+    public Person(Person person) {
+        super();
+        this.idPerson = person.getIdPerson();
+        this.name = person.getName();
+        this.surname = person.getSurname();
+        this.credentials = person.getCredentials();
+    }
 
     public long getIdPerson() {
         return idPerson;
@@ -72,6 +93,14 @@ public class Person implements Serializable {
 
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
     
     @Override

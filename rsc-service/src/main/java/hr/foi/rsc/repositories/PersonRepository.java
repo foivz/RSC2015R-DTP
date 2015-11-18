@@ -7,7 +7,7 @@ package hr.foi.rsc.repositories;
 
 import hr.foi.rsc.model.Person;
 import javax.persistence.Table;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Table(name="person")
-public interface PersonRepository extends JpaRepository<Person, String> {
+public interface PersonRepository extends CrudRepository<Person, String> {
     
     public Person findByIdPerson(long id);
     public Person findByCredentialsUsername(String username);
