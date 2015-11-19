@@ -26,6 +26,8 @@ import java.util.Arrays;
 import hr.foi.rsc.model.Credentials;
 import hr.foi.rsc.model.Token;
 
+import static org.springframework.http.HttpMethod.*;
+
 /**
  *
  * Created by Tomislav Turek on 23.10.15..
@@ -38,7 +40,7 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
     static final String mainUrl = "http://46.101.173.23:8080";
     ServiceResponseHandler handler;
     String url;
-    String method;
+    HttpMethod method;
 
     public ServiceAsyncTask(ServiceResponseHandler handler) {
         this.handler = handler;
@@ -64,53 +66,44 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
         sp = params[0];
         Looper.prepare();
 
-        ServiceResponse jsonResponse = null;
+        ServiceResponse jsonResponse = new ServiceResponse();
 
         url = mainUrl+sp.getUrl();
         method = sp.getMethod();
 
+
         Log.i(ServiceCaller.LOG_TAG, "ServiceAsyncTask -- Initiating service call to " + sp.getUrl());
 
+        RestTemplate rest=new RestTemplate();
+
+        rest.getMessageConverters().add(new FormHttpMessageConverter());
+        rest.getMessageConverters().add(new StringHttpMessageConverter());
+        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+        rest.setErrorHandler(new RestResponseErrorHandler());
 
         try {
 
-                RestTemplate rest=new RestTemplate();
+            if (sp.getUrl().equals("/oauth/token")) {
+                resp = tokenRequest((Credentials) sp.getObject(), rest);
+                jsonResponse.setHttpCode(resp.getStatusCode().value());
+                jsonResponse.setJsonResponse(resp.getBody());
+            }
+            else{
+                resp = getResult(sp.getObject(), sp.getToken(), rest, method);
+                jsonResponse.setHttpCode(resp.getStatusCode().value());
+                jsonResponse.setJsonResponse(resp.getBody());
+            }
 
+        }catch (RestException ex) {
 
-                rest.getMessageConverters().add(new FormHttpMessageConverter());
-                rest.getMessageConverters().add(new StringHttpMessageConverter());
-                rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-
-                if(sp.getUrl().equals("/oauth/token")) {
-                    resp = tokenRequest((Credentials) sp.getObject(), rest);
-                    jsonResponse= new ServiceResponse();
-                    jsonResponse.setHttpCode(resp.getStatusCode().value());
-                    jsonResponse.setJsonResponse(resp.getBody());
-                }
-                else{
-
-                    resp=getResult(sp.getObject(),sp.getToken(),rest,method);
-                    jsonResponse=new ServiceResponse();
-                    jsonResponse.setHttpCode(resp.getStatusCode().value());
-                    jsonResponse.setJsonResponse(resp.getBody());
-
-                }
-
-
-
-
-
-        }catch(RestClientException a) {
-
-                a.printStackTrace();
-                Log.i(ServiceCaller.LOG_TAG, "Eror making request");
+            Log.i(ServiceCaller.LOG_TAG, "tusam");
+            jsonResponse.setJsonResponse(ex.getBody().toString());
+            jsonResponse.setHttpCode(ex.getStatusCode());
 
         }
 
-
         return jsonResponse;
-
     }
 
     /**
@@ -128,7 +121,10 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
         handler.onPostSend();
     }
 
-    public ResponseEntity<String> getResult(Serializable object, Serializable token, RestTemplate rest,String method){
+    /**
+     * sending object and token to webservice
+     */
+    public ResponseEntity<String> getResult(Serializable object, Serializable token, RestTemplate rest,HttpMethod method){
 
             Token userToken =(Token) token;
 
@@ -143,7 +139,9 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
 
             HttpEntity request=new HttpEntity(object,headers);
 
-            ResponseEntity<String> result=rest.exchange(url, HttpMethod.POST, request, String.class);
+            ResponseEntity<String> result = null;
+
+            result = rest.exchange(url, method, request, String.class);
 
             Log.i(ServiceCaller.LOG_TAG, "Response" + result.getBody().toString());
             Log.i(ServiceCaller.LOG_TAG, "Response" + result.getStatusCode().value());
@@ -152,6 +150,12 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
 
     }
 
+
+    /**
+     * Sending req to server for token
+     * @param cred user credentials
+     * @return s serviceresponse (json details of token)
+     */
     public ResponseEntity<String> tokenRequest(Credentials cred,RestTemplate rest){
 
         String authorization =
@@ -177,9 +181,12 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
         Log.i(ServiceCaller.LOG_TAG, "Response" + request.getHeaders().toString());
         Log.i(ServiceCaller.LOG_TAG, "Response" + request.getBody().toString());
 
-        ResponseEntity<String> response=rest.exchange(url, HttpMethod.POST, request, String.class);
-        Log.i(ServiceCaller.LOG_TAG, "Response" + response.getBody().toString());
-        Log.i(ServiceCaller.LOG_TAG, "Response" + response.getStatusCode().value());
+
+            ResponseEntity<String> response=rest.exchange(url, POST, request, String.class);
+            Log.i(ServiceCaller.LOG_TAG, "Response" + response.getBody().toString());
+            Log.i(ServiceCaller.LOG_TAG, "Response" + response.getStatusCode().value());
+
+
 
         return response;
     }

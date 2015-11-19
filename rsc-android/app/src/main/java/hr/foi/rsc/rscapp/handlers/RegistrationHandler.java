@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.springframework.http.HttpMethod;
+
 import java.io.Serializable;
 
 import hr.foi.rsc.model.Credentials;
@@ -32,7 +34,7 @@ public class RegistrationHandler extends ResponseHandler {
             String loginPath = this.context.getString(hr.foi.rsc.webservice.R.string.login_path);
             TokenHandler tokenHandler = new TokenHandler(this.context);
             ServiceParams params = new ServiceParams(loginPath,
-                    "POST",credentials);
+                    HttpMethod.POST,credentials);
 
             new ServiceAsyncTask(tokenHandler).execute(params);
             return true;

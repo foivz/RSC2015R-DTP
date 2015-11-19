@@ -8,6 +8,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.springframework.http.HttpMethod;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -76,7 +78,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 RegistrationHandler registrationHandler = new RegistrationHandler(RegistrationActivity.this, credentials);
                 new ServiceAsyncTask(registrationHandler)
                         .execute(new ServiceParams(getString(hr.foi.rsc.webservice.R.string.signup_path),
-                        "POST", person));
+                                HttpMethod.POST, person));
             }
         }
     };

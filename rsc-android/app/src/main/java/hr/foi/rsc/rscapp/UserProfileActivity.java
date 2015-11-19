@@ -8,11 +8,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.springframework.http.HttpMethod;
+
 import java.util.Arrays;
 import java.util.List;
 
 import hr.foi.rsc.core.Input;
 import hr.foi.rsc.core.SessionManager;
+import hr.foi.rsc.model.Token;
 import hr.foi.rsc.rscapp.handlers.UpdateHandler;
 import hr.foi.rsc.model.Credentials;
 import hr.foi.rsc.model.Person;
@@ -91,12 +94,16 @@ public class UserProfileActivity extends AppCompatActivity {
                 Credentials changedPassword = new Credentials(user.getCredentials().getUsername(), passwordValue);
                 user.setCredentials(changedPassword);
 
+                SessionManager manager=SessionManager.getInstance(getApplicationContext());
+
+                Token userToken=manager.retrieveSession("token",Token.class);
+
                 Log.i("hr.foi.debug", "UserProfileActivity --  calling web service ");
 
                 UpdateHandler updateHandler = new UpdateHandler(UserProfileActivity.this, user);
                 new ServiceAsyncTask(updateHandler)
                         .execute(new ServiceParams(getString(hr.foi.rsc.webservice.R.string.persons_path)
-                        + user.getIdPerson(), "PUT", user));
+                        + user.getIdPerson(), HttpMethod.PUT, user,userToken));
             }
         }
 

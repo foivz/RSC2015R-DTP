@@ -1,5 +1,7 @@
 package hr.foi.rsc.webservice;
 
+import org.springframework.http.HttpMethod;
+
 import java.io.Serializable;
 
 /**
@@ -9,16 +11,16 @@ import java.io.Serializable;
 public class ServiceParams {
 
     private String url;
-    private String method;
+    private HttpMethod method;
     private Serializable object;
     private Serializable token;
 
-    public ServiceParams(String url, String method, Serializable object) {
+    public ServiceParams(String url, HttpMethod method, Serializable object) {
         this.url = url;
         this.method = method;
         this.object = object;
     }
-    public ServiceParams(String url, String method, Serializable object,Serializable token) {
+    public ServiceParams(String url, HttpMethod method, Serializable object,Serializable token) {
         this.url = url;
         this.method = method;
         this.object = object;
@@ -37,11 +39,11 @@ public class ServiceParams {
         this.url = url;
     }
 
-    public String getMethod() {
+    public HttpMethod getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
+    public void setMethod(HttpMethod method) {
         this.method = method;
     }
 

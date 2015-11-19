@@ -22,7 +22,6 @@ public class LoginHandler extends ResponseHandler {
 
     @Override
     public boolean handleResponse(ServiceResponse response) {
-        Log.i("hr.foi.debug", "LoginHandler -- Got response: " + response.toString());
 
         if(response.getHttpCode() == 200) {
 

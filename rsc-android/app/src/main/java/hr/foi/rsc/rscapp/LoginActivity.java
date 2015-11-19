@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.springframework.http.HttpMethod;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -106,7 +108,7 @@ public class LoginActivity extends Activity {
 
                 TokenHandler tokenHandler = new TokenHandler(LoginActivity.this);
                 ServiceParams params = new ServiceParams(getString(hr.foi.rsc.webservice.R.string.login_path),
-                        "POST", credentials);
+                        HttpMethod.POST, credentials);
 
                 new ServiceAsyncTask(tokenHandler).execute(params);
             }
