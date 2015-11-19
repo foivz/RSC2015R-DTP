@@ -1,20 +1,18 @@
 package hr.foi.rsc.rscapp.handlers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
-
 import java.io.Serializable;
-
 import hr.foi.rsc.core.SessionManager;
 import hr.foi.rsc.model.Person;
+import hr.foi.rsc.rscapp.UserProfileActivity;
 import hr.foi.rsc.webservice.ServiceResponse;
 
 /**
- * handles login calls
- * Created by Tomislav Turek on 07.11.15..
+ * Created by paz on 18.11.15..
  */
 public class LoginHandler extends ResponseHandler {
 
@@ -28,23 +26,21 @@ public class LoginHandler extends ResponseHandler {
 
         if(response.getHttpCode() == 200) {
 
-            // convert json to person object
+            // convert json to token object
             Person person = new Gson().fromJson(response.getJsonResponse(), Person.class);
             // save person to session
             SessionManager manager = SessionManager.getInstance(this.context);
             if(manager.createSession(person, "person")) {
 
-                Person sessionPerson = manager.retrieveSession("person", Person.class);
+
                 Log.i("hr.foi.debug",
-                        "LoginHandler -- valid user, created session: " + sessionPerson.toString()
-                                + ", proceeding to group activity");
-                // TODO: token stuff
+                        "LoginHandler -- valid user, created token: " + person.toString()
+                                + ", going into ");
 
-                // TODO: start main activity
 
-                //Intent intent = new Intent(this.context, Activity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                //this.context.startActivity(intent);
+                Intent intent = new Intent(this.context, UserProfileActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.context.startActivity(intent);
                 return true;
 
             } else {
@@ -58,9 +54,10 @@ public class LoginHandler extends ResponseHandler {
             // http code different from 200 OK
             // TODO: seperate invalid credentials and cannot connect to server
 
-            Log.i("hr.foi.debug", "LoginHandler -- invalid credentials sent");
+            Log.i("hr.foi.debug", "TokenHandler -- invalid credentials sent");
             Toast.makeText(this.context, "Invalid credentials", Toast.LENGTH_LONG).show();
             return false;
         }
     }
 }
+

@@ -11,12 +11,23 @@ public class ServiceParams {
     private String url;
     private String method;
     private Serializable object;
+    private Serializable token;
 
     public ServiceParams(String url, String method, Serializable object) {
         this.url = url;
         this.method = method;
         this.object = object;
     }
+    public ServiceParams(String url, String method, Serializable object,Serializable token) {
+        this.url = url;
+        this.method = method;
+        this.object = object;
+        this.token = token;
+    }
+
+    public void setToken(Serializable object){ this.token=object; }
+
+    public Serializable getToken(){ return this.token; }
 
     public String getUrl() {
         return url;

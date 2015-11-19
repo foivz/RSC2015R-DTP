@@ -1,13 +1,30 @@
 package hr.foi.rsc.webservice;
 
+import android.media.session.MediaSessionManager;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.util.Log;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.Base64Utils;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
-import java.io.IOException;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Arrays;
+
+
+import hr.foi.rsc.model.Credentials;
+import hr.foi.rsc.model.Token;
 
 /**
  *
@@ -16,9 +33,12 @@ import java.net.URL;
 public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResponse> {
 
     ServiceParams sp;
-    // TODO: change url
-    static final String mainUrl = "http://teamup-puding.rhcloud.com";
+    ResponseEntity<String> resp;
+
+    static final String mainUrl = "http://46.101.173.23:8080";
     ServiceResponseHandler handler;
+    String url;
+    String method;
 
     public ServiceAsyncTask(ServiceResponseHandler handler) {
         this.handler = handler;
@@ -40,25 +60,57 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
      */
     @Override
     protected ServiceResponse doInBackground(ServiceParams... params) {
+
         sp = params[0];
         Looper.prepare();
+
         ServiceResponse jsonResponse = null;
 
+        url = mainUrl+sp.getUrl();
+        method = sp.getMethod();
+
         Log.i(ServiceCaller.LOG_TAG, "ServiceAsyncTask -- Initiating service call to " + sp.getUrl());
+
+
         try {
-            URL url = new URL(mainUrl+sp.getUrl());
-            String method = sp.getMethod();
-            Serializable object = sp.getObject();
-            jsonResponse = ServiceCaller.call(url, method, object);
-        } catch (MalformedURLException e) {
-            // TODO: catch impl
-            Log.e(ServiceCaller.LOG_TAG, "ServiceAsyncTask -- failed to create URL from string " + sp.getUrl());
-        } catch (IOException e) {
-            // TODO: catch impl
-            Log.e(ServiceCaller.LOG_TAG, "ServiceAsyncTask -- cannot open connection to " + sp.getUrl());
+
+                RestTemplate rest=new RestTemplate();
+
+
+                rest.getMessageConverters().add(new FormHttpMessageConverter());
+                rest.getMessageConverters().add(new StringHttpMessageConverter());
+                rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+
+                if(sp.getUrl().equals("/oauth/token")) {
+                    resp = tokenRequest((Credentials) sp.getObject(), rest);
+                    jsonResponse= new ServiceResponse();
+                    jsonResponse.setHttpCode(resp.getStatusCode().value());
+                    jsonResponse.setJsonResponse(resp.getBody());
+                }
+                else{
+
+                    resp=getResult(sp.getObject(),sp.getToken(),rest,method);
+                    jsonResponse=new ServiceResponse();
+                    jsonResponse.setHttpCode(resp.getStatusCode().value());
+                    jsonResponse.setJsonResponse(resp.getBody());
+
+                }
+
+
+
+
+
+        }catch(RestClientException a) {
+
+                a.printStackTrace();
+                Log.i(ServiceCaller.LOG_TAG, "Eror making request");
+
         }
 
+
         return jsonResponse;
+
     }
 
     /**
@@ -74,5 +126,61 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
             Log.w(ServiceCaller.LOG_TAG, "ServiceAsyncTask -- Could not call service response handler");
         }
         handler.onPostSend();
+    }
+
+    public ResponseEntity<String> getResult(Serializable object, Serializable token, RestTemplate rest,String method){
+
+            Token userToken =(Token) token;
+
+            String authorization = userToken.getTokenType()+" "+ userToken.getAccessToken();
+
+            Log.i(ServiceCaller.LOG_TAG, "Authorization token:" + authorization);
+
+            HttpHeaders headers=new HttpHeaders();
+            headers.add("Authorization", "Basic " + authorization);
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            HttpEntity request=new HttpEntity(object,headers);
+
+            ResponseEntity<String> result=rest.exchange(url, HttpMethod.POST, request, String.class);
+
+            Log.i(ServiceCaller.LOG_TAG, "Response" + result.getBody().toString());
+            Log.i(ServiceCaller.LOG_TAG, "Response" + result.getStatusCode().value());
+
+            return result;
+
+    }
+
+    public ResponseEntity<String> tokenRequest(Credentials cred,RestTemplate rest){
+
+        String authorization =
+                new String(Base64Utils.encode("angular:davinci2015".getBytes()));
+
+        HttpHeaders headers=new HttpHeaders();
+        headers.add("Authorization", "Basic " + authorization);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+
+        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
+        bodyMap.add("username", cred.getUsername());
+        bodyMap.add("password", cred.getPassword());
+        bodyMap.add("grant_type","password");
+        bodyMap.add("scope", "read write");
+        bodyMap.add("client_id", "angular");
+        bodyMap.add("client_secret", "davinci2015");
+
+        HttpEntity<MultiValueMap<String, String>> request=new
+                            HttpEntity<MultiValueMap<String, String>>(bodyMap, headers);
+
+        Log.i(ServiceCaller.LOG_TAG, "Response" + request.getHeaders().toString());
+        Log.i(ServiceCaller.LOG_TAG, "Response" + request.getBody().toString());
+
+        ResponseEntity<String> response=rest.exchange(url, HttpMethod.POST, request, String.class);
+        Log.i(ServiceCaller.LOG_TAG, "Response" + response.getBody().toString());
+        Log.i(ServiceCaller.LOG_TAG, "Response" + response.getStatusCode().value());
+
+        return response;
     }
 }

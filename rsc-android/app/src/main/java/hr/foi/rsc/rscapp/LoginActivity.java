@@ -18,8 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import hr.foi.rsc.core.Input;
+import hr.foi.rsc.core.SessionManager;
 import hr.foi.rsc.core.prompts.LoadingPrompt;
-import hr.foi.rsc.rscapp.handlers.LoginHandler;
+import hr.foi.rsc.rscapp.handlers.TokenHandler;
 import hr.foi.rsc.model.Credentials;
 import hr.foi.rsc.webservice.ServiceAsyncTask;
 import hr.foi.rsc.webservice.ServiceParams;
@@ -35,6 +36,8 @@ public class LoginActivity extends Activity {
     TextView register;
     List<Input> inputs;
     LoadingPrompt loadingPrompt;
+    String usernameValue;
+    String passwordValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,20 +94,28 @@ public class LoginActivity extends Activity {
         public void onClick(View v) {
             Log.i("hr.foi.debug", "LoginActivity -- initiated login");
 
-            String usernameValue = username.getText().toString();
-            String passwordValue = password.getText().toString();
+            usernameValue = username.getText().toString();
+            passwordValue = password.getText().toString();
 
             if(Input.validate(inputs)) {
                 Credentials credentials = new Credentials(usernameValue, passwordValue);
                 Log.i("hr.foi.debug", "LoginActivity -- sending credentials to service");
 
-                LoginHandler loginHandler = new LoginHandler(LoginActivity.this);
-                ServiceParams params = new ServiceParams(getString(hr.foi.rsc.webservice.R.string.signup_path),
+                SessionManager manager=SessionManager.getInstance(getApplicationContext());
+                manager.createSession(credentials,"credentials");
+
+                TokenHandler tokenHandler = new TokenHandler(LoginActivity.this);
+                ServiceParams params = new ServiceParams(getString(hr.foi.rsc.webservice.R.string.login_path),
                         "POST", credentials);
-                new ServiceAsyncTask(loginHandler).execute(params);
+
+                new ServiceAsyncTask(tokenHandler).execute(params);
             }
         }
     };
+
+
+
+
 
     /**
      * called when register is clicked
