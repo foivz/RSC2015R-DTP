@@ -2,27 +2,42 @@
 // endbower
 
 $white: #d8dbe2; //rgba(216, 219, 226, 100)
+$whiteHover: #EAEEF5;
 $grey: #a9bcd0; //rgba(169, 188, 208, 100)
 $blue: #58a4b0; //rgba(88, 164, 176, 100)
+$blueHover: #60B2BF;
 $blueGrey: #373f51; //rgba(55, 63, 81, 100)
 $darkGrey: #1b1b1e; //rgba(27, 27, 30, 100)
 
 $heading: 'Montserrat', sans-serif;
 $para: 'Lato', sans-serif;
+$additional: 'Source Sans Pro', sans-serif;
 
 h1,h2,h3,h4,h5{
   font-family: $heading;
 }
 
-p{
+p, input{
   font-family: $para;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 html, body{
     margin:0px;
     padding:0px;
     background-color: $grey;
+}
+
+a{
+  color: $blueGrey;
+  font-family: $heading;
+  &:hover{
+    text-decoration: none;
+  }
+}
+
+button{
+  font-family: $heading;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -35,28 +50,45 @@ html, body{
 
 
 /* login */
+.login{
+  margin-top: 5%;
+  background-color: $white;
+  border-top: 10px solid $blue;
+  padding-bottom: 30px;
+  h2{
+    font-family: $additional;
+    font-weight: 300;
+    margin: 35px 0;
+  }
+  input{
+    height: auto;
+    background-color: rgba(240,240,240, 0.8);
+    padding: 12px 15px;
+    border-radius: 3px;
+    font-size: 18px;
+  }
+}
+
 .login button{
   background-color: $blue;
   border: solid 1px $blue;
+  padding: 20px 0px;
+  font-size: 20px;
   margin-top: 30px;
   margin-bottom: 20px;
   transition: all 200ms linear;
   &:hover{
-    background-color: $blueGrey;
+    background-color: $blueHover;
+    border: 1px solid $blueHover;
     opacity: 0.9;
   }
 }
 
 
 
-
-
 /* Registration */
 .pass-opacity {
   cursor: pointer;
-}
-
-.registration input{
 }
 
 
@@ -84,11 +116,30 @@ html, body{
     right: 50px;
     top: 20px;
     color: $white;
-    font-size: 22px;
+    .menu-container__app-login{
+      display: relative;
+      display: inline-block;
+      font-size: 16px;
+      a {
+        color: $white;
+        padding-right: 30px;
+        transition: all 150ms linear;
+        &:hover{
+          text-decoration: none;
+          color: $blue;
+        }
+      }
+      span{
+        padding-right: 2px;
+      }
+    }
   }
 }
 
 /* Navigation -- icon */
+.menu-container__icon:hover > .menu-icon {
+  border-top: 6px solid $whiteHover;
+}
 .menu-icon{
     position: absolute;
     border-top: 6px solid $white;
