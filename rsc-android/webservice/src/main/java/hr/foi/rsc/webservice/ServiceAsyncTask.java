@@ -132,14 +132,14 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
 
             Token userToken =(Token) token;
 
-            String authorization = userToken.getTokenType()+" "+ userToken.getAccessToken();
+            String authorization = "Bearer "+ userToken.getAccessToken();
 
             Log.i(ServiceCaller.LOG_TAG, "Authorization token:" + authorization);
 
             HttpHeaders headers=new HttpHeaders();
-            headers.add("Authorization", "Basic " + authorization);
+            headers.add("Authorization",  authorization);
             headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity request=new HttpEntity(object,headers);
 
