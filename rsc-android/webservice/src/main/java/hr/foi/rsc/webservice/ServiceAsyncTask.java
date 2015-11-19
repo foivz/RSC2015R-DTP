@@ -143,7 +143,9 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
 
             result = rest.exchange(url, method, request, String.class);
 
-            Log.i(ServiceCaller.LOG_TAG, "Response" + result.getBody().toString());
+            if(result.getBody()!=null)
+                Log.i(ServiceCaller.LOG_TAG, "Response" + result.getBody().toString());
+
             Log.i(ServiceCaller.LOG_TAG, "Response" + result.getStatusCode().value());
 
             return result;

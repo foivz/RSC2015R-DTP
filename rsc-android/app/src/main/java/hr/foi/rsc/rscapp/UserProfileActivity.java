@@ -101,6 +101,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 Log.i("hr.foi.debug", "UserProfileActivity --  calling web service ");
 
                 UpdateHandler updateHandler = new UpdateHandler(UserProfileActivity.this, user);
+
                 new ServiceAsyncTask(updateHandler)
                         .execute(new ServiceParams(getString(hr.foi.rsc.webservice.R.string.persons_path)
                         + user.getIdPerson(), HttpMethod.PUT, user,userToken));
