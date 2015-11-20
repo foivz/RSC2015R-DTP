@@ -8,7 +8,7 @@
  * Controller of the webAngularTemplateApp
  */
 angular.module('webAngularTemplateApp')
-	.controller('RegisterCtrl', ['$location', '$window', '$http', 'registerUser', function($location, $window, $htpp, registerUser){
+	.controller('RegisterCtrl', ['$location', '$window', '$http', 'registerUser', 'auth', function($location, $window, $htpp, registerUser, auth){
 		var controller = this;
 
 		controller.passwordType = 'password';
@@ -19,26 +19,40 @@ angular.module('webAngularTemplateApp')
 
 		controller.Register = function(){
 
-			var obj = {
+			var credentials = {
 				name : controller.name,
 				surname : controller.surname,
-				email : controller.email,
-				username: controller.username,
-				password : controller.password,
-				image : "app/img/default.jpeg",
-				type : {
-					id : '2', // 2 - user
-					type : 'user'
-				}
-			}
-			console.log(obj);
-			registerUser.register(obj)
-				.then(function(data){
-					console.log(data);
+				//email : controller.email,
+				password:controller.password,
+				username:controller.username,
+				grant_type:'password',
+				scope:'read write',
+				client_secret:'davinci2015',
+				client_id:'angular' 
+				//image : "app/img/default.jpeg",
+				// type : {
+				// 	id : '2', // 2 - user
+				// 	type : 'user'
+				// }
+			};
+
+			registerUser.register(credentials)
+			.then(function(data){
+				console.log("User reg success");
+				//After reg succes fetch token
+				delete credentials.name;
+				delete credentials.surname;
+				console.log(credentials);
+				auth.login(credentials)
+				.then(function(){
+					console.log("Fetch token success");
 					$location.path('/main');
-				},
-				function(data){
-					console.log("Registration Error");
-				});
+				}, function(data){
+					console.log("Fetch token error")
+				})
+
+			}, function(data){
+				console.log("User reg error");
+			})
 		}
 	}]);

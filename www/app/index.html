@@ -19,47 +19,55 @@
   </head>
   <body ng-app="webAngularTemplateApp">
     <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     <!-- Add your site or application content here -->
-    <div class="menu-container">
-      <div class="menu-container__icon">
-        <div class="menu-icon menu-icon--top"></div>
-        <div class="menu-icon menu-icon--middle"></div>
-        <div class="menu-icon menu-icon--bottom"></div>
-      </div>   
-      <div class="menu-container__app">
-        <div class="menu-container__app-login">
-          <a href="#register"><span class="glyphicon glyphicon-user"></span> Register</a>
-          <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Sign in</a>
+    <div ng-controller="NavigationCtrl as nav">
+      <div class="menu-container">
+        <div class="menu-container__icon">
+          <div class="menu-icon menu-icon--top"></div>
+          <div class="menu-icon menu-icon--middle"></div>
+          <div class="menu-icon menu-icon--bottom"></div>
         </div>
-      </div> 
-    </div>
-
-    <div class="flip-container">
-      <div class="flip-inner">
-        <div class="front">
-          
-          <div class="content">
-              <div ng-view=""></div>
+        <div class="menu-container__app">
+          <div class="menu-container__app-login">
+            <a href="#register" ng-hide="nav.CheckLogin()">
+              <span class="glyphicon glyphicon-user"></span> Register
+            </a>
+            <a href="#login" ng-hide="nav.CheckLogin()">
+              <span class="glyphicon glyphicon-log-in"></span> Log in
+            </a>
+            <a href="#login" logout ng-show="nav.CheckLogin()">
+              <span class="glyphicon glyphicon-log-out"></span> Log out
+            </a>
           </div>
-
         </div>
-        <div class="back">
-          <nav>
-            <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="">Work</a></li>
-              <li><a href="">Careers</a></li>
-              <li><a href="">Contact</a></li>
-            </ul>
-          </nav>
+      </div>
+      <div class="flip-container">
+        <div class="flip-inner">
+          <div class="front">
+            
+            <div class="content">
+              <div ng-view=""></div>
+            </div>
+          </div>
+          <div class="back">
+            <nav>
+              <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="">Profile</a></li>
+                <li>
+                  <a href="#login" logout ng-show="nav.CheckLogin()">
+                    Log out
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
-
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -70,17 +78,18 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/login.js"></script>
-        <script src="scripts/services/auth.js"></script>
-        <script src="scripts/services/logininterceptor.js"></script>
-        <script src="scripts/controllers/register.js"></script>
-        <script src="scripts/services/register.js"></script>
-        <script src="scripts/actions/menu.js"></script>
-        <!-- endbuild -->
-</body>
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/services/auth.js"></script>
+    <script src="scripts/services/logininterceptor.js"></script>
+    <script src="scripts/controllers/register.js"></script>
+    <script src="scripts/services/register.js"></script>
+    <script src="scripts/actions/menu.js"></script>
+    <script src="scripts/directives/logout.js"></script>
+    <script src="scripts/controllers/navigation.js"></script>
+    <!-- endbuild -->
+  </body>
 </html>

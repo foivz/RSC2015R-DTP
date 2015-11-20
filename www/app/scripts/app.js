@@ -16,7 +16,7 @@ angular
   ])
   .config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
     
-    //$httpProvider.interceptors.push('loginInterceptor');
+    $httpProvider.interceptors.push('loginInterceptor');
     
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
