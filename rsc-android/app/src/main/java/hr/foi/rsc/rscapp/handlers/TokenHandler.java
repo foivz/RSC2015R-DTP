@@ -3,22 +3,22 @@ package hr.foi.rsc.rscapp.handlers;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 
 import org.springframework.http.HttpMethod;
 
 import java.io.Serializable;
+
 import hr.foi.rsc.core.SessionManager;
 import hr.foi.rsc.model.Credentials;
-import hr.foi.rsc.model.Person;
 import hr.foi.rsc.model.Token;
 import hr.foi.rsc.webservice.ServiceAsyncTask;
 import hr.foi.rsc.webservice.ServiceParams;
 import hr.foi.rsc.webservice.ServiceResponse;
 
 /**
- * handles login calls
- * Created by Tomislav Turek on 07.11.15..
+ * Created by hrvoje on 20/11/15.
  */
 public class TokenHandler extends ResponseHandler {
 
@@ -34,7 +34,7 @@ public class TokenHandler extends ResponseHandler {
             // convert json to token object
             Token personToken = new Gson().fromJson(response.getJsonResponse(), Token.class);
             // save person to session
-            SessionManager manager = SessionManager.getInstance(this.context);
+            SessionManager manager = SessionManager.getInstance(getContext());
             if(manager.createSession(personToken, "token")) {
 
                 Token sessionToken = manager.retrieveSession("token", Token.class);
@@ -43,7 +43,7 @@ public class TokenHandler extends ResponseHandler {
                                 + ", going to make request with token");
 
 
-                LoginHandler LoginHandler = new LoginHandler(TokenHandler.this.context);
+                LoginHandler LoginHandler = new LoginHandler(getContext());
                 Credentials credentials=manager.retrieveSession("credentials",Credentials.class);
 
                 Log.i("hr.foi.debug",
@@ -56,7 +56,7 @@ public class TokenHandler extends ResponseHandler {
                         "TokenHandler -- token: " + sessionToken.getAccessToken()
                                 + ", going to make request with token");
 
-                ServiceParams params = new ServiceParams(this.context.getString(hr.foi.rsc.webservice.R.string.login_path_token),
+                ServiceParams params = new ServiceParams(getContext().getString(hr.foi.rsc.webservice.R.string.login_path_token),
                         HttpMethod.POST, credentials,sessionToken);
                 new ServiceAsyncTask(LoginHandler).execute(params);
 
@@ -69,7 +69,7 @@ public class TokenHandler extends ResponseHandler {
 
             } else {
                 // login failed
-                Toast.makeText(this.context,
+                Toast.makeText(getContext(),
                         "Internal application error, please try again", Toast.LENGTH_LONG).show();
                 return false;
             }
@@ -79,7 +79,7 @@ public class TokenHandler extends ResponseHandler {
             // TODO: seperate invalid credentials and cannot connect to server
 
             Log.i("hr.foi.debug", "TokenHandler -- invalid credentials sent");
-            Toast.makeText(this.context, "Invalid credentials", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Invalid credentials", Toast.LENGTH_LONG).show();
             return false;
         }
     }

@@ -1,6 +1,7 @@
 package hr.foi.rsc.rscapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -13,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.springframework.http.HttpMethod;
 
@@ -22,10 +26,14 @@ import java.util.List;
 import hr.foi.rsc.core.Input;
 import hr.foi.rsc.core.SessionManager;
 import hr.foi.rsc.core.prompts.LoadingPrompt;
-import hr.foi.rsc.rscapp.handlers.TokenHandler;
+import hr.foi.rsc.model.Token;
+import hr.foi.rsc.rscapp.handlers.LoginHandler;
+import hr.foi.rsc.rscapp.handlers.ResponseHandler;
 import hr.foi.rsc.model.Credentials;
+import hr.foi.rsc.rscapp.handlers.TokenHandler;
 import hr.foi.rsc.webservice.ServiceAsyncTask;
 import hr.foi.rsc.webservice.ServiceParams;
+import hr.foi.rsc.webservice.ServiceResponse;
 
 public class LoginActivity extends Activity {
 
@@ -106,18 +114,15 @@ public class LoginActivity extends Activity {
                 SessionManager manager=SessionManager.getInstance(getApplicationContext());
                 manager.createSession(credentials,"credentials");
 
-                TokenHandler tokenHandler = new TokenHandler(LoginActivity.this);
+
                 ServiceParams params = new ServiceParams(getString(hr.foi.rsc.webservice.R.string.login_path),
                         HttpMethod.POST, credentials);
 
+                TokenHandler tokenHandler = new TokenHandler(LoginActivity.this);
                 new ServiceAsyncTask(tokenHandler).execute(params);
             }
         }
     };
-
-
-
-
 
     /**
      * called when register is clicked

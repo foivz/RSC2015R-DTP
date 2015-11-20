@@ -32,11 +32,11 @@ public class RegistrationHandler extends ResponseHandler {
             Log.i("hr.foi.debug", "RegistrationHandler -- successfully registered user, logging in now...");
             // login
             String loginPath = this.context.getString(hr.foi.rsc.webservice.R.string.login_path);
-            TokenHandler tokenHandler = new TokenHandler(this.context);
+//            TokenHandler tokenHandler = new TokenHandler(this.context);
             ServiceParams params = new ServiceParams(loginPath,
                     HttpMethod.POST,credentials);
 
-            new ServiceAsyncTask(tokenHandler).execute(params);
+         //   new ServiceAsyncTask(tokenHandler).execute(params);
             return true;
         } else {
             Log.w("hr.foi.debug",

@@ -64,7 +64,6 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
     protected ServiceResponse doInBackground(ServiceParams... params) {
 
         sp = params[0];
-        Looper.prepare();
 
         ServiceResponse jsonResponse = new ServiceResponse();
 
@@ -149,6 +148,28 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
             Log.i(ServiceCaller.LOG_TAG, "Response" + result.getStatusCode().value());
 
             return result;
+
+    }
+    public ResponseEntity<String> getResult(Serializable object, RestTemplate rest,HttpMethod method){
+
+
+
+        HttpHeaders headers=new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity request=new HttpEntity(object,headers);
+
+        ResponseEntity<String> result = null;
+
+        result = rest.exchange(url, method, request, String.class);
+
+        if(result.getBody()!=null)
+            Log.i(ServiceCaller.LOG_TAG, "Response" + result.getBody().toString());
+
+        Log.i(ServiceCaller.LOG_TAG, "Response" + result.getStatusCode().value());
+
+        return result;
 
     }
 
