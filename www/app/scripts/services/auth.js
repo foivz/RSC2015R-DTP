@@ -27,16 +27,14 @@ angular.module('webAngularTemplateApp')
             }
           }).then(function(result){
             
-            console.log("Prošao auth");
-            console.log(result);
-            console.log(result.access_token);
-
-            //$window.sessionStorage['token'] = result.data.token;
+            console.log("Auth success");
+            $window.sessionStorage['access_token'] = result.data.access_token;
+            $window.sessionStorage['refresh_token'] = result.data.access_token;
             
             deferred.resolve(result);
           }, function(data){
             
-            console.log("Nije prošao auth");
+            console.log("Auth error");
 
             deferred.reject(data);
           });

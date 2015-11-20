@@ -9,15 +9,26 @@
  */
 angular.module('webAngularTemplateApp')
   .factory('registerUser', ['$http', '$q', '$window', function($http, $q, $window){
+    
     var deferred = $q.defer();
     var register = function (data){
-          var path = 'URL ZA REG';
+          var path = 'http://46.101.173.23:8080/person/signup';
+          var obj = {
+            idPerson: '0',
+            name: data.name,
+            surname: data.surname,
+            credentials: {
+              username: data.username,
+              password: data.password
+            }
+          };
+
+          console.log(obj);
           $http({
             method: 'POST',
             url: path,
-            data: data,
+            data: obj,
           }).then(function(result){
-            $window.sessionStorage['token'] = result.data.token;
             deferred.resolve(result);
           }, function(data){
             deferred.reject(data);
