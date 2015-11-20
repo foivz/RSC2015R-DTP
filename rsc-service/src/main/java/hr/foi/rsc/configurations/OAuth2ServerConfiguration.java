@@ -51,6 +51,7 @@ public class OAuth2ServerConfiguration {
             public void configure(HttpSecurity http) throws Exception {
                     http
                             .authorizeRequests()
+                                    .antMatchers("/person/signup").anonymous()
                                     .antMatchers("/person/*").authenticated();
             }
 
