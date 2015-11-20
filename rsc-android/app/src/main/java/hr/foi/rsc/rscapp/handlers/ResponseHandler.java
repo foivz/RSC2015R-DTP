@@ -32,4 +32,28 @@ public abstract class ResponseHandler implements ServiceResponseHandler {
     public void onPostSend() {
         loadingPrompt.hidePrompt();
     }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public Object[] getArgs() {
+        return args;
+    }
+
+    public void setArgs(Object[] args) {
+        this.args = args;
+    }
+
+    public LoadingPrompt getLoadingPrompt() {
+        return loadingPrompt;
+    }
+
+    public void setLoadingPrompt(LoadingPrompt loadingPrompt) {
+        this.loadingPrompt = loadingPrompt;
+    }
 }
