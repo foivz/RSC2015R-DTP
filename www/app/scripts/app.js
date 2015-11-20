@@ -21,7 +21,7 @@ angular
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
     $routeProvider
-      .when('/', {
+      .when('/main', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main',
@@ -30,7 +30,8 @@ angular
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
-        controllerAs: 'about'
+        controllerAs: 'about',
+        //resolve: {auth: routeAuth}
       })
       .when('/login', {
         templateUrl: 'views/login.html',
@@ -46,7 +47,8 @@ angular
         redirectTo: '/'
       });
   }])
-  .run(['$rootScope', '$location', function($rootScope, $location){
+  .run(['$rootScope', '$location', '$route', function($rootScope, $location, $route){
+    $route.reload();
     $rootScope.$on('$routeChangeError', function(eventObj){
       if(!eventObj.login)
         $location.path('/login');

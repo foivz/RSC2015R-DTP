@@ -9,6 +9,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='bower_components/fullpage.js/jquery.fullPage.css' />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -23,51 +24,18 @@
     <![endif]-->
     <!-- Add your site or application content here -->
     <div ng-controller="NavigationCtrl as nav">
-      <div class="menu-container">
-        <div class="menu-container__icon">
-          <div class="menu-icon menu-icon--top"></div>
-          <div class="menu-icon menu-icon--middle"></div>
-          <div class="menu-icon menu-icon--bottom"></div>
+      <div ng-switch="nav.CheckPage()">
+        <div ng-switch-when="true">
+          <!-- Introduction page -->
+          <div ng-include src="'views/introduction.html'"></div>
         </div>
-        <div class="menu-container__app">
-          <div class="menu-container__app-login">
-            <a href="#register" ng-hide="nav.CheckLogin()">
-              <span class="glyphicon glyphicon-user"></span> Register
-            </a>
-            <a href="#login" ng-hide="nav.CheckLogin()">
-              <span class="glyphicon glyphicon-log-in"></span> Log in
-            </a>
-            <a href="#login" logout ng-show="nav.CheckLogin()">
-              <span class="glyphicon glyphicon-log-out"></span> Log out
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="flip-container">
-        <div class="flip-inner">
-          <div class="front">
-            
-            <div class="content">
-              <div ng-view=""></div>
-            </div>
-          </div>
-          <div class="back">
-            <nav>
-              <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="">Profile</a></li>
-                <li>
-                  <a href="#login" logout ng-show="nav.CheckLogin()">
-                    Log out
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+        <div ng-switch-when="false">
+          <!-- Working environment -->
+          <div ng-include src="'views/wrapper.html'"></div>
         </div>
       </div>
     </div>
+
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -76,6 +44,9 @@
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/fullpage.js/jquery.fullPage.js"></script>
+    <script src="bower_components/fullpage.js/vendors/jquery.easings.min.js"></script>
+    <script src="bower_components/fullpage.js/vendors/jquery.slimscroll.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -87,9 +58,9 @@
     <script src="scripts/services/logininterceptor.js"></script>
     <script src="scripts/controllers/register.js"></script>
     <script src="scripts/services/register.js"></script>
-    <script src="scripts/actions/menu.js"></script>
     <script src="scripts/directives/logout.js"></script>
     <script src="scripts/controllers/navigation.js"></script>
+    <script src="scripts/directives/menu.js"></script>
     <!-- endbuild -->
   </body>
 </html>

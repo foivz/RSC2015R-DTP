@@ -1,4 +1,5 @@
 // bower:scss
+@import "fullpage.js/jquery.fullPage.scss";
 // endbower
 
 $white: #d8dbe2; //rgba(216, 219, 226, 100)
@@ -48,8 +49,69 @@ button{
   padding-right: 15px;
 }
 
+/* GENERAL SETTINGS */
+/* buttons */
+.buttons{
+    background-color: $blue;
+    border: solid 1px $blue;
+    padding: 20px 0px;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    transition: all 200ms linear;
+    &:hover{
+      background-color: $blueHover;
+      border: 1px solid $blueHover;
+      opacity: 0.8;
+    }
+}
 
-/* login */
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+
+/* introduction */
+#fullpage {
+  h1{
+    font-size: 50px;
+    font-weight: 300;
+  }
+  button{
+    @extend .buttons;
+    padding: 20px 160px;
+  }
+}
+
+.first-section{
+  background-image: url("../images/bg-polygons.svg"), linear-gradient(to top, #58a4b0 0%,#d8dbe2 90%);
+  h1{
+    color: $white;
+  }
+}
+
+.second-section{
+  background-color: $white;
+}
+
+.third-section{
+  background: $grey;
+  h1{
+    color: $whiteHover;
+  }
+  p{
+    font-size: 14px;
+  }
+}
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+
+/* Login */
 .login{
   margin-top: 5%;
   background-color: $white;
@@ -70,26 +132,29 @@ button{
 }
 
 .login button{
-  background-color: $blue;
-  border: solid 1px $blue;
-  padding: 20px 0px;
-  font-size: 20px;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  transition: all 200ms linear;
-  &:hover{
-    background-color: $blueHover;
-    border: 1px solid $blueHover;
-    opacity: 0.9;
-  }
+  @extend .buttons;
 }
 
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
 
 
 /* Registration */
+.register{
+  margin-bottom: 100px;
+}
+
 .pass-opacity {
   cursor: pointer;
 }
+
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
 
 
 
@@ -248,16 +313,10 @@ button{
   }
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
 
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-  }
-}
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
 
 
 /* Responsive: Portrait tablets and up */

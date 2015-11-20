@@ -1,38 +1,293 @@
-/* line 16, ../../app/styles/main.scss */
+/**
+ * fullPage 2.7.4
+ * https://github.com/alvarotrigo/fullPage.js
+ * MIT licensed
+ *
+ * Copyright (C) 2013 alvarotrigo.com - A project by Alvaro Trigo
+ * Contribution by Jhony0311
+ */
+/* line 9, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+html.fp-enabled,
+.fp-enabled body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /*Avoid flicker on slides transitions for mobile phones #336 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* line 18, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#superContainer {
+  height: 100%;
+  position: relative;
+  /* Touch detection for Windows 8 */
+  /* IE 11 on Windows Phone 8.1*/
+  touch-action: none;
+}
+
+/* line 28, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-section {
+  position: relative;
+  /* Safari<=5 Android<=3 */
+  /* <=28 */
+  box-sizing: border-box;
+}
+
+/* line 34, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-slide {
+  float: left;
+}
+
+/* line 37, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-slide, .fp-slidesContainer {
+  height: 100%;
+  display: block;
+}
+
+/* line 41, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-slides {
+  z-index: 1;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  /* Safari<=6 Android<=4.3 */
+  transition: all 0.3s ease-out;
+}
+
+/* line 49, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-section.fp-table, .fp-slide.fp-table {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* line 54, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-tableCell {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 60, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-slidesContainer {
+  float: left;
+  position: relative;
+}
+
+/* line 64, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-controlArrow {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  cursor: pointer;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  margin-top: -38px;
+  transform: translate3d(0, 0, 0);
+}
+/* line 77, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-controlArrow.fp-prev {
+  left: 15px;
+  width: 0;
+  border-width: 38.5px 34px 38.5px 0;
+  border-color: transparent #fff transparent transparent;
+}
+/* line 84, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-controlArrow.fp-next {
+  right: 15px;
+  border-width: 38.5px 0 38.5px 34px;
+  border-color: transparent transparent transparent #fff;
+}
+
+/* line 90, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-scrollable {
+  overflow: scroll;
+}
+
+/* line 93, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-notransition {
+  transition: none !important;
+}
+
+/* line 97, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-slidesNav {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  opacity: 1;
+}
+/* line 103, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-slidesNav.bottom {
+  bottom: 17px;
+}
+/* line 107, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-slidesNav.top {
+  top: 17px;
+}
+
+/* line 112, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul,
+.fp-slidesNav ul {
+  margin: 0;
+  padding: 0;
+}
+/* line 117, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul li,
+.fp-slidesNav ul li {
+  display: block;
+  width: 14px;
+  height: 13px;
+  margin: 7px;
+  position: relative;
+}
+/* line 124, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul li a,
+.fp-slidesNav ul li a {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  text-decoration: none;
+}
+/* line 133, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul li a.active span,
+.fp-slidesNav ul li a.active span {
+  height: 12px;
+  width: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 100%;
+}
+/* line 139, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul li:hover #fp-nav ul li a.active span, #fp-slidesNav ul li:hover #fp-nav ul li a.active span, #fp-nav ul li:hover
+.fp-slidesNav ul li a.active span, #fp-slidesNav ul li:hover
+.fp-slidesNav ul li a.active span {
+  height: 12px;
+  width: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 100%;
+}
+/* line 148, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul li a span,
+.fp-slidesNav ul li a span {
+  border-radius: 50%;
+  position: absolute;
+  z-index: 1;
+  height: 4px;
+  width: 4px;
+  border: 0;
+  background: #333;
+  left: 50%;
+  top: 50%;
+  margin: -2px 0 0 -2px;
+  transition: all 0.1s ease-in-out;
+}
+/* line 169, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul li:hover a span,
+.fp-slidesNav ul li:hover a span {
+  width: 10px;
+  height: 10px;
+  margin: -5px 0px 0px -5px;
+}
+
+/* line 179, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav {
+  position: fixed;
+  z-index: 100;
+  margin-top: -32px;
+  top: 50%;
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+/* line 186, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav.right {
+  right: 17px;
+}
+/* line 189, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav.left {
+  left: 17px;
+}
+/* line 194, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul li .fp-tooltip {
+  position: absolute;
+  top: -2px;
+  color: #fff;
+  font-size: 14px;
+  font-family: arial, helvetica, sans-serif;
+  white-space: nowrap;
+  max-width: 220px;
+  overflow: hidden;
+  display: block;
+  opacity: 0;
+  width: 0;
+}
+/* line 207, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul li .fp-tooltip.right {
+  right: 20px;
+}
+/* line 216, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav ul li:hover .fp-tooltip {
+  transition: opacity 0.2s ease-in;
+  width: auto;
+  opacity: 1;
+}
+/* line 225, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+#fp-nav.fp-show-active a.active + .fp-tooltip {
+  transition: opacity 0.2s ease-in;
+  width: auto;
+  opacity: 1;
+}
+
+/* line 232, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-slidesNav ul li {
+  display: inline-block;
+}
+
+/* line 235, ../../bower_components/fullpage.js/jquery.fullPage.scss */
+.fp-auto-height.fp-section,
+.fp-auto-height .fp-slide,
+.fp-auto-height .fp-tableCell {
+  height: auto !important;
+}
+
+/* line 17, ../../app/styles/main.scss */
 h1, h2, h3, h4, h5 {
   font-family: "Montserrat", sans-serif;
 }
 
-/* line 20, ../../app/styles/main.scss */
+/* line 21, ../../app/styles/main.scss */
 p, input {
   font-family: "Lato", sans-serif;
   font-size: 20px;
 }
 
-/* line 25, ../../app/styles/main.scss */
+/* line 26, ../../app/styles/main.scss */
 html, body {
   margin: 0px;
   padding: 0px;
   background-color: #a9bcd0;
 }
 
-/* line 31, ../../app/styles/main.scss */
+/* line 32, ../../app/styles/main.scss */
 a {
   color: #373f51;
   font-family: "Montserrat", sans-serif;
 }
-/* line 34, ../../app/styles/main.scss */
+/* line 35, ../../app/styles/main.scss */
 a:hover {
   text-decoration: none;
 }
 
-/* line 39, ../../app/styles/main.scss */
+/* line 40, ../../app/styles/main.scss */
 button {
   font-family: "Montserrat", sans-serif;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
-/* line 44, ../../app/styles/main.scss */
+/* line 45, ../../app/styles/main.scss */
 .header,
 .marketing,
 .footer {
@@ -40,31 +295,10 @@ button {
   padding-right: 15px;
 }
 
-/* login */
-/* line 53, ../../app/styles/main.scss */
-.login {
-  margin-top: 5%;
-  background-color: #d8dbe2;
-  border-top: 10px solid #58a4b0;
-  padding-bottom: 30px;
-}
-/* line 58, ../../app/styles/main.scss */
-.login h2 {
-  font-family: "Source Sans Pro", sans-serif;
-  font-weight: 300;
-  margin: 35px 0;
-}
-/* line 63, ../../app/styles/main.scss */
-.login input {
-  height: auto;
-  background-color: rgba(240, 240, 240, 0.8);
-  padding: 12px 15px;
-  border-radius: 3px;
-  font-size: 18px;
-}
-
-/* line 72, ../../app/styles/main.scss */
-.login button {
+/* GENERAL SETTINGS */
+/* buttons */
+/* line 54, ../../app/styles/main.scss */
+.buttons, #fullpage button, .login button {
   background-color: #58a4b0;
   border: solid 1px #58a4b0;
   padding: 20px 0px;
@@ -73,21 +307,87 @@ button {
   margin-bottom: 20px;
   transition: all 200ms linear;
 }
-/* line 80, ../../app/styles/main.scss */
-.login button:hover {
+/* line 62, ../../app/styles/main.scss */
+.buttons:hover, #fullpage button:hover, .login button:hover {
   background-color: #60B2BF;
   border: 1px solid #60B2BF;
-  opacity: 0.9;
+  opacity: 0.8;
+}
+
+/* introduction */
+/* line 77, ../../app/styles/main.scss */
+#fullpage h1 {
+  font-size: 50px;
+  font-weight: 300;
+}
+/* line 81, ../../app/styles/main.scss */
+#fullpage button {
+  padding: 20px 160px;
+}
+
+/* line 87, ../../app/styles/main.scss */
+.first-section {
+  background-image: url("../images/bg-polygons.svg"), linear-gradient(to top, #58a4b0 0%, #d8dbe2 90%);
+}
+/* line 89, ../../app/styles/main.scss */
+.first-section h1 {
+  color: #d8dbe2;
+}
+
+/* line 94, ../../app/styles/main.scss */
+.second-section {
+  background-color: #d8dbe2;
+}
+
+/* line 98, ../../app/styles/main.scss */
+.third-section {
+  background: #a9bcd0;
+}
+/* line 100, ../../app/styles/main.scss */
+.third-section h1 {
+  color: #EAEEF5;
+}
+/* line 103, ../../app/styles/main.scss */
+.third-section p {
+  font-size: 14px;
+}
+
+/* Login */
+/* line 115, ../../app/styles/main.scss */
+.login {
+  margin-top: 5%;
+  background-color: #d8dbe2;
+  border-top: 10px solid #58a4b0;
+  padding-bottom: 30px;
+}
+/* line 120, ../../app/styles/main.scss */
+.login h2 {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 300;
+  margin: 35px 0;
+}
+/* line 125, ../../app/styles/main.scss */
+.login input {
+  height: auto;
+  background-color: rgba(240, 240, 240, 0.8);
+  padding: 12px 15px;
+  border-radius: 3px;
+  font-size: 18px;
 }
 
 /* Registration */
-/* line 90, ../../app/styles/main.scss */
+/* line 145, ../../app/styles/main.scss */
+.register {
+  margin-bottom: 100px;
+}
+
+/* line 149, ../../app/styles/main.scss */
 .pass-opacity {
   cursor: pointer;
 }
 
 /* Navigation */
-/* line 97, ../../app/styles/main.scss */
+/* line 162, ../../app/styles/main.scss */
 .menu-container {
   position: relative;
   display: block;
@@ -96,7 +396,7 @@ button {
   margin: 0 auto;
   background-color: #373f51;
 }
-/* line 105, ../../app/styles/main.scss */
+/* line 170, ../../app/styles/main.scss */
 .menu-container .menu-container__icon {
   position: relative;
   height: 40px;
@@ -106,42 +406,42 @@ button {
   cursor: pointer;
   transition: all 200ms ease-in-out;
 }
-/* line 114, ../../app/styles/main.scss */
+/* line 179, ../../app/styles/main.scss */
 .menu-container .menu-container__app {
   position: absolute;
   right: 50px;
   top: 20px;
   color: #d8dbe2;
 }
-/* line 119, ../../app/styles/main.scss */
+/* line 184, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login {
   display: relative;
   display: inline-block;
   font-size: 16px;
 }
-/* line 123, ../../app/styles/main.scss */
+/* line 188, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login a {
   color: #d8dbe2;
   padding-right: 30px;
   transition: all 150ms linear;
 }
-/* line 127, ../../app/styles/main.scss */
+/* line 192, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login a:hover {
   text-decoration: none;
   color: #58a4b0;
 }
-/* line 132, ../../app/styles/main.scss */
+/* line 197, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login span {
   padding-right: 2px;
 }
 
 /* Navigation -- icon */
-/* line 140, ../../app/styles/main.scss */
+/* line 205, ../../app/styles/main.scss */
 .menu-container__icon:hover > .menu-icon {
   border-top: 6px solid #EAEEF5;
 }
 
-/* line 143, ../../app/styles/main.scss */
+/* line 208, ../../app/styles/main.scss */
 .menu-icon {
   position: absolute;
   border-top: 6px solid #d8dbe2;
@@ -150,40 +450,40 @@ button {
   transition: all 200ms ease-in-out;
 }
 
-/* line 150, ../../app/styles/main.scss */
+/* line 215, ../../app/styles/main.scss */
 .menu-icon--top {
   top: 0;
 }
 
-/* line 153, ../../app/styles/main.scss */
+/* line 218, ../../app/styles/main.scss */
 .menu-icon--middle {
   top: 13px;
 }
 
-/* line 156, ../../app/styles/main.scss */
+/* line 221, ../../app/styles/main.scss */
 .menu-icon--bottom {
   top: 26px;
 }
 
-/* line 160, ../../app/styles/main.scss */
+/* line 225, ../../app/styles/main.scss */
 .menu-rotate {
   transform: rotateY(-180deg);
   transition: all 200ms ease-in-out;
 }
 
-/* line 165, ../../app/styles/main.scss */
+/* line 230, ../../app/styles/main.scss */
 .menu-top-action {
   top: 15px;
   transform: rotate(45deg);
   transition: all 150ms linear;
 }
 
-/* line 170, ../../app/styles/main.scss */
+/* line 235, ../../app/styles/main.scss */
 .menu-middle-action {
   opacity: 0;
 }
 
-/* line 173, ../../app/styles/main.scss */
+/* line 238, ../../app/styles/main.scss */
 .menu-bottom-action {
   top: 15px;
   transform: rotate(-45deg);
@@ -191,24 +491,24 @@ button {
 }
 
 /* Navigation -- Flip */
-/* line 180, ../../app/styles/main.scss */
+/* line 245, ../../app/styles/main.scss */
 .flip-container {
   position: relative;
   width: 100%;
   height: 100%;
   perspective: 1000;
 }
-/* line 186, ../../app/styles/main.scss */
+/* line 251, ../../app/styles/main.scss */
 .flip-container .front {
   z-index: 2;
   transform: rotateY(0deg);
 }
-/* line 190, ../../app/styles/main.scss */
+/* line 255, ../../app/styles/main.scss */
 .flip-container .back {
   transform: rotateY(180deg);
 }
 
-/* line 195, ../../app/styles/main.scss */
+/* line 260, ../../app/styles/main.scss */
 .front, .back {
   backface-visibility: hidden;
   height: 100%;
@@ -216,7 +516,7 @@ button {
   width: 100%;
 }
 
-/* line 202, ../../app/styles/main.scss */
+/* line 267, ../../app/styles/main.scss */
 .flip-inner {
   width: 100%;
   height: 100%;
@@ -230,63 +530,51 @@ button {
   transition: 400ms;
 }
 
-/* line 216, ../../app/styles/main.scss */
+/* line 281, ../../app/styles/main.scss */
 .flip-inner-action {
   transform: rotateY(-180deg);
 }
 
 /*Navigation -- list */
-/* line 222, ../../app/styles/main.scss */
+/* line 287, ../../app/styles/main.scss */
 .back nav ul {
   list-style: none;
   text-align: center;
   font-size: 24px;
   padding-left: 0;
 }
-/* line 228, ../../app/styles/main.scss */
+/* line 293, ../../app/styles/main.scss */
 .back nav ul li {
   padding: 20px;
   width: 100%;
   color: white;
   border-bottom: 2px solid rgba(240, 240, 240, 0.4);
 }
-/* line 234, ../../app/styles/main.scss */
+/* line 299, ../../app/styles/main.scss */
 .back nav ul li:last-child {
   border: none;
 }
-/* line 238, ../../app/styles/main.scss */
+/* line 303, ../../app/styles/main.scss */
 .back nav ul li:hover {
   background-color: #d8dbe2;
   transition: all 400ms ease-in-out;
 }
-/* line 244, ../../app/styles/main.scss */
+/* line 309, ../../app/styles/main.scss */
 .back nav ul a {
   padding: 20px;
   color: #1b1b1e;
   text-decoration: none;
 }
 
-/* Main marketing message and sign up button */
-/* line 252, ../../app/styles/main.scss */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-/* line 256, ../../app/styles/main.scss */
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
-}
-
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  /* line 265, ../../app/styles/main.scss */
+  /* line 324, ../../app/styles/main.scss */
   .container {
     max-width: 730px;
   }
 
   /* Remove the padding we set earlier */
-  /* line 270, ../../app/styles/main.scss */
+  /* line 329, ../../app/styles/main.scss */
   .header,
   .marketing,
   .footer {
@@ -295,13 +583,13 @@ button {
   }
 
   /* Space out the masthead */
-  /* line 277, ../../app/styles/main.scss */
+  /* line 336, ../../app/styles/main.scss */
   .header {
     margin-bottom: 30px;
   }
 
   /* Remove the bottom border on the jumbotron for visual effect */
-  /* line 281, ../../app/styles/main.scss */
+  /* line 340, ../../app/styles/main.scss */
   .jumbotron {
     border-bottom: 0;
   }
