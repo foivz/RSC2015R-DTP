@@ -14,17 +14,29 @@ public class ServiceParams {
     private HttpMethod method;
     private Serializable object;
     private Serializable token;
+    private boolean tokenRequest;
 
     public ServiceParams(String url, HttpMethod method, Serializable object) {
         this.url = url;
         this.method = method;
         this.object = object;
+        this.tokenRequest = false;
     }
-    public ServiceParams(String url, HttpMethod method, Serializable object,Serializable token) {
+
+    public ServiceParams(String url, HttpMethod method, Serializable object, Serializable token) {
         this.url = url;
         this.method = method;
         this.object = object;
         this.token = token;
+        this.tokenRequest = false;
+    }
+
+    public ServiceParams(String url, HttpMethod method, Serializable object, Serializable token, boolean tokenRequest) {
+        this.url = url;
+        this.method = method;
+        this.object = object;
+        this.token = token;
+        this.tokenRequest = tokenRequest;
     }
 
     public void setToken(Serializable object){ this.token=object; }
@@ -53,6 +65,14 @@ public class ServiceParams {
 
     public void setObject(Serializable object) {
         this.object = object;
+    }
+
+    public boolean isTokenRequest() {
+        return tokenRequest;
+    }
+
+    public void setTokenRequest(boolean tokenRequest) {
+        this.tokenRequest = tokenRequest;
     }
 
     @Override

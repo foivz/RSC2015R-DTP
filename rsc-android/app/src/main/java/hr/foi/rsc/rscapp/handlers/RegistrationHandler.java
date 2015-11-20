@@ -34,9 +34,9 @@ public class RegistrationHandler extends ResponseHandler {
             String loginPath = this.getContext().getString(hr.foi.rsc.webservice.R.string.login_path);
             TokenHandler tokenHandler = new TokenHandler(this.getContext());
             ServiceParams params = new ServiceParams(loginPath,
-                    HttpMethod.POST,credentials);
+                    HttpMethod.POST, credentials);
 
-            new ServiceAsyncTask(tokenHandler).execute(params);
+         //   new ServiceAsyncTask(tokenHandler).execute(params);
             return true;
         } else {
             Log.w("hr.foi.debug",

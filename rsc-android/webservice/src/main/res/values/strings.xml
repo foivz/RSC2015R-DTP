@@ -7,4 +7,5 @@
     <string name="login_path">/oauth/token</string>
     <string name="login_path_token">/person/login</string>
     <string name="signup_path">/person/signup</string>
+    <string name="oauth_path">/oath/token</string>
 </resources>

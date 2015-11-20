@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import hr.foi.rsc.core.Input;
+import hr.foi.rsc.core.SessionManager;
 import hr.foi.rsc.model.Credentials;
 import hr.foi.rsc.rscapp.handlers.RegistrationHandler;
 import hr.foi.rsc.model.Person;

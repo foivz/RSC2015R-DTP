@@ -104,7 +104,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
                 new ServiceAsyncTask(updateHandler)
                         .execute(new ServiceParams(getString(hr.foi.rsc.webservice.R.string.persons_path)
-                        + user.getIdPerson(), HttpMethod.PUT, user,userToken));
+                        + user.getIdPerson(), HttpMethod.PUT, user, userToken));
             }
         }
 
