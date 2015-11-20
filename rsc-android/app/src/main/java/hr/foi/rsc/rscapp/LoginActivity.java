@@ -116,7 +116,7 @@ public class LoginActivity extends Activity {
 
 
                 ServiceParams params = new ServiceParams(getString(hr.foi.rsc.webservice.R.string.login_path),
-                        HttpMethod.POST, credentials);
+                        HttpMethod.POST, credentials, null, true);
 
                 TokenHandler tokenHandler = new TokenHandler(LoginActivity.this);
                 new ServiceAsyncTask(tokenHandler).execute(params);

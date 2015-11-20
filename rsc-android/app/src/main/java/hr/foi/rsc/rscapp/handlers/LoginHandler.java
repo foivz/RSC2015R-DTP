@@ -28,7 +28,7 @@ public class LoginHandler extends ResponseHandler {
             // convert json to token object
             Person person = new Gson().fromJson(response.getJsonResponse(), Person.class);
             // save person to session
-            SessionManager manager = SessionManager.getInstance(this.context);
+            SessionManager manager = SessionManager.getInstance(this.getContext());
             if(manager.createSession(person, "person")) {
 
 
@@ -37,14 +37,14 @@ public class LoginHandler extends ResponseHandler {
                                 + ", going into ");
 
 
-                Intent intent = new Intent(this.context, UserProfileActivity.class);
+                Intent intent = new Intent(this.getContext(), UserProfileActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                this.context.startActivity(intent);
+                this.getContext().startActivity(intent);
                 return true;
 
             } else {
                 // login failed
-                Toast.makeText(this.context,
+                Toast.makeText(this.getContext(),
                         "Internal application error, please try again", Toast.LENGTH_LONG).show();
                 return false;
             }
@@ -54,7 +54,7 @@ public class LoginHandler extends ResponseHandler {
             // TODO: seperate invalid credentials and cannot connect to server
 
             Log.i("hr.foi.debug", "TokenHandler -- invalid credentials sent");
-            Toast.makeText(this.context, "Invalid credentials", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), "Invalid credentials", Toast.LENGTH_LONG).show();
             return false;
         }
     }

@@ -57,7 +57,7 @@ public class TokenHandler extends ResponseHandler {
                                 + ", going to make request with token");
 
                 ServiceParams params = new ServiceParams(getContext().getString(hr.foi.rsc.webservice.R.string.login_path_token),
-                        HttpMethod.POST, credentials,sessionToken);
+                        HttpMethod.POST, credentials, sessionToken);
                 new ServiceAsyncTask(LoginHandler).execute(params);
 
 
