@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -25,7 +26,7 @@ public class Team implements Serializable{
     
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "idteam")
+    @Column(name = "id_team")
     long idTeam;
     
     @Column(name="name")
@@ -34,6 +35,7 @@ public class Team implements Serializable{
     
     @JsonManagedReference
     @ManyToOne
+    @JoinColumn(name="id_game")
     Game game;
 
     public long getIdTeam() {

@@ -31,7 +31,7 @@ public class Game implements Serializable
     
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "idgame")
+    @Column(name = "id_game")
     long idGame;
     
     @Column(name="timer")
@@ -42,11 +42,18 @@ public class Game implements Serializable
     
     @JsonManagedReference
     @ManyToOne
+    @JoinColumn(name="id_person")
     Person judge;
     
     @OneToMany( mappedBy ="game", 
 			 cascade=CascadeType.ALL)
-     private List<Team> teams;
+    private List<Team> team;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_map")
+    private Maps map;
+    
+    
     
     
 
@@ -82,13 +89,23 @@ public class Game implements Serializable
         this.judge = judge;
     }
 
-    public List<Team> getTeams() {
-        return teams;
+    public List<Team> getTeam() {
+        return team;
     }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
+    public void setTeam(List<Team> team) {
+        this.team = team;
     }
+
+    public Maps getMap() {
+        return map;
+    }
+
+    public void setMap(Maps map) {
+        this.map = map;
+    }
+    
+    
     
     
     

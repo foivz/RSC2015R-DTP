@@ -23,13 +23,14 @@ public class TeamMember implements Serializable{
     
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "idteammember")
+    @Column(name = "id_teammember")
     long idTeamMember;
     
-    @Column(name="person_id")
+    
+    @Column(name="id_person")
     long idPerson;
     
-    @Column(name="team_idteam")
+    @Column(name="id_team")
     long idTeam;
     
     @Column(name="kill")
@@ -43,6 +44,11 @@ public class TeamMember implements Serializable{
     
     @Column(name="lng")
     double lng;
+
+    public TeamMember() {
+    }
+    
+    
 
     public TeamMember(long idPerson, long idTeam, double lat, double lng) {
         this.idPerson = idPerson;
