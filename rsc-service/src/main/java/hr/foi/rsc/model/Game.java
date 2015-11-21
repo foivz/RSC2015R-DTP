@@ -47,6 +47,7 @@ public class Game implements Serializable
     
     @OneToMany( mappedBy ="game", 
 			 cascade=CascadeType.ALL)
+    @JsonManagedReference
     private List<Team> team;
     
     @ManyToOne
