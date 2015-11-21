@@ -135,7 +135,14 @@ public class TeamController {
          org.jboss.logging.Logger.getLogger("TeamController.java").log(org.jboss.logging.Logger.Level.INFO,
                     "Finding team " + foundPerson.getName());
        
-        TeamMember memberTeam= new TeamMember(foundPerson.getIdPerson(),foundTeam.getIdTeam(),0,0);
+        TeamMember memberTeam= new TeamMember();
+        
+        memberTeam.setDeath(0);
+        memberTeam.setIdPerson(foundPerson.getIdPerson());
+        memberTeam.setIdTeam(foundTeam.getIdTeam());
+        memberTeam.setKills(0);
+      
+   
         
     
         
@@ -144,7 +151,8 @@ public class TeamController {
              org.jboss.logging.Logger.getLogger("TeamController.java").log(org.jboss.logging.Logger.Level.INFO,
                     "Saving memberTeam " + memberTeam.toString());
              
-             this.teamMemberRepository.save(memberTeam);
+             memberTeam=this.teamMemberRepository.save(memberTeam);
+             
              return new ResponseEntity(memberTeam, HttpStatus.OK);
              
             

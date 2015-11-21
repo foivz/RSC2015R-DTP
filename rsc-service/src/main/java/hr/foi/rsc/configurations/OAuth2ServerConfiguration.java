@@ -55,7 +55,7 @@ public class OAuth2ServerConfiguration {
                                     .antMatchers("/game/*").anonymous()
                                     .antMatchers("/team/*").anonymous()
                                     .antMatchers("/maps/*").anonymous()
-                                    .antMatchers("/person/*").anonymous();
+                                    .antMatchers("/person/*").authenticated();
             }
 
     }

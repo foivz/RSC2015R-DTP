@@ -13,6 +13,7 @@ import hr.foi.rsc.repositories.GameRepository;
 import hr.foi.rsc.repositories.PersonRepository;
 import hr.foi.rsc.repositories.TeamMemberRepository;
 import hr.foi.rsc.repositories.TeamRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,23 +129,31 @@ public class GameController {
     }
     
     @RequestMapping(value="{id}/team/{idTeam}",method=RequestMethod.GET)
-    public ResponseEntity<List<TeamMember>> getLocations(@PathVariable("id") long idGame,
+    public ResponseEntity<List<Person>> getLocations(@PathVariable("id") long idGame,
                 @PathVariable("idTeam") long idTeam){
         
+        org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.INFO,
+                    "Request comming");
+        
+        
         List<TeamMember> teamMemberLocations=this.teamMemberRespository.findByIdTeam(idTeam);
-        List<Person> persons=null;
-        List<Long> ids=null;
+        
+   
+        List<Long> ids= new ArrayList<>();
+        
         for(TeamMember a : teamMemberLocations){
             ids.add(a.getIdPerson());
+            org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.INFO,
+                    "Person" + a.getIdPerson());
         }
         
         List<Person> person=this.personRepository.findByIdPersonIn(ids);
         
-        if(persons!=null){
+        if(person!=null){
             
             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
-                    "No team found for id " + idTeam);
-            return new ResponseEntity(persons , HttpStatus.OK);
+                    "Returning persons " + person.get(1).getName());
+            return new ResponseEntity(person , HttpStatus.OK);
             
         }
         
