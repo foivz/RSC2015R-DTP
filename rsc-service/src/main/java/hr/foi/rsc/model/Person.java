@@ -56,6 +56,12 @@ public class Person implements Serializable {
     
     @Column(name="death")
     int death;
+    
+    @Column(name="lat")
+    double lat;
+    
+    @Column(name="lng")
+    double lng;
 
     
     
@@ -151,6 +157,24 @@ public class Person implements Serializable {
     public void setDeath(int death) {
         this.death = death;
     }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+    
+    
     
     
 }

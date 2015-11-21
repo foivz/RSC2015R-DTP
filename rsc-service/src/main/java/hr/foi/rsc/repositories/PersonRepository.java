@@ -6,6 +6,7 @@
 package hr.foi.rsc.repositories;
 
 import hr.foi.rsc.model.Person;
+import java.util.List;
 import javax.persistence.Table;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,10 @@ import org.springframework.stereotype.Repository;
 public interface PersonRepository extends CrudRepository<Person, String> {
     
     public Person findByIdPerson(long id);
+    
+    
+    public List<Person> findByIdPersonIn(List<Long> idPerson);
+    
     public Person findByCredentialsUsername(String username);
+    
 }

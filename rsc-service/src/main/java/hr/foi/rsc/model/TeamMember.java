@@ -39,34 +39,30 @@ public class TeamMember implements Serializable{
     @Column(name="death")
     long death;
     
-    @Column(name="lat")
-    double lat;
     
-    @Column(name="lng")
-    double lng;
+    
+    @Column(name="ready")
+    int ready;
+    
 
     public TeamMember() {
     }
     
     
-
     public TeamMember(long idPerson, long idTeam, double lat, double lng) {
         this.idPerson = idPerson;
         this.idTeam = idTeam;
-        this.lat = lat;
-        this.lng = lng;
+       
     }
 
-    public TeamMember(long idPerson, long idTeam, long kill, long death, double lat, double lng) {
-        this.idPerson = idPerson;
-        this.idTeam = idTeam;
-        this.kill = kill;
-        this.death = death;
-        this.lat = lat;
-        this.lng = lng;
+  
+    public int getReady() {
+        return ready;
     }
-    
-    
+
+    public void setReady(int ready) {
+        this.ready = ready;
+    }
     
     
     
@@ -110,26 +106,6 @@ public class TeamMember implements Serializable{
         this.death = death;
     }
 
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public double getLng() {
-        return lng;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
-    }
-    
-    
-    
-    
-    
-    
+ 
     
 }

@@ -132,11 +132,20 @@ public class GameController {
                 @PathVariable("idTeam") long idTeam){
         
         List<TeamMember> teamMemberLocations=this.teamMemberRespository.findByIdTeam(idTeam);
+        List<Person> persons=null;
+        List<Long> ids=null;
+        for(TeamMember a : teamMemberLocations){
+            ids.add(a.getIdPerson());
+        }
         
-        if(teamMemberLocations!=null){
+        List<Person> person=this.personRepository.findByIdPersonIn(ids);
+        
+        if(persons!=null){
+            
             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
                     "No team found for id " + idTeam);
-            return new ResponseEntity(teamMemberLocations , HttpStatus.OK);
+            return new ResponseEntity(persons , HttpStatus.OK);
+            
         }
         
         else{

@@ -118,10 +118,7 @@ public class TeamController {
         }
     }
     
-    
-    
-    
-    
+
     @RequestMapping( value= "/{id}/person/{idPerson}", method=RequestMethod.POST)
     public ResponseEntity addTeamMember(@PathVariable("id") long id,@PathVariable("idPerson") long idPerson){
         
@@ -134,7 +131,7 @@ public class TeamController {
          
         Person foundPerson = this.personRepository.findByIdPerson(id);
         
-        TeamMember memberTeam= new TeamMember(foundPerson.getIdPerson(),foundTeam.getIdTeam(),0,0,0.0,0.0);
+        TeamMember memberTeam= new TeamMember(foundPerson.getIdPerson(),foundTeam.getIdTeam(),0,0);
         
         if(foundPerson!=null && foundTeam!=null){
             
