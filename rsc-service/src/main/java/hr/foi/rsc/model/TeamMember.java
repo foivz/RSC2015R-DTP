@@ -43,6 +43,26 @@ public class TeamMember {
     @Column(name="lng")
     double lng;
 
+    public TeamMember(long idPerson, long idTeam, double lat, double lng) {
+        this.idPerson = idPerson;
+        this.idTeam = idTeam;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public TeamMember(long idPerson, long idTeam, long kill, long death, double lat, double lng) {
+        this.idPerson = idPerson;
+        this.idTeam = idTeam;
+        this.kill = kill;
+        this.death = death;
+        this.lat = lat;
+        this.lng = lng;
+    }
+    
+    
+    
+    
+    
     public long getIdTeamMember() {
         return idTeamMember;
     }
