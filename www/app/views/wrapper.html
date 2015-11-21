@@ -1,0 +1,54 @@
+<div class="menu-container">
+  <div 
+    class="menu-container__icon" 
+    ng-click="nav.ToggleNavigation();" 
+    ng-class="{'menu-rotate': nav.toggle}" 
+    ng-show="nav.CheckLogin()">
+    
+    <div class="menu-icon menu-icon--top" ng-class="{'menu-top-action': nav.toggle}"></div>
+    <div class="menu-icon menu-icon--middle" ng-class="{'menu-middle-action': nav.toggle}"></div>
+    <div class="menu-icon menu-icon--bottom" ng-class="{'menu-bottom-action': nav.toggle}"></div>
+  </div>
+  <div class="menu-container__app">
+    <div class="menu-container__app-login">
+
+      <a href="#register" ng-hide="nav.CheckLogin()">
+        <span class="glyphicon glyphicon-user"></span> Register
+      </a>
+
+      <a href="#login" ng-hide="nav.CheckLogin()">
+        <span class="glyphicon glyphicon-log-in"></span> Log in
+      </a>
+
+      <a href="#login" logout ng-show="nav.CheckLogin()">
+        <span class="glyphicon glyphicon-log-out"></span> Log out
+      </a>
+
+    </div>
+  </div>
+</div>
+<div class="flip-container">
+  <div class="flip-inner" ng-class="{'flip-inner-action': nav.toggle}">
+    <div class="front">
+      <div class="content">
+        <div ng-view=""></div>
+      </div>
+    </div>
+    <div class="back">
+
+      <nav>
+        <ul>
+          <li><a href="#main" ng-click="nav.ToggleNavigation();">Home</a></li>
+          <li><a href="#about" ng-click="nav.ToggleNavigation();">About</a></li>
+          <li><a href="" ng-click="nav.ToggleNavigation();">Profile</a></li>
+          <li>
+            <a href="#login" logout ng-show="nav.CheckLogin()">
+              Log out
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>  <!-- back -->
+  </div>    <!-- flip-inner -->
+</div>      <!-- flip-container -->

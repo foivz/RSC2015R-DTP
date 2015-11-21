@@ -1,5 +1,6 @@
 package hr.foi.rsc.webservice;
 
+import android.content.res.Resources;
 import android.media.session.MediaSessionManager;
 import android.os.AsyncTask;
 import android.os.Looper;
@@ -64,7 +65,6 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
     protected ServiceResponse doInBackground(ServiceParams... params) {
 
         sp = params[0];
-        Looper.prepare();
 
         ServiceResponse jsonResponse = new ServiceResponse();
 
@@ -84,18 +84,18 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
 
         try {
 
-            if (sp.getUrl().equals("/oauth/token")) {
-                resp = tokenRequest((Credentials) sp.getObject(), rest);
-                jsonResponse.setHttpCode(resp.getStatusCode().value());
-                jsonResponse.setJsonResponse(resp.getBody());
+            if (sp.isTokenRequest()) {
+                resp = ServiceCaller.tokenRequest(url, (Credentials) sp.getObject(), rest);
             }
             else{
-                resp = getResult(sp.getObject(), sp.getToken(), rest, method);
-                jsonResponse.setHttpCode(resp.getStatusCode().value());
-                jsonResponse.setJsonResponse(resp.getBody());
+                resp = sp.getToken() == null ?
+                          ServiceCaller.getResult(url, sp.getObject(), rest, method)
+                        : ServiceCaller.getResult(url, sp.getObject(), sp.getToken(), rest, method);
             }
+            jsonResponse.setHttpCode(resp.getStatusCode().value());
+            jsonResponse.setJsonResponse(resp.getBody());
 
-        }catch (RestException ex) {
+        } catch (RestException ex) {
 
             Log.i(ServiceCaller.LOG_TAG, "tusam");
             jsonResponse.setJsonResponse(ex.getBody().toString());
@@ -119,77 +119,5 @@ public class ServiceAsyncTask extends AsyncTask<ServiceParams, Void, ServiceResp
             Log.w(ServiceCaller.LOG_TAG, "ServiceAsyncTask -- Could not call service response handler");
         }
         handler.onPostSend();
-    }
-
-    /**
-     * sending object and token to webservice
-     */
-    public ResponseEntity<String> getResult(Serializable object, Serializable token, RestTemplate rest,HttpMethod method){
-
-            Token userToken =(Token) token;
-
-            String authorization = "Bearer "+ userToken.getAccessToken();
-
-            Log.i(ServiceCaller.LOG_TAG, "Authorization token:" + authorization);
-
-            HttpHeaders headers=new HttpHeaders();
-            headers.add("Authorization",  authorization);
-            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-            headers.setContentType(MediaType.APPLICATION_JSON);
-
-            HttpEntity request=new HttpEntity(object,headers);
-
-            ResponseEntity<String> result = null;
-
-            result = rest.exchange(url, method, request, String.class);
-
-            if(result.getBody()!=null)
-                Log.i(ServiceCaller.LOG_TAG, "Response" + result.getBody().toString());
-
-            Log.i(ServiceCaller.LOG_TAG, "Response" + result.getStatusCode().value());
-
-            return result;
-
-    }
-
-
-    /**
-     * Sending req to server for token
-     * @param cred user credentials
-     * @return s serviceresponse (json details of token)
-     */
-    public ResponseEntity<String> tokenRequest(Credentials cred,RestTemplate rest){
-
-        String authorization =
-                new String(Base64Utils.encode("angular:davinci2015".getBytes()));
-
-        HttpHeaders headers=new HttpHeaders();
-        headers.add("Authorization", "Basic " + authorization);
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-
-
-        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
-        bodyMap.add("username", cred.getUsername());
-        bodyMap.add("password", cred.getPassword());
-        bodyMap.add("grant_type","password");
-        bodyMap.add("scope", "read write");
-        bodyMap.add("client_id", "angular");
-        bodyMap.add("client_secret", "davinci2015");
-
-        HttpEntity<MultiValueMap<String, String>> request=new
-                            HttpEntity<MultiValueMap<String, String>>(bodyMap, headers);
-
-        Log.i(ServiceCaller.LOG_TAG, "Response" + request.getHeaders().toString());
-        Log.i(ServiceCaller.LOG_TAG, "Response" + request.getBody().toString());
-
-
-            ResponseEntity<String> response=rest.exchange(url, POST, request, String.class);
-            Log.i(ServiceCaller.LOG_TAG, "Response" + response.getBody().toString());
-            Log.i(ServiceCaller.LOG_TAG, "Response" + response.getStatusCode().value());
-
-
-
-        return response;
     }
 }

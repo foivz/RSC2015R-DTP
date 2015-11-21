@@ -9,6 +9,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='bower_components/fullpage.js/jquery.fullPage.css' />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -19,43 +20,18 @@
   </head>
   <body ng-app="webAngularTemplateApp">
     <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     <!-- Add your site or application content here -->
-    <div class="menu-container">
-      <div class="menu-container__icon">
-        <div class="menu-icon menu-icon--top"></div>
-        <div class="menu-icon menu-icon--middle"></div>
-        <div class="menu-icon menu-icon--bottom"></div>
-      </div>   
-      <div class="menu-container__app">
-        <div class="menu-container__app-login">
-          <a href="#register"><span class="glyphicon glyphicon-user"></span> Register</a>
-          <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Sign in</a>
+    <div ng-controller="NavigationCtrl as nav">
+      <div ng-switch="nav.CheckPage()">
+        <div ng-switch-when="true">
+          <!-- Introduction page -->
+          <div ng-include src="'views/introduction.html'"></div>
         </div>
-      </div> 
-    </div>
-
-    <div class="flip-container">
-      <div class="flip-inner">
-        <div class="front">
-          
-          <div class="content">
-              <div ng-view=""></div>
-          </div>
-
-        </div>
-        <div class="back">
-          <nav>
-            <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="">Work</a></li>
-              <li><a href="">Careers</a></li>
-              <li><a href="">Contact</a></li>
-            </ul>
-          </nav>
+        <div ng-switch-when="false">
+          <!-- Working environment -->
+          <div ng-include src="'views/wrapper.html'"></div>
         </div>
       </div>
     </div>
@@ -68,19 +44,23 @@
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/fullpage.js/jquery.fullPage.js"></script>
+    <script src="bower_components/fullpage.js/vendors/jquery.easings.min.js"></script>
+    <script src="bower_components/fullpage.js/vendors/jquery.slimscroll.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/login.js"></script>
-        <script src="scripts/services/auth.js"></script>
-        <script src="scripts/services/logininterceptor.js"></script>
-        <script src="scripts/controllers/register.js"></script>
-        <script src="scripts/services/register.js"></script>
-        <script src="scripts/actions/menu.js"></script>
-        <!-- endbuild -->
-</body>
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/services/auth.js"></script>
+    <script src="scripts/services/logininterceptor.js"></script>
+    <script src="scripts/controllers/register.js"></script>
+    <script src="scripts/services/register.js"></script>
+    <script src="scripts/directives/logout.js"></script>
+    <script src="scripts/controllers/navigation.js"></script>
+    <script src="scripts/directives/menu.js"></script>
+    <!-- endbuild -->
+  </body>
 </html>
