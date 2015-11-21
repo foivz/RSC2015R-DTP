@@ -7,6 +7,7 @@ package hr.foi.rsc.controllers;
 
 import hr.foi.rsc.model.Game;
 import hr.foi.rsc.model.Person;
+import hr.foi.rsc.model.Team;
 import hr.foi.rsc.model.TeamMember;
 import hr.foi.rsc.repositories.GameRepository;
 import hr.foi.rsc.repositories.PersonRepository;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -127,6 +129,23 @@ public class GameController {
             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
                     "No team found for id " + idTeam);
             return new ResponseEntity(teamMemberLocations,HttpStatus.OK);
+         
+        }
+        else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        
+    }
+    
+    @RequestMapping(value="{code}", method=RequestMethod.POST)
+     public ResponseEntity<List<Team>> getTeams(@RequestParam("code") String code){
+        
+        Game found = this.gameRepository.findByCode(code);
+        List<Team> teams=found.getTeam();
+        if(teams!=null){
+            org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    "No team found for code " + code);
+            return new ResponseEntity(teams,HttpStatus.OK);
          
         }
         else{
