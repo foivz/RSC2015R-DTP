@@ -137,6 +137,23 @@ public class GameController {
         
     }
     
+    @RequestMapping(value="/game/{code}", method=RequestMethod.GET)
+    public ResponseEntity getGame(@PathVariable("code") String code){
+        
+        Game game=this.gameRepository.findByCode(code);
+        
+        if(game!=null){
+             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    " team found for code " + code);
+            return new ResponseEntity(game,HttpStatus.OK);
+        }
+        else{
+             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    " team found for code " + code);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+    
     @RequestMapping(value="{code}", method=RequestMethod.POST)
      public ResponseEntity<List<Team>> getTeams(@RequestParam("code") String code){
         
