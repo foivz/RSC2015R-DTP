@@ -119,7 +119,12 @@ public class LoginActivity extends Activity {
                         HttpMethod.POST, credentials, null, true);
 
                 TokenHandler tokenHandler = new TokenHandler(LoginActivity.this);
-                new ServiceAsyncTask(tokenHandler).execute(params);
+                try {
+                    new ServiceAsyncTask(tokenHandler).execute(params);
+                } catch(Exception e) {
+                    Toast.makeText(getApplicationContext(), "Please check your connection.",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         }
     };

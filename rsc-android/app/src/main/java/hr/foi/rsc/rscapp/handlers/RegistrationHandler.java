@@ -36,7 +36,7 @@ public class RegistrationHandler extends ResponseHandler {
             ServiceParams params = new ServiceParams(loginPath,
                     HttpMethod.POST, credentials);
 
-         //   new ServiceAsyncTask(tokenHandler).execute(params);
+            new ServiceAsyncTask(tokenHandler).execute(params);
             return true;
         } else {
             Log.w("hr.foi.debug",

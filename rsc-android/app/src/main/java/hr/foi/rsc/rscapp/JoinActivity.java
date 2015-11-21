@@ -1,8 +1,10 @@
 package hr.foi.rsc.rscapp;
 
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Paint;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -12,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +25,9 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import hr.foi.rsc.core.SessionManager;
+import hr.foi.rsc.core.prompts.AlertPrompt;
 
 import static android.nfc.NdefRecord.createMime;
 
@@ -37,7 +43,14 @@ public class JoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join);
 
         code = (EditText) findViewById(R.id.code_input);
+        submitCode = (Button) findViewById(R.id.submit_code);
         submitCode.setOnClickListener(onSubmit);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_join_activity, menu);
+        return true;
     }
 
     @Override
@@ -70,8 +83,8 @@ public class JoinActivity extends AppCompatActivity {
                 if (contents != null) {
 
                     // call result activity with the contents
-                    Intent showResult = new Intent(getApplicationContext(), null/*ChooseTeamActivity.class*/);
-                    showResult.putExtra("scanResult", contents);
+                    Intent showResult = new Intent(getApplicationContext(), ChooseTeamActivity.class);
+                    showResult.putExtra("code", contents);
                     startActivity(showResult);
 
                 } else {
@@ -92,8 +105,10 @@ public class JoinActivity extends AppCompatActivity {
             String codeContent = code.getText().toString();
 
             if(!TextUtils.isEmpty(codeContent)) {
-                Intent prepare = new Intent(getApplicationContext(), null);
-                startActivity(prepare);
+                // call result activity with the contents
+                Intent showResult = new Intent(getApplicationContext(), ChooseTeamActivity.class);
+                showResult.putExtra("code", codeContent);
+                startActivity(showResult);
             } else {
                 Toast.makeText(getApplicationContext(), getString(R.string.code_field_empty),
                         Toast.LENGTH_LONG).show();
@@ -101,6 +116,22 @@ public class JoinActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        // ask for sign out if back is pressed
+        DialogInterface.OnClickListener signOutListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SessionManager.getInstance(getApplicationContext()).destroyAll();
+                dialog.dismiss();
+                JoinActivity.super.onBackPressed();
+            }
+        };
+        AlertPrompt signOutPrompt = new AlertPrompt(this);
+        signOutPrompt.prepare(R.string.signout_question, signOutListener,
+                R.string.sign_out, null, R.string.cancel);
+        signOutPrompt.showPrompt();
+    }
 
 }
 
