@@ -5,6 +5,8 @@
  */
 package hr.foi.rsc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="maps")
-public class Maps {
+public class Maps implements Serializable{
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -45,7 +47,7 @@ public class Maps {
     @Column(name="flag_lng")
     double flagLng;
     
-    
+    @JsonIgnore
     @OneToMany( mappedBy ="map", 
 			 cascade=CascadeType.ALL)
     List<Game> game;

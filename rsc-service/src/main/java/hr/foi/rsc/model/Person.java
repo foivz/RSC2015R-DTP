@@ -64,8 +64,8 @@ public class Person implements Serializable {
     
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "person_role", joinColumns = { @JoinColumn(name = "person_id") },
-            inverseJoinColumns = { @JoinColumn(name = "role_id") })
+    @JoinTable(name = "person_role", joinColumns = { @JoinColumn(name = "id_person") },
+            inverseJoinColumns = { @JoinColumn(name = "id_role") })
     Set<Role> roles = new HashSet<>();
 
     public Person() {
@@ -111,6 +111,14 @@ public class Person implements Serializable {
         this.credentials = credentials;
     }
 
+    public List<Game> getJudgedGames() {
+        return judgedGames;
+    }
+
+    public void setJudgedGames(List<Game> judgedGames) {
+        this.judgedGames = judgedGames;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -118,7 +126,9 @@ public class Person implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-    
+
+  
+  
     @Override
     public String toString() {
         return this.name + " " + this.surname;

@@ -5,8 +5,8 @@
  */
 package hr.foi.rsc.repositories;
 
-import hr.foi.rsc.model.TeamMember;
-import java.util.List;
+import hr.foi.rsc.model.Game;
+import hr.foi.rsc.model.Maps;
 import javax.persistence.Table;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,14 +16,9 @@ import org.springframework.stereotype.Repository;
  * @author paz
  */
 @Repository
-@Table(name="teammember")
-public interface TeamMemberRepository extends CrudRepository<TeamMember, String>{
+@Table(name="maps")
+public interface MapsRepository extends CrudRepository<Maps, String>{
     
-     public TeamMember findByIdTeamMember(long id);
-     public TeamMember findByIdPerson(long id);
-     public List<TeamMember> findByIdTeam(long id);
-     
-     public List<TeamMember> findByIdPersonIn(List<Long> idPerson);
-     
-
+    public Maps findByIdGame(long id);
+    
 }

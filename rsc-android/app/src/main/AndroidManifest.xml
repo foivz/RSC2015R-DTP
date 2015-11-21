@@ -31,6 +31,8 @@
                 <data android:mimeType="application/vnd.com.example.android.beam"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ChooseTeamActivity" >
+        </activity>
     </application>
 
 </manifest>
