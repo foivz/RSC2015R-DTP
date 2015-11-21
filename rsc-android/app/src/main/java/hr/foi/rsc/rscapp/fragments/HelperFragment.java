@@ -1,4 +1,4 @@
-package hr.foi.rsc.rscapp;
+package hr.foi.rsc.rscapp.fragments;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.TextView;
+
+import hr.foi.rsc.rscapp.R;
 
 /**
  * Created by hrvoje on 21/11/15.

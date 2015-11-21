@@ -1,4 +1,4 @@
-package hr.foi.rsc.rscapp;
+package hr.foi.rsc.rscapp.fragments;
 
 import android.support.v4.app.Fragment;
 

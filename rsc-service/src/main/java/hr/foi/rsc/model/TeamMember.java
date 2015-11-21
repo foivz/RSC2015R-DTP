@@ -32,37 +32,16 @@ public class TeamMember implements Serializable{
     @Column(name="id_team")
     long idTeam;
     
-    @Column(name="kill")
-    long kill;
+    @Column(name="kills")
+    long kills;
     
     @Column(name="death")
     long death;
-    
-    
-    
-    @Column(name="ready")
-    int ready;
-    
 
     public TeamMember() {
     }
-    
-    
-    public TeamMember(long idPerson, long idTeam, double lat, double lng) {
-        this.idPerson = idPerson;
-        this.idTeam = idTeam;
-       
-    }
 
   
-    public int getReady() {
-        return ready;
-    }
-
-    public void setReady(int ready) {
-        this.ready = ready;
-    }
-    
     
     
     public long getIdTeamMember() {
@@ -89,13 +68,14 @@ public class TeamMember implements Serializable{
         this.idTeam = idTeam;
     }
 
-    public long getKill() {
-        return kill;
+    public long getKills() {
+        return kills;
     }
 
-    public void setKill(long kill) {
-        this.kill = kill;
+    public void setKills(long kills) {
+        this.kills = kills;
     }
+
 
     public long getDeath() {
         return death;
@@ -104,7 +84,7 @@ public class TeamMember implements Serializable{
     public void setDeath(long death) {
         this.death = death;
     }
-
- 
+    
+    
     
 }

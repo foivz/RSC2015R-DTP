@@ -6,14 +6,19 @@
 package hr.foi.rsc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -54,7 +59,24 @@ public class Maps implements Serializable{
     @OneToMany( mappedBy ="map", 
 			 cascade=CascadeType.ALL)
     List<Game> game;
+    
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name = "mapsobstacles",  joinColumns = { 
+			@JoinColumn(name = "id_map", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "id_mapobstacle", 
+					nullable = false, updatable = false) })
+    @JsonManagedReference
+    private List<MapObstacles> mapObstacles;
 
+    public List<MapObstacles> getMapObstacles() {
+        return mapObstacles;
+    }
+
+    public void setMapObstacles(List<MapObstacles> mapObstacles) {
+        this.mapObstacles = mapObstacles;
+    }
+    
     public long getIdMap() {
         return idMap;
     }

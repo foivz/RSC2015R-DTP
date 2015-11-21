@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hr.foi.rsc.rscapp" >
-
-    <uses-sdk android:minSdkVersion="9" />
+    xmlns:tools="http://schemas.android.com/tools"
+    package="hr.foi.rsc.rscapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
@@ -21,15 +24,18 @@
         android:name="android.hardware.microphone"
         android:required="true" />
 
-    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBCZgT4gC7oGlZ-a19PlPbI8Z_4PYc6GEA" />
         <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +60,7 @@
         </activity>
         <activity android:name=".MatchInfoActivity" >
         </activity>
-        <activity android:name=".handlers.PlayGameActivity" >
+        <activity android:name=".PlayGameActivity" >
         </activity>
     </application>
 
