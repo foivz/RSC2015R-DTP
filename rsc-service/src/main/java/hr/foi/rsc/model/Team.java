@@ -6,6 +6,7 @@
 package hr.foi.rsc.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="team")
-public class Team {
+public class Team implements Serializable{
     
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)

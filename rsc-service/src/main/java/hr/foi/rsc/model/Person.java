@@ -57,10 +57,10 @@ public class Person implements Serializable {
     int death;
 
 
-     @OneToMany(fetch = FetchType.LAZY, mappedBy ="judge", 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy ="judge", 
 			 cascade=CascadeType.ALL)
-     @JsonBackReference
-     private List<Game> judgedGames;
+    @JsonBackReference
+    private List<Game> judgedGames;
     
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)

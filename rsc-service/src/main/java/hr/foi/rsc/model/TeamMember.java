@@ -5,6 +5,7 @@
  */
 package hr.foi.rsc.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="teammember")
-public class TeamMember {
+public class TeamMember implements Serializable{
     
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -7,7 +7,11 @@ package hr.foi.rsc.controllers;
 
 import hr.foi.rsc.model.Game;
 import hr.foi.rsc.model.Person;
+import hr.foi.rsc.model.TeamMember;
 import hr.foi.rsc.repositories.GameRepository;
+import hr.foi.rsc.repositories.PersonRepository;
+import hr.foi.rsc.repositories.TeamMemberRepository;
+import hr.foi.rsc.repositories.TeamRepository;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,10 +33,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class GameController {
     
     GameRepository gameRepository;
+    PersonRepository personRepository;
+    TeamRepository teamRepository;
+    TeamMemberRepository teamMemberRespository;
 
     @Autowired
-    public GameController(GameRepository gameRepository) {
+    public GameController(GameRepository gameRepository, PersonRepository personRepository, TeamRepository teamRepository,
+            TeamMemberRepository teamMemberRepository) {
+        
         this.gameRepository = gameRepository;
+        this.personRepository=personRepository;
+        this.teamRepository=teamRepository;
+        this.teamMemberRespository=teamMemberRepository;
+        
+        
     }
     
      /**
@@ -41,7 +55,7 @@ public class GameController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<Game>> retrieveAll() {
-        Logger.getLogger("PersonController.java").log(Level.INFO,
+        Logger.getLogger("GameController.java").log(Level.INFO,
                 "GET on /game -- retrieving full list of games");
         return new ResponseEntity(this.gameRepository.findAll(), HttpStatus.OK);
     }
@@ -102,6 +116,17 @@ public class GameController {
                     "No user found for id " + id);
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+    }
+    
+    @RequestMapping(value="{id}/team/{idTeam}",method=RequestMethod.GET)
+    public ResponseEntity getLocations(@PathVariable("id") long idGame,@PathVariable("idTeam") long idTeam){
+        
+        List<TeamMember> teamMemberLocations=null;
+        List<Long> personsId=null;
+        
+        
+        return new ResponseEntity(teamMemberLocations,HttpStatus.OK);
+        
     }
     
 }
