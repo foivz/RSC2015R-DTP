@@ -15,6 +15,8 @@
     <string name="firstname_error">First name can only contain letters (min 3, max 45)</string>
     <string name="lastname_error">Last name can only contain letters (min 3, max 45)</string>
     <string name="matching_password_error">Passwords do not match</string>
+    <string name="code_field_empty">Code field should not be empty</string>
+    <string name="decoding_fail">Decoding result failed</string>
 
     <!-- various -->
     <string name="signin">Sign in</string>
