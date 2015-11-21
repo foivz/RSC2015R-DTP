@@ -1,8 +1,11 @@
-package hr.foi.rsc.rscapp;
+package hr.foi.rsc.rscapp.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import hr.foi.rsc.rscapp.fragments.HelperFragment;
+import hr.foi.rsc.rscapp.fragments.GameFragment;
 
 /**
  * Created by hrvoje on 21/11/15.

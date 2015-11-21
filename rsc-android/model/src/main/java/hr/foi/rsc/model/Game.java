@@ -12,6 +12,15 @@ public class Game implements Serializable{
     String code;
     int timer;
     List<Team> team;
+    int start;
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
 
     public String getName() {
         return name;

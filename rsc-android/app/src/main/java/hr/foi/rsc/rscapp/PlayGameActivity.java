@@ -1,4 +1,4 @@
-package hr.foi.rsc.rscapp.handlers;
+package hr.foi.rsc.rscapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

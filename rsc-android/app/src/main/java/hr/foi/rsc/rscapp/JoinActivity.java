@@ -1,5 +1,6 @@
 package hr.foi.rsc.rscapp;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,6 +60,8 @@ public class JoinActivity extends AppCompatActivity {
             startActivityForResult(IntentIntegrator.createScanIntent(getApplicationContext(), IntentIntegrator.QR_CODE_TYPES,
                     "Place the QR code inside the viewfinder"), IntentIntegrator.REQUEST_CODE);
             return true;
+        } else if(item.getItemId() == R.id.action_profile) {
+            startActivity(new Intent(this, UserProfileActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
