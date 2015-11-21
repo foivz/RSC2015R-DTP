@@ -1,9 +1,11 @@
 package hr.foi.rsc.model;
 
+import java.io.Serializable;
+
 /**
  * Created by hrvoje on 21/11/15.
  */
-public class Position {
+public class Position implements Serializable {
     double lat;
     double lng;
 

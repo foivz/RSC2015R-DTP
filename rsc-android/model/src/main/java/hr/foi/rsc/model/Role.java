@@ -1,9 +1,11 @@
 package hr.foi.rsc.model;
 
+import java.io.Serializable;
+
 /**
  * Created by hrvoje on 21/11/15.
  */
-public class Role {
+public class Role implements Serializable{
     int idRole;
     String name;
 
