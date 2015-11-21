@@ -10,73 +10,66 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/linearLayout"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="10dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="180dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="100dp"
-            android:layout_marginBottom="20dp">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ibCtmBlue"
-                android:src="@drawable/winnersblue"
-                android:adjustViewBounds="true"
-                android:cropToPadding="false"
-                android:background="#00000000"
-                android:scaleType="fitXY" />
-
-        </LinearLayout>
-
         <TextView
-            android:layout_width="127dp"
-            android:layout_height="44dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textViewTeamBlue"
-            android:layout_marginLeft="100dp" />
-
-        <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="180dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="100dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Choose your team"
+            android:id="@+id/textViewChooseTeam"
+            android:layout_gravity="center"
+            android:layout_above="@+id/linearLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="80dp" />
 
         <ImageButton
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibCtmBlue"
+            android:src="@drawable/winnersblue"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:background="@drawable/image_button_style"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textViewTeamBlue"
+            android:layout_marginBottom="50dp" />
+
+        <ImageButton
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ibCtmRed"
             android:src="@drawable/winnersred"
             android:adjustViewBounds="true"
             android:cropToPadding="false"
-            android:background="#00000000"
-            android:scaleType="fitXY" />
-          </LinearLayout>
+            android:background="@drawable/image_button_style"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp" />
 
         <TextView
+            android:layout_gravity="center"
             android:layout_width="127dp"
             android:layout_height="44dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textViewTeamREd"
             android:layout_marginLeft="100dp" />
-    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Choose your team"
-        android:id="@+id/textViewChooseTeam"
-        android:layout_weight="0.5"
-        android:layout_above="@+id/linearLayout"
-        android:layout_centerHorizontal="true" />
+    </LinearLayout>
 
 
 </RelativeLayout>

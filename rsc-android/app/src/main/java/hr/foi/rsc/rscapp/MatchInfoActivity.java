@@ -36,7 +36,7 @@ public class MatchInfoActivity extends AppCompatActivity {
         new ServiceAsyncTask(matchInfoHandler).execute(params);
 
         Game game = manager.retrieveSession("game",Game.class);
-        
+
     }
     void populateListView(){
         // Instanciating an array list (you don't need to do this,

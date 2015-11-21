@@ -5,6 +5,8 @@
  */
 package hr.foi.rsc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,12 +23,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="maps")
-public class Maps {
+public class Maps implements Serializable{
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id_map")
     long idMap;
+    
+    @Column(name="name")
+    String name;
     
     @Column(name="start_lat")
     double startLat;
@@ -45,7 +50,7 @@ public class Maps {
     @Column(name="flag_lng")
     double flagLng;
     
-    
+    @JsonIgnore
     @OneToMany( mappedBy ="map", 
 			 cascade=CascadeType.ALL)
     List<Game> game;
@@ -112,6 +117,14 @@ public class Maps {
 
     public void setGame(List<Game> game) {
         this.game = game;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
     
     

@@ -17,6 +17,10 @@ public abstract class ResponseHandler implements ServiceResponseHandler {
     Object[] args;
     LoadingPrompt loadingPrompt;
 
+    public ResponseHandler(Serializable... args) {
+        this.args = args;
+    }
+
     public ResponseHandler(Context context, Serializable... args) {
         this.context = context;
         this.args = args;

@@ -21,7 +21,7 @@ public interface TeamMemberRepository extends CrudRepository<TeamMember, String>
     
      public TeamMember findByIdTeamMember(long id);
      public TeamMember findByIdPerson(long id);
-     public TeamMember findByIdTeam(long id);
+     public List<TeamMember> findByIdTeam(long id);
      
      public List<TeamMember> findByIdPersonIn(List<Long> idPerson);
      

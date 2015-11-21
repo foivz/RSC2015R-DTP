@@ -7,6 +7,7 @@ package hr.foi.rsc.controllers;
 
 import hr.foi.rsc.model.Game;
 import hr.foi.rsc.model.Person;
+import hr.foi.rsc.model.Team;
 import hr.foi.rsc.model.TeamMember;
 import hr.foi.rsc.repositories.GameRepository;
 import hr.foi.rsc.repositories.PersonRepository;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -103,7 +105,7 @@ public class GameController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity modify(@PathVariable("id") long id, @RequestBody Game game) {
         org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.INFO,
-                "PUT on /person/" + id + " -- " + game.toString());
+                "PUT on /game/" + id + " -- " + game.toString());
         
         Game signed = this.gameRepository.findByIdGame(id);
         if(signed != null) {
@@ -113,19 +115,59 @@ public class GameController {
             return new ResponseEntity(HttpStatus.OK);
         } else {
             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
-                    "No user found for id " + id);
+                    "No game found for id " + id);
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
     
     @RequestMapping(value="{id}/team/{idTeam}",method=RequestMethod.GET)
-    public ResponseEntity getLocations(@PathVariable("id") long idGame,@PathVariable("idTeam") long idTeam){
+    public ResponseEntity<List<TeamMember>> getLocations(@PathVariable("id") long idGame,@PathVariable("idTeam") long idTeam){
         
-        List<TeamMember> teamMemberLocations=null;
-        List<Long> personsId=null;
+        List<TeamMember> teamMemberLocations=this.teamMemberRespository.findByIdTeam(idTeam);
         
+        if(teamMemberLocations!=null){
+            org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    "No team found for id " + idTeam);
+            return new ResponseEntity(teamMemberLocations,HttpStatus.OK);
+         
+        }
+        else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
         
-        return new ResponseEntity(teamMemberLocations,HttpStatus.OK);
+    }
+    
+    @RequestMapping(value="/game/{code}", method=RequestMethod.GET)
+    public ResponseEntity getGame(@PathVariable("code") String code){
+        
+        Game game=this.gameRepository.findByCode(code);
+        
+        if(game!=null){
+             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    " team found for code " + code);
+            return new ResponseEntity(game,HttpStatus.OK);
+        }
+        else{
+             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    " team found for code " + code);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @RequestMapping(value="{code}", method=RequestMethod.POST)
+     public ResponseEntity<List<Team>> getTeams(@PathVariable("code") String code){
+        
+        Game found = this.gameRepository.findByCode(code);
+        List<Team> teams=found.getTeam();
+        if(teams!=null){
+            org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    "No team found for code " + code);
+            return new ResponseEntity(teams,HttpStatus.OK);
+         
+        }
+        else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
         
     }
     
