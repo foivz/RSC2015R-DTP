@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,15 +37,17 @@ public class JoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join);
 
         code = (EditText) findViewById(R.id.code_input);
-        qr = (ImageView) findViewById(R.id.qr_code);
+        submitCode.setOnClickListener(onSubmit);
+    }
 
-        qr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(IntentIntegrator.createScanIntent(getApplicationContext(), IntentIntegrator.QR_CODE_TYPES,
-                        "Place the QR code inside the viewfinder"), IntentIntegrator.REQUEST_CODE);
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_qr_scan) {
+            startActivityForResult(IntentIntegrator.createScanIntent(getApplicationContext(), IntentIntegrator.QR_CODE_TYPES,
+                    "Place the QR code inside the viewfinder"), IntentIntegrator.REQUEST_CODE);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -97,5 +100,7 @@ public class JoinActivity extends AppCompatActivity {
             }
         }
     };
+
+
 }
 

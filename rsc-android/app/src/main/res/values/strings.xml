@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">RSC</string>
+    <string name="action_qr">QR</string>
+
+    <string name="input_code">Input invite code here</string>
 
     <!-- login and registration form -->
     <string name="first_name">First name</string>

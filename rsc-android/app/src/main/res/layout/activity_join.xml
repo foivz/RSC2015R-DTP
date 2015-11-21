@@ -12,23 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/qr_code"
-            android:src="@drawable/trigger_qr" />
-
-        <EditText
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="match_parent"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/code_input" />
+            android:id="@+id/txtCodeLayout"
+            android:layout_marginBottom="20dp">
+
+            <EditText
+                android:hint="@string/input_code"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/code_input" />
+        </android.support.design.widget.TextInputLayout>
         
         <Button
             android:background="@drawable/buttonstyle"
+            android:textColor="@color/white"
             android:text="@string/submit"
             android:id="@+id/submit_code"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </RelativeLayout>

@@ -46,7 +46,7 @@ dependencies {
     compile 'com.embarkmobile:zxing-android-minimal:1.2.1@aar'
 
     // design android
-    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:design:23.1.1'
 
     compile project(':model')
     compile project(':core')
