@@ -27,10 +27,10 @@ angular
         controllerAs: 'main',
         //resolve: {auth: routeAuth}
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about',
+      .when('/new-match', {
+        templateUrl: 'views/new-match.html',
+        controller: 'NewMatchCtrl',
+        controllerAs: 'newMatch',
         //resolve: {auth: routeAuth}
       })
       .when('/login', {
@@ -42,6 +42,11 @@ angular
         templateUrl: 'views/register.html',
         controller: 'RegisterCtrl',
         controllerAs: 'register'
+      })
+      .when('/map', {
+        templateUrl: 'views/map.html',
+        controller: 'MapCtrl',
+        controllerAs: 'map'
       })
       .otherwise({
         redirectTo: '/'

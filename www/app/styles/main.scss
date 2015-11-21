@@ -2,43 +2,57 @@
 @import "fullpage.js/jquery.fullPage.scss";
 // endbower
 
-$white: #d8dbe2; //rgba(216, 219, 226, 100)
-$whiteHover: #EAEEF5;
-$grey: #a9bcd0; //rgba(169, 188, 208, 100)
-$blue: #58a4b0; //rgba(88, 164, 176, 100)
-$blueHover: #60B2BF;
-$blueGrey: #373f51; //rgba(55, 63, 81, 100)
-$darkGrey: #1b1b1e; //rgba(27, 27, 30, 100)
 
-$heading: 'Montserrat', sans-serif;
-$para: 'Lato', sans-serif;
-$additional: 'Source Sans Pro', sans-serif;
+$yellow: #eee82c; //rgba(238, 232, 44, 100)
+$green1: #91cb3e; //rgba(145, 203, 62, 100)
+$green2: #53a548; //rgba(83, 165, 72, 100)
+$green3: #4c934c; //rgba(76, 147, 76, 100)
+$green4: #19381f; //rgba(25, 56, 31, 100)
+
+
+$white:       #d8dbe2; //rgba(216, 219, 226, 100)
+$whiteHover:  #EAEEF5;
+$grey:        #474F4D; //rgba(169, 188, 208, 100)
+$blueHover:   #60B2BF;
+$blueGrey:    #373f51; //rgba(55, 63, 81, 100)
+
+$heading:     'Black Ops One', cursive;
+$tittilium:   'Titillium Web', sans-serif;
+$para:        'Montserrat', sans-serif;
+$additional:  'Source Sans Pro', sans-serif;
 
 h1,h2,h3,h4,h5{
-  font-family: $heading;
+  font-family: $tittilium;
+  color: $green4;
 }
 
 p, input{
   font-family: $para;
   font-size: 20px;
+  color: $grey;
 }
 
 html, body{
     margin:0px;
     padding:0px;
-    background-color: $grey;
+    background-color: $white;
 }
 
 a{
-  color: $blueGrey;
+  color: $white;
   font-family: $heading;
   &:hover{
+    color: $whiteHover;
     text-decoration: none;
   }
 }
 
 button{
-  font-family: $heading;
+  font-family: $tittilium;
+}
+
+.container-fluid{
+  padding: 0px !important;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -52,16 +66,17 @@ button{
 /* GENERAL SETTINGS */
 /* buttons */
 .buttons{
-    background-color: $blue;
-    border: solid 1px $blue;
+    background-color: $white;
+    border: solid 1px $white;
+    color: $green4;
     padding: 20px 0px;
     font-size: 20px;
     margin-top: 30px;
     margin-bottom: 20px;
     transition: all 200ms linear;
     &:hover{
-      background-color: $blueHover;
-      border: 1px solid $blueHover;
+      background-color: $whiteHover;
+      border: 1px solid $whiteHover;
       opacity: 0.8;
     }
 }
@@ -74,10 +89,6 @@ button{
 
 /* introduction */
 #fullpage {
-  h1{
-    font-size: 50px;
-    font-weight: 300;
-  }
   button{
     @extend .buttons;
     padding: 20px 160px;
@@ -85,23 +96,52 @@ button{
 }
 
 .first-section{
-  background-image: url("../images/bg-polygons.svg"), linear-gradient(to top, #58a4b0 0%,#d8dbe2 90%);
+  background: url("../images/paintball2.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   h1{
+    margin-top: 400px;
+    background-color: rgba(255,255,255, 0.1);
+    font-family: $heading;
+    color: $white;
+    font-size: 100px;
+  }
+  h2{
+    background-color: rgba(255,255,255, 0.1);
+    padding: 10px;
     color: $white;
   }
 }
 
 .second-section{
-  background-color: $white;
+  background-color: $green4;
+  h1{
+    color: $white;
+  }
 }
 
 .third-section{
   background: $grey;
+  font-family: $tittilium;
+  font-size: 22px;
+  color: $whiteHover;
   h1{
+    font-family: $heading;
     color: $whiteHover;
+    font-size: 48px;
+    padding-bottom: 40px;
   }
   p{
     font-size: 14px;
+  }
+  span{
+    cursor: pointer;
+    transition: all 200ms linear;
+    &:hover{
+      color: $green1;
+    }
   }
 }
 
@@ -115,7 +155,7 @@ button{
 .login{
   margin-top: 5%;
   background-color: $white;
-  border-top: 10px solid $blue;
+  border-top: 10px solid $green1;
   padding-bottom: 30px;
   h2{
     font-family: $additional;
@@ -165,7 +205,7 @@ button{
   height: 70px;
   width: 100%;
   margin: 0 auto;
-  background-color: $blueGrey;
+  background-color: $green4;
 
   .menu-container__icon {
     position: relative;
@@ -186,12 +226,13 @@ button{
       display: inline-block;
       font-size: 16px;
       a {
+        font-family: $para;
         color: $white;
         padding-right: 30px;
         transition: all 150ms linear;
         &:hover{
           text-decoration: none;
-          color: $blue;
+          color: $green2;
         }
       }
       span{
@@ -301,15 +342,17 @@ button{
     }
 
     &:hover{
-      background-color: $white;
+      background-color: $whiteHover;
       transition: all 400ms ease-in-out;
     }
   }
 
   a {
-    padding: 20px;
-    color: $darkGrey;
+    font-family: $para;
     text-decoration: none;
+    font-weight: 700;
+    padding: 20px;
+    color: $grey;
   }
 }
 
