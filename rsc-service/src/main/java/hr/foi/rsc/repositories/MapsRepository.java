@@ -19,6 +19,6 @@ import org.springframework.stereotype.Repository;
 @Table(name="maps")
 public interface MapsRepository extends CrudRepository<Maps, String>{
     
-    public Maps findByIdGame(long id);
+    public Maps findByIdMap(long id);
     
 }
