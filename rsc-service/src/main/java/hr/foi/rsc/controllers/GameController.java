@@ -85,12 +85,19 @@ public class GameController {
         }
     }
     
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<Game> create(@RequestBody Game game) {
+    @RequestMapping(value = "/create/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Game> create(@PathVariable("id") long idUser, @RequestBody Game game) {
+        
         org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.INFO,
                 "POST on /game/create -- " + game.toString());
         
-        Game signed = this.gameRepository.save(game);
+        Person judge= this.personRepository.findByIdPerson(idUser);
+        
+        
+        Game signed = game;
+        signed.setJudge(judge);
+        signed= this.gameRepository.save(game);
+        
         if(signed != null) {
             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.INFO,
                     "Registration success for " + signed.toString());
@@ -121,26 +128,34 @@ public class GameController {
     }
     
     @RequestMapping(value="{id}/team/{idTeam}",method=RequestMethod.GET)
-    public ResponseEntity<List<TeamMember>> getLocations(@PathVariable("id") long idGame,@PathVariable("idTeam") long idTeam){
+    public ResponseEntity<List<TeamMember>> getLocations(@PathVariable("id") long idGame,
+                @PathVariable("idTeam") long idTeam){
         
         List<TeamMember> teamMemberLocations=this.teamMemberRespository.findByIdTeam(idTeam);
         
         if(teamMemberLocations!=null){
             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
                     "No team found for id " + idTeam);
-            return new ResponseEntity(teamMemberLocations,HttpStatus.OK);
-         
+            return new ResponseEntity(teamMemberLocations , HttpStatus.OK);
         }
+        
         else{
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         
     }
     
-    @RequestMapping(value="/game/{code}", method=RequestMethod.GET)
+    @RequestMapping(value="getGameCode/{code}", method=RequestMethod.GET)
     public ResponseEntity getGame(@PathVariable("code") String code){
         
+         org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    "  found for code " + code);
+        
+        
         Game game=this.gameRepository.findByCode(code);
+        
+         org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    " team found for code " + game.toString());
         
         if(game!=null){
              org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
@@ -154,11 +169,18 @@ public class GameController {
         }
     }
     
-    @RequestMapping(value="{code}", method=RequestMethod.POST)
+    @RequestMapping(value="/{code}", method=RequestMethod.POST)
      public ResponseEntity<List<Team>> getTeams(@PathVariable("code") String code){
+         
+          org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    "  POST found for code " + code);
         
         Game found = this.gameRepository.findByCode(code);
         List<Team> teams=found.getTeam();
+        
+         org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
+                    "  POST found for code " + code);
+         
         if(teams!=null){
             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
                     "No team found for code " + code);
