@@ -46,11 +46,9 @@ public class MatchInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setRetainInstance(true);
         setContentView(R.layout.activity_match_info);
 
         self = SessionManager.getInstance(this).retrieveSession("person", Person.class);
-        self.setReady(0);
 
         lvDetails = (ListView) findViewById(R.id.listViewMatchDetails);
         judge = (TextView) findViewById(R.id.textViewJudgeName);
@@ -144,9 +142,10 @@ public class MatchInfoActivity extends AppCompatActivity {
 
         @Override
         public boolean handleResponse(ServiceResponse response) {
-            if(response.getHttpCode() == 200) {
-                startActivity(new Intent(getApplicationContext(), null));
-            }
+            //if(response.getHttpCode() == 200) {
+                stopTimers();
+                startActivity(new Intent(getApplicationContext(), PlayGameActivity.class));
+            //}
             return true;
         }
 
@@ -175,10 +174,16 @@ public class MatchInfoActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    public void onBackPressed() {
+    void stopTimers() {
         timer.cancel();
         timer.purge();
+        go.cancel();
+        go.purge();
+    }
+
+    @Override
+    public void onBackPressed() {
+        stopTimers();
         super.onBackPressed();
     }
 }

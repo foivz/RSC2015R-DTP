@@ -31,8 +31,8 @@ public class PageAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch(position) {
-            case 0: return "Blue";
-            default: return "Yellow";
+            case 0: return "Map";
+            default: return "Timer";
         }
     }
 }
