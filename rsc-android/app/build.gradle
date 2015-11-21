@@ -33,6 +33,10 @@ repositories {
     maven {
         url "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
     }
+    maven {
+        url "http://dl.bintray.com/glomadrian/maven"
+
+    }
 }
 
 dependencies {
@@ -49,6 +53,8 @@ dependencies {
     compile 'com.pubnub:pubnub-android:3.7.5'
     // design android
     compile 'com.android.support:design:23.1.1'
+   //animateswitch
+    compile 'com.github.glomadrian:MaterialAnimatedSwitch:1.1@aar'
 
     compile project(':model')
     compile project(':core')
