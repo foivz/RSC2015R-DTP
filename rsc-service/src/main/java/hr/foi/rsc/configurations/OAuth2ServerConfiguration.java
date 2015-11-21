@@ -52,6 +52,8 @@ public class OAuth2ServerConfiguration {
                     http
                             .authorizeRequests()
                                     .antMatchers("/person/signup").anonymous()
+                                    .antMatchers("/game/*").anonymous()
+                                    .antMatchers("/team/*").anonymous()
                                     .antMatchers("/person/*").authenticated();
             }
 

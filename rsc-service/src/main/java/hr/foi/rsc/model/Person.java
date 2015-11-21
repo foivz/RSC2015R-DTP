@@ -5,12 +5,15 @@
  */
 package hr.foi.rsc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -21,6 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -29,12 +33,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="person")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="idPerson") 
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="idPerson") 
 public class Person implements Serializable {
     
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "idperson")
+    @Column(name = "id_person")
     long idPerson;
     
     @Column(name="name")
@@ -45,7 +49,19 @@ public class Person implements Serializable {
    
     @Embedded
     Credentials credentials;
- 
+    
+    @Column(name="kill")
+    int kill;
+    
+    @Column(name="death")
+    int death;
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy ="judge", 
+			 cascade=CascadeType.ALL)
+    @JsonBackReference
+    private List<Game> judgedGames;
+    
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "person_role", joinColumns = { @JoinColumn(name = "person_id") },
@@ -107,5 +123,22 @@ public class Person implements Serializable {
     public String toString() {
         return this.name + " " + this.surname;
     }
+    
+        public int getKill() {
+        return kill;
+    }
+
+    public void setKill(int kill) {
+        this.kill = kill;
+    }
+
+    public int getDeath() {
+        return death;
+    }
+
+    public void setDeath(int death) {
+        this.death = death;
+    }
+    
     
 }
