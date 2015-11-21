@@ -15,7 +15,17 @@ public class Person implements Serializable {
     String avatar;
     int kill;
     int death;
+    double lat;
+    double lng;
+    boolean ready;
 
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
 
     public String getAvatar() {
 
@@ -40,6 +50,22 @@ public class Person implements Serializable {
 
     public void setKill(int kill) {
         this.kill = kill;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     public Person() {

@@ -4,6 +4,12 @@
 
     <string name="input_code">Input invite code here</string>
 
+    <string name="judge">Judge</string>
+    <string name="match">Match</string>
+    <string name="players">Teammates</string>
+    <string name="ready_status">Ready status:</string>
+    <string name="action_pro">Change profile</string>
+
     <!-- login and registration form -->
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>

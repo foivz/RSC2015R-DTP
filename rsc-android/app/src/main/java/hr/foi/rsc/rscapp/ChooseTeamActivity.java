@@ -23,6 +23,7 @@ import java.util.List;
 import hr.foi.rsc.core.Input;
 import hr.foi.rsc.core.SessionManager;
 import hr.foi.rsc.model.Credentials;
+import hr.foi.rsc.model.Game;
 import hr.foi.rsc.model.Person;
 import hr.foi.rsc.model.Team;
 import hr.foi.rsc.rscapp.handlers.RegistrationHandler;
@@ -35,8 +36,8 @@ import hr.foi.rsc.webservice.ServiceResponseHandler;
 public class ChooseTeamActivity extends AppCompatActivity {
 
     String code;
-    TextView red;
-    TextView blue;
+    TextView redView;
+    TextView blueView;
     Team redTeam;
     Team blueTeam;
     Person self;
@@ -49,35 +50,31 @@ public class ChooseTeamActivity extends AppCompatActivity {
         code = intent.getStringExtra("code");
         self = SessionManager.getInstance(getApplicationContext()).retrieveSession("person", Person.class);
 
-        ServiceParams params = new ServiceParams(getString(R.string.game_path) + code, HttpMethod.POST, null);
+        ServiceParams params = new ServiceParams(getString(R.string.game_code_path) + code, HttpMethod.GET, null);
         new ServiceAsyncTask(handler).execute(params);
-
-        ImageButton red = (ImageButton) findViewById(R.id.ibCtmRed);
-        red.setEnabled(false);
-        red.setOnClickListener(onRed);
-
-        ImageButton blue = (ImageButton) findViewById(R.id.ibCtmBlue);
-        blue.setEnabled(false);
-        blue.setOnClickListener(onBlue);
     }
 
     View.OnClickListener onBlue = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ServiceParams params = new ServiceParams(getString(R.string.game_path) + blueTeam.getIdTeam()
-                    + getString(R.string.persons_path) + self.getIdPerson(), HttpMethod.POST, null);
-            new ServiceAsyncTask(handlerTransit).execute(params);
+            sendRequest(blueTeam);
         }
     };
 
     View.OnClickListener onRed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ServiceParams params = new ServiceParams(getString(R.string.game_path) + redTeam.getIdTeam()
-                    + getString(R.string.persons_path) + self.getIdPerson(), HttpMethod.POST, null);
-            new ServiceAsyncTask(handlerTransit).execute(params);
+            sendRequest(redTeam);
         }
     };
+
+
+    void sendRequest(Team team) {
+        SessionManager.getInstance(getApplicationContext()).createSession(team, "team");
+        ServiceParams params = new ServiceParams(getString(R.string.team_path) + team.getIdTeam()
+                + getString(R.string.persons_path) + self.getIdPerson(), HttpMethod.POST, null);
+        new ServiceAsyncTask(handlerTransit).execute(params);
+    }
 
     ServiceResponseHandler handler = new ServiceResponseHandler() {
         @Override
@@ -88,16 +85,30 @@ public class ChooseTeamActivity extends AppCompatActivity {
         @Override
         public boolean handleResponse(ServiceResponse response) {
             if(response.getHttpCode() == 200) {
-                Type type = new TypeToken<ArrayList<Team>>() {}.getType();
-                List<Team> teams = new Gson().fromJson(response.getJsonResponse(), type);
-                if(teams != null && teams.size() != 0) {
-                    redTeam = teams.get(0);
-                    blueTeam = teams.get(1);
-                    red.setText(redTeam.getName());
-                    blue.setText(blueTeam.getName());
+                Game game = new Gson().fromJson(response.getJsonResponse(), Game.class);
+                if(game != null && game.getTeam().size() != 0) {
+
+                    setContentView(R.layout.activity_choose_team);
+
+                    ImageButton red = (ImageButton) findViewById(R.id.ibCtmRed);
+                    red.setOnClickListener(onRed);
+
+                    ImageButton blue = (ImageButton) findViewById(R.id.ibCtmBlue);
+                    blue.setOnClickListener(onBlue);
+
+                    SessionManager.getInstance(getApplicationContext()).createSession(game, "game");
+                    redTeam = game.getTeam().get(0);
+                    blueTeam = game.getTeam().get(1);
+
+                    redView = (TextView) findViewById(R.id.textViewTeamREd);
+                    blueView = (TextView) findViewById(R.id.textViewTeamBlue);
+
+                    redView.setText(redTeam.getName());
+                    blueView.setText(blueTeam.getName());
+
                     red.setEnabled(true);
                     blue.setEnabled(true);
-                    setContentView(R.layout.activity_choose_team);
+
                     return true;
                 } else {
                     Toast.makeText(getApplicationContext(), "There is no team found for code " + code,
@@ -106,6 +117,7 @@ public class ChooseTeamActivity extends AppCompatActivity {
                 }
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to fetch teams for match!", Toast.LENGTH_LONG).show();
+                finish();
             }
             return false;
         }
@@ -116,11 +128,16 @@ public class ChooseTeamActivity extends AppCompatActivity {
         }
     };
 
-    ResponseHandler handlerTransit = new ResponseHandler() {
+    ServiceResponseHandler handlerTransit = new ServiceResponseHandler() {
+        @Override
+        public void onPreSend() {
+
+        }
+
         @Override
         public boolean handleResponse(ServiceResponse response) {
             if(response.getHttpCode() == 200) {
-                Intent intent = new Intent(getApplicationContext(), null);
+                Intent intent = new Intent(getApplicationContext(), MatchInfoActivity.class);
                 intent.putExtra("code", code);
                 startActivity(intent);
                 return true;
@@ -128,6 +145,11 @@ public class ChooseTeamActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Please try again!", Toast.LENGTH_LONG).show();
                 return false;
             }
+        }
+
+        @Override
+        public void onPostSend() {
+
         }
     };
 
