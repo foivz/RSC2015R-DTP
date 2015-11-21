@@ -8,6 +8,7 @@ package hr.foi.rsc.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -33,7 +34,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="person")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="idPerson") 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="idPerson") 
 public class Person implements Serializable {
     
     @Id 
@@ -55,11 +56,18 @@ public class Person implements Serializable {
     
     @Column(name="death")
     int death;
+    
+    @Column(name="lat")
+    double lat;
+    
+    @Column(name="lng")
+    double lng;
 
-
+    
+    
     @OneToMany(fetch = FetchType.LAZY, mappedBy ="judge", 
 			 cascade=CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference
     private List<Game> judgedGames;
     
     @JsonIgnore
@@ -149,6 +157,24 @@ public class Person implements Serializable {
     public void setDeath(int death) {
         this.death = death;
     }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+    
+    
     
     
 }

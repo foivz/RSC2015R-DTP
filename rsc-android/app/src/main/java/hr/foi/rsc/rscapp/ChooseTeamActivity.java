@@ -1,5 +1,6 @@
 package hr.foi.rsc.rscapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
@@ -33,7 +34,7 @@ import hr.foi.rsc.webservice.ServiceParams;
 import hr.foi.rsc.webservice.ServiceResponse;
 import hr.foi.rsc.webservice.ServiceResponseHandler;
 
-public class ChooseTeamActivity extends AppCompatActivity {
+public class ChooseTeamActivity extends Activity {
 
     String code;
     TextView redView;

@@ -17,13 +17,13 @@ public class Person implements Serializable {
     int death;
     double lat;
     double lng;
-    boolean ready;
+    int ready;
 
-    public boolean isReady() {
+    public int isReady() {
         return ready;
     }
 
-    public void setReady(boolean ready) {
+    public void setReady(int ready) {
         this.ready = ready;
     }
 

@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package hr.foi.rsc.model;
-
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
@@ -40,12 +39,12 @@ public class Game implements Serializable
     @Column(name="code")
     String code;
     
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="id_person")
     Person judge;
     
-    @OneToMany( mappedBy ="game", 
+    @OneToMany( mappedBy="game",
 			 cascade=CascadeType.ALL)
     @JsonManagedReference
     private List<Team> team;

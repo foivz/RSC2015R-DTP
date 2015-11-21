@@ -32,7 +32,7 @@ import hr.foi.rsc.core.prompts.AlertPrompt;
 
 import static android.nfc.NdefRecord.createMime;
 
-public class JoinActivity extends Activity {
+public class JoinActivity extends AppCompatActivity {
 
     EditText code;
     ImageView qr;

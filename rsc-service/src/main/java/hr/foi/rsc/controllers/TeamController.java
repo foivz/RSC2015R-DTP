@@ -118,20 +118,26 @@ public class TeamController {
         }
     }
     
-   
+
     @RequestMapping( value= "/{id}/person/{idPerson}", method=RequestMethod.POST)
-    public ResponseEntity addTeamMember(@RequestParam("id") long id,@RequestParam("idPerson") long idPerson){
+    public ResponseEntity addTeamMember(@PathVariable("id") long id,@PathVariable("idPerson") long idPerson){
         
          org.jboss.logging.Logger.getLogger("TeamController.java").log(org.jboss.logging.Logger.Level.INFO,
                     "Finding team ");
+         
         Team foundTeam = this.teamRepository.findByIdTeam(id);
         
          org.jboss.logging.Logger.getLogger("TeamController.java").log(org.jboss.logging.Logger.Level.INFO,
-                    "Finding user ");
+                    "Finding user " + foundTeam.getName());
          
-        Person foundPerson = this.personRepository.findByIdPerson(id);
+        Person foundPerson = this.personRepository.findByIdPerson(idPerson);
         
-        TeamMember memberTeam= new TeamMember(foundPerson.getIdPerson(),foundTeam.getIdTeam(),0,0,0.0,0.0);
+         org.jboss.logging.Logger.getLogger("TeamController.java").log(org.jboss.logging.Logger.Level.INFO,
+                    "Finding team " + foundPerson.getName());
+       
+        TeamMember memberTeam= new TeamMember(foundPerson.getIdPerson(),foundTeam.getIdTeam(),0,0);
+        
+    
         
         if(foundPerson!=null && foundTeam!=null){
             

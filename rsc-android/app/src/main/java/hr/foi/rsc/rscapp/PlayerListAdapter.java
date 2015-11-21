@@ -67,7 +67,7 @@ public class PlayerListAdapter extends ArrayAdapter<Person> {
                 holder = (ViewHolder) vi.getTag();
             }
 
-            if(persons.get(position).isReady()) {
+            if(persons.get(position).isReady() == 1) {
                 holder.presence.setImageDrawable(getContext().getResources().getDrawable(android.R.drawable.presence_online));
             } else {
                 holder.presence.setImageDrawable(getContext().getResources().getDrawable(android.R.drawable.presence_busy));

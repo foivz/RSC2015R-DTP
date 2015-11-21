@@ -6,6 +6,7 @@
 package hr.foi.rsc.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -33,10 +34,9 @@ public class Team implements Serializable{
     @Column(name="name")
     String name;
     
-    
-    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="id_game")
+    @JsonBackReference
+    @JoinColumn(name="id_game")   
     Game game;
 
     public long getIdTeam() {

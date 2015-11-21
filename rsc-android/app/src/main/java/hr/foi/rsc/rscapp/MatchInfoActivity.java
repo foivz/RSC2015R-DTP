@@ -1,6 +1,7 @@
 package hr.foi.rsc.rscapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -38,11 +39,18 @@ public class MatchInfoActivity extends AppCompatActivity {
     TextView match;
     Team myTeam;
     Game game;
+    Timer timer;
+    Timer go;
+    Person self;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setRetainInstance(true);
         setContentView(R.layout.activity_match_info);
+
+        self = SessionManager.getInstance(this).retrieveSession("person", Person.class);
+        self.setReady(0);
 
         lvDetails = (ListView) findViewById(R.id.listViewMatchDetails);
         judge = (TextView) findViewById(R.id.textViewJudgeName);
@@ -52,8 +60,10 @@ public class MatchInfoActivity extends AppCompatActivity {
         match.setText(game.getName());
         myTeam = SessionManager.getInstance(this).retrieveSession("team", Team.class);
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(joinPlayer, 1000, 1000);
+        go = new Timer();
+        go.schedule(startMatchTimerTask, 1000, 1000);
     }
 
     @Override
@@ -65,15 +75,38 @@ public class MatchInfoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.be_ready) {
-            if(item.getIcon() == getResources().getDrawable(android.R.drawable.presence_busy)) {
+            ServiceParams params;
+            if(self.isReady() == 0) {
                 item.setIcon(android.R.drawable.presence_online);
+                self.setReady(1);
             } else {
                 item.setIcon(android.R.drawable.presence_busy);
+                self.setReady(0);
             }
+            params = new ServiceParams(getString(R.string.persons_path)
+                    + self.getIdPerson() + "/ready", HttpMethod.PUT, null);
+            new ServiceAsyncTask(readyChange).execute(params);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    ServiceResponseHandler readyChange = new ServiceResponseHandler() {
+        @Override
+        public void onPreSend() {
+
+        }
+
+        @Override
+        public boolean handleResponse(ServiceResponse response) {
+            return true;
+        }
+
+        @Override
+        public void onPostSend() {
+
+        }
+    };
 
     ServiceResponseHandler playerStatus = new ServiceResponseHandler() {
         @Override
@@ -103,6 +136,26 @@ public class MatchInfoActivity extends AppCompatActivity {
         }
     };
 
+    ServiceResponseHandler startMatch = new ServiceResponseHandler() {
+        @Override
+        public void onPreSend() {
+
+        }
+
+        @Override
+        public boolean handleResponse(ServiceResponse response) {
+            if(response.getHttpCode() == 200) {
+                startActivity(new Intent(getApplicationContext(), null));
+            }
+            return true;
+        }
+
+        @Override
+        public void onPostSend() {
+
+        }
+    };
+
 
     TimerTask joinPlayer = new TimerTask() {
         @Override
@@ -113,4 +166,19 @@ public class MatchInfoActivity extends AppCompatActivity {
         }
     };
 
+    TimerTask startMatchTimerTask = new TimerTask() {
+        @Override
+        public void run() {
+            ServiceParams params = new ServiceParams(getString(R.string.game_path) + "/isReady/"
+                    + game.getIdGame(), HttpMethod.GET, null);
+            new ServiceAsyncTask(startMatch).execute(params);
+        }
+    };
+
+    @Override
+    public void onBackPressed() {
+        timer.cancel();
+        timer.purge();
+        super.onBackPressed();
+    }
 }
