@@ -155,7 +155,7 @@ public class GameController {
     }
     
     @RequestMapping(value="{code}", method=RequestMethod.POST)
-     public ResponseEntity<List<Team>> getTeams(@RequestParam("code") String code){
+     public ResponseEntity<List<Team>> getTeams(@PathVariable("code") String code){
         
         Game found = this.gameRepository.findByCode(code);
         List<Team> teams=found.getTeam();
