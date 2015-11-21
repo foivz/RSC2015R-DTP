@@ -12,6 +12,35 @@ public class Person implements Serializable {
     String name;
     String surname;
     Credentials credentials;
+    String avatar;
+    int kill;
+    int death;
+
+
+    public String getAvatar() {
+
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public int getDeath() {
+        return death;
+    }
+
+    public void setDeath(int death) {
+        this.death = death;
+    }
+
+    public int getKill() {
+        return kill;
+    }
+
+    public void setKill(int kill) {
+        this.kill = kill;
+    }
 
     public Person() {
     }
