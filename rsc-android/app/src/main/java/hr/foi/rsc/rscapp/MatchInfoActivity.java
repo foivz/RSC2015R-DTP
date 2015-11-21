@@ -1,4 +1,4 @@
-package hr.foi.rsc.rscapp;
+/*package hr.foi.rsc.rscapp;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -67,4 +67,4 @@ public class MatchInfoActivity extends AppCompatActivity {
 
     }
 
-}
+}*/
