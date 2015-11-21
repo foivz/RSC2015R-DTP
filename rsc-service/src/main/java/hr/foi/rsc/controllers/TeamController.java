@@ -124,14 +124,20 @@ public class TeamController {
         
          org.jboss.logging.Logger.getLogger("TeamController.java").log(org.jboss.logging.Logger.Level.INFO,
                     "Finding team ");
+         
         Team foundTeam = this.teamRepository.findByIdTeam(id);
         
          org.jboss.logging.Logger.getLogger("TeamController.java").log(org.jboss.logging.Logger.Level.INFO,
-                    "Finding user ");
+                    "Finding user " + foundTeam.getName());
          
-        Person foundPerson = this.personRepository.findByIdPerson(id);
+        Person foundPerson = this.personRepository.findByIdPerson(idPerson);
         
+         org.jboss.logging.Logger.getLogger("TeamController.java").log(org.jboss.logging.Logger.Level.INFO,
+                    "Finding team " + foundPerson.getName());
+       
         TeamMember memberTeam= new TeamMember(foundPerson.getIdPerson(),foundTeam.getIdTeam(),0,0);
+        
+    
         
         if(foundPerson!=null && foundTeam!=null){
             

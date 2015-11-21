@@ -25,8 +25,7 @@ public class TeamMember implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id_teammember")
     long idTeamMember;
-    
-    
+   
     @Column(name="id_person")
     long idPerson;
     
