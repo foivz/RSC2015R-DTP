@@ -96,6 +96,22 @@ public class GameController {
     }
     
     
+    @RequestMapping(value="/{id}/start", method = RequestMethod.POST)
+    public ResponseEntity<Game> startGame(@PathVariable("id") long id){
+        
+        Game start = this.gameRepository.findByIdGame(id);
+        
+        if(start != null){
+            
+            start.setStart(1);
+            start=this.gameRepository.save(start);
+            return new ResponseEntity(start,HttpStatus.OK);
+        }
+        else 
+             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        
+    }
+    
     /**
      * gets game with specified id
      * @param id id of game
