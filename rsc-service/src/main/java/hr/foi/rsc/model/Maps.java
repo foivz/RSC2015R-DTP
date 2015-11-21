@@ -30,6 +30,9 @@ public class Maps implements Serializable{
     @Column(name = "id_map")
     long idMap;
     
+    @Column(name="name")
+    String name;
+    
     @Column(name="start_lat")
     double startLat;
     @Column(name="end_lat")
@@ -114,6 +117,14 @@ public class Maps implements Serializable{
 
     public void setGame(List<Game> game) {
         this.game = game;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
     
     
