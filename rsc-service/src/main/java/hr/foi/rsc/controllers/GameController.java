@@ -64,6 +64,26 @@ public class GameController {
     }
     
     
+    @RequestMapping(value="/personLocation", method = RequestMethod.PUT)
+    public ResponseEntity updateUserLocation(@RequestBody Person person){
+        
+        if(person!=null){
+            
+            this.personRepository.save(person);
+            Logger.getLogger("GameController.java").log(Level.INFO,
+                "update person location");
+            return new ResponseEntity(HttpStatus.OK);
+            
+        }else{
+            
+            Logger.getLogger("GameController.java").log(Level.INFO,
+                "cannot update");
+            
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        
+    }
+    
     @RequestMapping(value = "/isReady/{id}", method = RequestMethod.GET)
     public ResponseEntity isReady(@PathVariable("id") long id){
         
