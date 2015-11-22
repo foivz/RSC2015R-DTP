@@ -30,15 +30,14 @@ public class Notification implements Serializable{
     @Column(name="content")
     String name;
     
-    @Column(name="id_team")
-    long id_team;
+    @Column(name="team")
+    long idTeam;
     
-    @Column(name="id_person")
-    long id_person;
+    @Column(name="person")
+    long idPerson;
     
-    @Column(name="read")
-    int read;
-
+    @Column(name="readed")
+    int Readed;
 
     public long getIdNotification() {
         return idNotification;
@@ -56,32 +55,37 @@ public class Notification implements Serializable{
         this.name = name;
     }
 
-    public long getId_team() {
-        return id_team;
+    public long getIdTeam() {
+        return idTeam;
     }
 
-    public void setId_team(long id_team) {
-        this.id_team = id_team;
+    public void setIdTeam(long idTeam) {
+        this.idTeam = idTeam;
     }
 
-    public long getId_person() {
-        return id_person;
+    public long getIdPerson() {
+        return idPerson;
     }
 
-    public void setId_person(long id_person) {
-        this.id_person = id_person;
+    public void setIdPerson(long idPerson) {
+        this.idPerson = idPerson;
     }
 
-    public int getRead() {
-        return read;
+
+    public int getReaded() {
+        return Readed;
     }
 
-    public void setRead(int read) {
-        this.read = read;
+    public void setReaded(int Readed) {
+        this.Readed = Readed;
     }
 
-    
-    
+   
+  
+
+  
+
+   
     
     
    

@@ -271,6 +271,34 @@ public class GameController {
     }
     
     
+    @RequestMapping(value="/{id}/person/{idTeam}/team")
+    public ResponseEntity kill(@PathVariable("id") long idUser, @PathVariable("idTeam") long idTeam){
+        
+        TeamMember kill=this.teamMemberRespository.findByIdTeamAndIdPerson(idTeam, idUser);
+        
+        kill.setDeath(kill.getDeath()+1);
+        this.teamMemberRespository.save(kill);
+        
+        return new ResponseEntity(HttpStatus.OK);
+        
+    }
+    
+    @RequestMapping(value = "person/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Person> retrieveByIdPerson(@PathVariable("id") long id) {
+        Logger.getLogger("PersonController.java").log(Level.INFO,
+                "GET on /person/" + id + " -- ");
+        Person found = this.personRepository.findByIdPerson(id);
+        if(found != null) {
+            Logger.getLogger("PersonController.java").log(Level.INFO,
+                    "User found for id " + id + ", returning " + found.toString());
+            return new ResponseEntity(found, HttpStatus.OK);
+        } else {
+            
+         
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+    
     
     @RequestMapping(value = "/isReady/{id}", method = RequestMethod.GET)
     public ResponseEntity isReady(@PathVariable("id") long id){
@@ -278,7 +306,7 @@ public class GameController {
         Game game=this.gameRepository.findByIdGame(id);
         
         if(game.getStart()==1)
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(game,HttpStatus.OK);
         else
             return new ResponseEntity(HttpStatus.NOT_FOUND);    
     }
