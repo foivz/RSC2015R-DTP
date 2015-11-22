@@ -49,14 +49,21 @@ public class Game implements Serializable
     @JsonManagedReference
     private List<Team> team;
     
+    @Column(name="start")
+    int  start;
+    
     @ManyToOne
     @JoinColumn(name = "id_map")
     private Maps map;
-    
-    
-    
-    
 
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+    
     public long getIdGame() {
         return idGame;
     }

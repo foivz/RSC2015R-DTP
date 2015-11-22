@@ -51,7 +51,7 @@ public class Person implements Serializable {
     @Embedded
     Credentials credentials;
     
-    @Column(name="kill")
+    @Column(name="kills")
     int kill;
     
     @Column(name="death")
@@ -62,9 +62,21 @@ public class Person implements Serializable {
     
     @Column(name="lng")
     double lng;
+    
+    @Column(name="ready")
+    double ready;
 
+    public double getReady() {
+        return ready;
+    }
+
+    public void setReady(double ready) {
+        this.ready = ready;
+    }
     
     
+
+ 
     @OneToMany(fetch = FetchType.LAZY, mappedBy ="judge", 
 			 cascade=CascadeType.ALL)
     @JsonManagedReference

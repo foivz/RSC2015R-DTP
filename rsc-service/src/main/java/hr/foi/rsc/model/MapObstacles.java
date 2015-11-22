@@ -15,20 +15,24 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
  * @author paz
  */
+
 @Entity
 @Table(name="mapobstacles")
 public class MapObstacles implements Serializable{
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id_mapobstacle")
+    @Column(name="id_mapobstacles")
     long idMapObstacle;
     
     @Column(name="name")
@@ -40,9 +44,10 @@ public class MapObstacles implements Serializable{
     @Column(name="lng")
     double lng;
     
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = " mapObstacles")
+    @ManyToOne
     @JsonBackReference
-    private List<Maps> maps;
+    @JoinColumn(name="id_map")   
+    Maps map;
  
 
     public long getIdMapObstacle() {
@@ -77,13 +82,7 @@ public class MapObstacles implements Serializable{
         this.lng = lng;
     }
 
-    public List<Maps> getMaps() {
-        return maps;
-    }
-
-    public void setMaps(List<Maps> maps) {
-        this.maps = maps;
-    }
+ 
     
     
     
