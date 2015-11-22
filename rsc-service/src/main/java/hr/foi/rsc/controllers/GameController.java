@@ -64,6 +64,55 @@ public class GameController {
     }
     
     
+    @RequestMapping(value="/personLocation", method = RequestMethod.PUT)
+    public ResponseEntity updateUserLocation(@RequestBody Person person){
+        
+        if(person!=null){
+            
+            this.personRepository.save(person);
+            Logger.getLogger("GameController.java").log(Level.INFO,
+                "update person location");
+            return new ResponseEntity(HttpStatus.OK);
+            
+        }else{
+            
+            Logger.getLogger("GameController.java").log(Level.INFO,
+                "cannot update");
+            
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        
+    }
+    
+    @RequestMapping(value="/{id}/end")
+    public ResponseEntity<List<TeamMember>> endGame(@PathVariable("id") long id){
+        
+        Game game=this.gameRepository.findByIdGame(id);
+        int teamOne = game.getTeam().indexOf(0);
+        int teamTwo = game.getTeam().indexOf(1);
+        
+        List<TeamMember> teamCompetitors= new ArrayList<>();
+        
+        teamCompetitors.addAll(this.teamMemberRespository.findByIdTeam(teamOne));
+        teamCompetitors.addAll(this.teamMemberRespository.findByIdTeam(teamTwo));
+        
+        
+         Logger.getLogger("GameController.java").log(Level.INFO,
+                "Retrurning details of match");
+        
+        if(teamCompetitors != null){
+             Logger.getLogger("GameController.java").log(Level.INFO,
+                "Returning details");
+               return new ResponseEntity(teamCompetitors,HttpStatus.OK);
+        }
+        else{
+             Logger.getLogger("GameController.java").log(Level.INFO,
+                "Cannot return details");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        
+    }
+    
     @RequestMapping(value = "/isReady/{id}", method = RequestMethod.GET)
     public ResponseEntity isReady(@PathVariable("id") long id){
         
@@ -75,6 +124,22 @@ public class GameController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);    
     }
     
+    
+    @RequestMapping(value="/{id}/start", method = RequestMethod.POST)
+    public ResponseEntity<Game> startGame(@PathVariable("id") long id){
+        
+        Game start = this.gameRepository.findByIdGame(id);
+        
+        if(start != null){
+            
+            start.setStart(1);
+            start=this.gameRepository.save(start);
+            return new ResponseEntity(start,HttpStatus.OK);
+        }
+        else 
+             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        
+    }
     
     /**
      * gets game with specified id
