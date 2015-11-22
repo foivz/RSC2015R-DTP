@@ -1,31 +1,27 @@
+<span id="time">05:00</span>
 <div class="container-fluid">
 	<div id="matchMap" style="width: 100%; height: 400px;"></div>
 </div>
 <div class="mainMatch">
-	<div class="col-md-6">
-		<h2>{{main.team1.idTeam + " " + main.team1.name}}</h2>
+	<div class="col-md-4">
+		<h2>{{matchAction.team1.idTeam + " " + matchAction.team1.name}}</h2>
 		<table class="table">
 			<tr>
 				<th>No.</th>
 				<th>Name</th>
 				<th>Kill</th>
 				<th>Death</th>
-				<th>Ready to rumble</th>
 			</tr>
-			<tr ng-repeat="people in main.team1People">
+			<tr ng-repeat="people in matchAction.team1People">
 				<td>{{$index+1}}</td>
 				<td>{{people.name + " " + people.surname}}</td>
 				<td>{{people.kill}}</td>
 				<td>{{people.death}}</td>
-				<td>
-					<span class="glyphicon glyphicon-ok" ng-show="people.ready"></span>	
-					<span class="glyphicon glyphicon-time" ng-hide="people.ready"></span>	
-				</td>
 			</tr>
 		</table>
 	</div>
-	<div class="col-md-6">
-		<h2>{{main.team2.idTeam + " " + main.team2.name}}</h2>
+	<div class="col-md-4">
+		<h2>{{matchAction.team2.idTeam + " " + matchAction.team2.name}}</h2>
 		<table class="table">
 			<tr>
 				<th>No.</th>
@@ -34,20 +30,28 @@
 				<th>Death</th>
 				<th>Ready to rumble</th>
 			</tr>
-			<tr ng-repeat="people in main.team2People">
+			<tr ng-repeat="people in matchAction.team2People">
 				<td>{{$index+1}}</td>
 				<td>{{people.name + " " + people.surname}}</td>
 				<td>{{people.kill}}</td>
 				<td>{{people.death}}</td>
-				<td>
-					<span class="glyphicon glyphicon-ok" ng-show="people.ready"></span>	
-					<span class="glyphicon glyphicon-time" ng-hide="people.ready"></span>	
-				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-4">
+		<h2>Notifications</h2>
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td></td>
 			</tr>
 		</table>
 	</div>
 	<div class="container text-center">
-		<button ng-click="main.StartMatch()" class="btn btn-info">START</button>
+		<button ng-click="matchAction.StartMatch()" class="btn btn-info">START</button>
 	</div>
 	<!-- <button class="btn btn-default"><img src="images/chip.png" width="30px" alt=""> Place a bet</button> -->
 </div>
