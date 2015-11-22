@@ -4,15 +4,20 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -39,11 +44,15 @@ import hr.foi.rsc.webservice.ServiceResponseHandler;
 /**
  * Created by hrvoje on 21/11/15.
  */
-public class GameFragment extends Fragment {
+public class GameFragment extends Fragment implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     Team myTeam;
     GoogleMap mMap;
     Timer t;
+    LocationManager locationManager;
+    LocationRequest mLocationRequest;
+    GoogleApiClient mGoogleApiClient;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,15 +62,7 @@ public class GameFragment extends Fragment {
 
         t = new Timer();
         t.schedule(locations, 1000, 1000);
-        LocationManager locationManager = (LocationManager)
-                getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (this.getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
-                this.getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-        }
+        buildGoogleApiClient();
     }
 
     @Nullable
@@ -76,30 +77,80 @@ public class GameFragment extends Fragment {
         MapFragment mMapFragment = (com.google.android.gms.maps.MapFragment) getActivity()
                 .getFragmentManager().findFragmentById(R.id.map);
         mMap = mMapFragment.getMap();
+        createLocationRequest();
     }
 
-    LocationListener locationListener = new LocationListener() {
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this.getContext())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Person self = SessionManager.getInstance(this.getContext()).retrieveSession("person", Person.class);
+        self.setLat(location.getLatitude());
+        self.setLng(location.getLongitude());
+        ServiceParams params = new ServiceParams(getString(R.string.game_path) + "personLocation", HttpMethod.PUT, self);
+        new ServiceAsyncTask(dummy).execute(params);
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        startLocationUpdates();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopLocationUpdates();
+    }
+
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            startLocationUpdates();
+        }
+    }
+
+    protected void startLocationUpdates() {
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+    }
+
+    ServiceResponseHandler dummy = new ServiceResponseHandler() {
         @Override
-        public void onLocationChanged(Location location) {
-            Person self = SessionManager.getInstance(getContext()).retrieveSession("user", Person.class);
-            self.setLat(location.getLatitude());
-            self.setLng(location.getLongitude());
-            ServiceParams params = new ServiceParams(getString(R.string.game_path) + "/personLocation", HttpMethod.PUT, self);
-            new ServiceAsyncTask(locationHandler).execute(params);
+        public void onPreSend() {
+
         }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
+        public boolean handleResponse(ServiceResponse response) {
+            return false;
         }
 
         @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
+        public void onPostSend() {
 
         }
     };
@@ -138,4 +189,9 @@ public class GameFragment extends Fragment {
             new ServiceAsyncTask(locationHandler).execute(params);
         }
     };
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
 }

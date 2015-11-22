@@ -61,11 +61,8 @@ public class Maps implements Serializable{
     List<Game> game;
     
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name = "mapsobstacles",  joinColumns = { 
-			@JoinColumn(name = "id_map", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "id_mapobstacle", 
-					nullable = false, updatable = false) })
+    @OneToMany( mappedBy="map",
+			 cascade=CascadeType.ALL)
     @JsonManagedReference
     private List<MapObstacles> mapObstacles;
 

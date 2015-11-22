@@ -63,6 +63,19 @@ public class GameController {
         return new ResponseEntity(this.gameRepository.findAll(), HttpStatus.OK);
     }
     
+    
+    @RequestMapping(value = "/isReady/{id}", method = RequestMethod.GET)
+    public ResponseEntity isReady(@PathVariable("id") long id){
+        
+        Game game=this.gameRepository.findByIdGame(id);
+        
+        if(game.getStart()==1)
+            return new ResponseEntity(HttpStatus.OK);
+        else
+            return new ResponseEntity(HttpStatus.NOT_FOUND);    
+    }
+    
+    
     /**
      * gets game with specified id
      * @param id id of game
@@ -152,7 +165,7 @@ public class GameController {
         if(person!=null){
             
             org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.WARN,
-                    "Returning persons " + person.get(1).getName());
+                    "Returning persons " );
             return new ResponseEntity(person , HttpStatus.OK);
             
         }
