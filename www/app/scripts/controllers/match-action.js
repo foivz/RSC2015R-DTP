@@ -177,16 +177,16 @@ angular.module('webAngularTemplateApp')
 					console.log("Notifikacije 1");
 					console.log(data);
 					controller.data = data;
-					for(var i=0; i<data.length; i++){
-						path = 'http://46.101.173.23:8080/game/person/' + controller.data[i].idPerson;
+					controller.data.forEach(function(entry){
+						path = 'http://46.101.173.23:8080/game/person/' + entry.idPerson;
 						$http.get(path)
 							.success(function(person){
-								console.log(controller.data[i].name + " " + person.name);
-								controller.notifications.push({notif: controller.data[i].name, person: person.name});
+								console.log(entry.name + " " + person.name);
+								controller.notifications.push({notif: entry.name, person: person.name});
 							}).error(function(data){
 								console.log(data);
 							})
-					}
+					})
 				}).error(function(data){
 					console.log(data);
 				})
@@ -196,17 +196,19 @@ angular.module('webAngularTemplateApp')
 				.success(function(data){
 					console.log("Notifikacije 2");
 					console.log(data);
+
 					controller.data = data;
-					for(var i=0; i<controller.data.length; i++){
-						path = 'http://46.101.173.23:8080/game/person/' + controller.data[i].idPerson;
+					controller.data.forEach(function(entry){
+						path = 'http://46.101.173.23:8080/game/person/' + entry.idPerson;
 						$http.get(path)
 							.success(function(person){
-								console.log(controller.data[i].name + " " + person.name);
-								controller.notifications.push({notif: controller.data[i].name, person: person.name});
+								console.log(entry.name + " " + person.name);
+								controller.notifications.push({notif: entry.name, person: person.name});
 							}).error(function(data){
 								console.log(data);
 							})
-					}
+					})
+
 				}).error(function(data){
 					console.log(data);
 				})
@@ -249,7 +251,7 @@ angular.module('webAngularTemplateApp')
 	        if (--timer < 0) {
 	            timer = duration;
 	        }
-	    }, 3000);
+	    }, 1000);
 	}
 
 	controller.EndGame = function(){
