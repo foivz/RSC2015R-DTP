@@ -253,41 +253,50 @@ html.fp-enabled,
   height: auto !important;
 }
 
-/* line 17, ../../app/styles/main.scss */
+/* line 20, ../../app/styles/main.scss */
 h1, h2, h3, h4, h5 {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+  color: #49a078;
 }
 
-/* line 21, ../../app/styles/main.scss */
+/* line 25, ../../app/styles/main.scss */
 p, input {
-  font-family: "Lato", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
+  color: #474F4D;
 }
 
-/* line 26, ../../app/styles/main.scss */
+/* line 31, ../../app/styles/main.scss */
 html, body {
   margin: 0px;
   padding: 0px;
-  background-color: #a9bcd0;
+  background-color: #c8ccc0;
+  background-image: url("http://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
 }
 
-/* line 32, ../../app/styles/main.scss */
+/* line 38, ../../app/styles/main.scss */
 a {
-  color: #373f51;
-  font-family: "Montserrat", sans-serif;
+  color: #dce1de;
+  font-family: "Black Ops One", cursive;
 }
-/* line 35, ../../app/styles/main.scss */
+/* line 41, ../../app/styles/main.scss */
 a:hover {
+  color: #D7DAE1;
   text-decoration: none;
 }
 
-/* line 40, ../../app/styles/main.scss */
+/* line 47, ../../app/styles/main.scss */
 button {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+}
+
+/* line 51, ../../app/styles/main.scss */
+.container-fluid {
+  padding: 0px !important;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
-/* line 45, ../../app/styles/main.scss */
+/* line 56, ../../app/styles/main.scss */
 .header,
 .marketing,
 .footer {
@@ -297,76 +306,133 @@ button {
 
 /* GENERAL SETTINGS */
 /* buttons */
-/* line 54, ../../app/styles/main.scss */
+/* line 65, ../../app/styles/main.scss */
 .buttons, #fullpage button, .login button {
-  background-color: #58a4b0;
-  border: solid 1px #58a4b0;
+  background-color: #dce1de;
+  border: solid 1px #dce1de;
+  color: #49a078;
   padding: 20px 0px;
   font-size: 20px;
   margin-top: 30px;
   margin-bottom: 20px;
   transition: all 200ms linear;
 }
-/* line 62, ../../app/styles/main.scss */
+/* line 74, ../../app/styles/main.scss */
 .buttons:hover, #fullpage button:hover, .login button:hover {
-  background-color: #60B2BF;
-  border: 1px solid #60B2BF;
-  opacity: 0.8;
+  color: #49a078;
+  background-color: #D7DAE1;
+  border: 1px solid #D7DAE1;
+  opacity: 0.7;
 }
 
 /* introduction */
-/* line 77, ../../app/styles/main.scss */
-#fullpage h1 {
-  font-size: 50px;
-  font-weight: 300;
-}
-/* line 81, ../../app/styles/main.scss */
+/* line 90, ../../app/styles/main.scss */
 #fullpage button {
   padding: 20px 160px;
 }
 
-/* line 87, ../../app/styles/main.scss */
+/* line 96, ../../app/styles/main.scss */
 .first-section {
-  background-image: url("../images/bg-polygons.svg"), linear-gradient(to top, #58a4b0 0%, #d8dbe2 90%);
+  background: url("../images/paintball22.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
-/* line 89, ../../app/styles/main.scss */
-.first-section h1 {
-  color: #d8dbe2;
+/* line 102, ../../app/styles/main.scss */
+.first-section img {
+  font-family: "Black Ops One", cursive;
+  color: #dce1de;
+  font-size: 100px;
+}
+/* line 107, ../../app/styles/main.scss */
+.first-section h2, .first-section h1 {
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
+  font-family: "Montserrat", sans-serif;
+  padding: 10px;
+  color: #dce1de;
+}
+/* line 114, ../../app/styles/main.scss */
+.first-section .img-container {
+  margin-top: 20%;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* line 94, ../../app/styles/main.scss */
+/* line 120, ../../app/styles/main.scss */
+.first-heading {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* line 124, ../../app/styles/main.scss */
 .second-section {
-  background-color: #d8dbe2;
+  background-color: #1f2421;
+}
+/* line 126, ../../app/styles/main.scss */
+.second-section h1 {
+  color: #dce1de;
+  font-weight: 700;
+}
+/* line 130, ../../app/styles/main.scss */
+.second-section h2 {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #D7DAE1;
 }
 
-/* line 98, ../../app/styles/main.scss */
+/* line 136, ../../app/styles/main.scss */
 .third-section {
-  background: #a9bcd0;
+  background: #474F4D;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 22px;
+  color: #D7DAE1;
 }
-/* line 100, ../../app/styles/main.scss */
+/* line 141, ../../app/styles/main.scss */
 .third-section h1 {
-  color: #EAEEF5;
+  font-family: "Black Ops One", cursive;
+  color: #D7DAE1;
+  font-size: 48px;
+  padding-bottom: 40px;
 }
-/* line 103, ../../app/styles/main.scss */
+/* line 147, ../../app/styles/main.scss */
+.third-section h4 {
+  position: absolute;
+  bottom: 20px;
+  left: 47%;
+  color: #dce1de;
+  border-bottom: 3px solid #dce1de;
+}
+/* line 153, ../../app/styles/main.scss */
+.third-section h4:hover {
+  color: #D7DAE1;
+}
+/* line 157, ../../app/styles/main.scss */
 .third-section p {
   font-size: 14px;
 }
+/* line 160, ../../app/styles/main.scss */
+.third-section span {
+  cursor: pointer;
+  transition: all 200ms linear;
+}
+/* line 163, ../../app/styles/main.scss */
+.third-section span:hover {
+  color: #93A2B0;
+}
 
 /* Login */
-/* line 115, ../../app/styles/main.scss */
+/* line 176, ../../app/styles/main.scss */
 .login {
   margin-top: 5%;
-  background-color: #d8dbe2;
-  border-top: 10px solid #58a4b0;
+  background-color: #D7DAE1;
+  border-top: 10px solid #216869;
   padding-bottom: 30px;
+  box-shadow: 5px 5px 5px #C3BCBC;
 }
-/* line 120, ../../app/styles/main.scss */
+/* line 182, ../../app/styles/main.scss */
 .login h2 {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 300;
   margin: 35px 0;
+  color: #1f2421;
 }
-/* line 125, ../../app/styles/main.scss */
+/* line 188, ../../app/styles/main.scss */
 .login input {
   height: auto;
   background-color: rgba(240, 240, 240, 0.8);
@@ -374,29 +440,45 @@ button {
   border-radius: 3px;
   font-size: 18px;
 }
+/* line 195, ../../app/styles/main.scss */
+.login a {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #474F4D;
+}
+
+/* line 201, ../../app/styles/main.scss */
+.login button {
+  background-color: #93A2B0;
+  color: #dce1de;
+}
+/* line 205, ../../app/styles/main.scss */
+.login button:hover {
+  background-color: #216869;
+  color: #dce1de;
+}
 
 /* Registration */
-/* line 145, ../../app/styles/main.scss */
+/* line 219, ../../app/styles/main.scss */
 .register {
   margin-bottom: 100px;
 }
 
-/* line 149, ../../app/styles/main.scss */
+/* line 223, ../../app/styles/main.scss */
 .pass-opacity {
   cursor: pointer;
 }
 
 /* Navigation */
-/* line 162, ../../app/styles/main.scss */
+/* line 236, ../../app/styles/main.scss */
 .menu-container {
   position: relative;
   display: block;
   height: 70px;
   width: 100%;
   margin: 0 auto;
-  background-color: #373f51;
+  background-color: #474F4D;
 }
-/* line 170, ../../app/styles/main.scss */
+/* line 244, ../../app/styles/main.scss */
 .menu-container .menu-container__icon {
   position: relative;
   height: 40px;
@@ -406,84 +488,85 @@ button {
   cursor: pointer;
   transition: all 200ms ease-in-out;
 }
-/* line 179, ../../app/styles/main.scss */
+/* line 253, ../../app/styles/main.scss */
 .menu-container .menu-container__app {
   position: absolute;
   right: 50px;
   top: 20px;
-  color: #d8dbe2;
+  color: #dce1de;
 }
-/* line 184, ../../app/styles/main.scss */
+/* line 258, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login {
   display: relative;
   display: inline-block;
   font-size: 16px;
 }
-/* line 188, ../../app/styles/main.scss */
+/* line 262, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login a {
-  color: #d8dbe2;
+  font-family: "Montserrat", sans-serif;
+  color: #dce1de;
   padding-right: 30px;
   transition: all 150ms linear;
 }
-/* line 192, ../../app/styles/main.scss */
+/* line 267, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login a:hover {
   text-decoration: none;
-  color: #58a4b0;
+  color: #93A2B0;
 }
-/* line 197, ../../app/styles/main.scss */
+/* line 272, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login span {
   padding-right: 2px;
 }
 
 /* Navigation -- icon */
-/* line 205, ../../app/styles/main.scss */
+/* line 280, ../../app/styles/main.scss */
 .menu-container__icon:hover > .menu-icon {
-  border-top: 6px solid #EAEEF5;
+  border-top: 6px solid #D7DAE1;
 }
 
-/* line 208, ../../app/styles/main.scss */
+/* line 283, ../../app/styles/main.scss */
 .menu-icon {
   position: absolute;
-  border-top: 6px solid #d8dbe2;
+  border-top: 6px solid #dce1de;
   width: 100%;
   left: 0;
   transition: all 200ms ease-in-out;
 }
 
-/* line 215, ../../app/styles/main.scss */
+/* line 290, ../../app/styles/main.scss */
 .menu-icon--top {
   top: 0;
 }
 
-/* line 218, ../../app/styles/main.scss */
+/* line 293, ../../app/styles/main.scss */
 .menu-icon--middle {
   top: 13px;
 }
 
-/* line 221, ../../app/styles/main.scss */
+/* line 296, ../../app/styles/main.scss */
 .menu-icon--bottom {
   top: 26px;
 }
 
-/* line 225, ../../app/styles/main.scss */
+/* line 300, ../../app/styles/main.scss */
 .menu-rotate {
   transform: rotateY(-180deg);
   transition: all 200ms ease-in-out;
 }
 
-/* line 230, ../../app/styles/main.scss */
+/* line 305, ../../app/styles/main.scss */
 .menu-top-action {
   top: 15px;
   transform: rotate(45deg);
   transition: all 150ms linear;
 }
 
-/* line 235, ../../app/styles/main.scss */
+/* line 310, ../../app/styles/main.scss */
 .menu-middle-action {
   opacity: 0;
 }
 
-/* line 238, ../../app/styles/main.scss */
+/* line 313, ../../app/styles/main.scss */
 .menu-bottom-action {
   top: 15px;
   transform: rotate(-45deg);
@@ -491,24 +574,24 @@ button {
 }
 
 /* Navigation -- Flip */
-/* line 245, ../../app/styles/main.scss */
+/* line 320, ../../app/styles/main.scss */
 .flip-container {
   position: relative;
   width: 100%;
   height: 100%;
   perspective: 1000;
 }
-/* line 251, ../../app/styles/main.scss */
+/* line 326, ../../app/styles/main.scss */
 .flip-container .front {
   z-index: 2;
   transform: rotateY(0deg);
 }
-/* line 255, ../../app/styles/main.scss */
+/* line 330, ../../app/styles/main.scss */
 .flip-container .back {
   transform: rotateY(180deg);
 }
 
-/* line 260, ../../app/styles/main.scss */
+/* line 335, ../../app/styles/main.scss */
 .front, .back {
   backface-visibility: hidden;
   height: 100%;
@@ -516,7 +599,7 @@ button {
   width: 100%;
 }
 
-/* line 267, ../../app/styles/main.scss */
+/* line 342, ../../app/styles/main.scss */
 .flip-inner {
   width: 100%;
   height: 100%;
@@ -530,51 +613,53 @@ button {
   transition: 400ms;
 }
 
-/* line 281, ../../app/styles/main.scss */
+/* line 356, ../../app/styles/main.scss */
 .flip-inner-action {
   transform: rotateY(-180deg);
 }
 
 /*Navigation -- list */
-/* line 287, ../../app/styles/main.scss */
+/* line 362, ../../app/styles/main.scss */
 .back nav ul {
   list-style: none;
   text-align: center;
   font-size: 24px;
   padding-left: 0;
 }
-/* line 293, ../../app/styles/main.scss */
+/* line 368, ../../app/styles/main.scss */
 .back nav ul li {
   padding: 20px;
   width: 100%;
   color: white;
   border-bottom: 2px solid rgba(240, 240, 240, 0.4);
 }
-/* line 299, ../../app/styles/main.scss */
+/* line 374, ../../app/styles/main.scss */
 .back nav ul li:last-child {
   border: none;
 }
-/* line 303, ../../app/styles/main.scss */
+/* line 378, ../../app/styles/main.scss */
 .back nav ul li:hover {
-  background-color: #d8dbe2;
+  background-color: #93A2B0;
   transition: all 400ms ease-in-out;
 }
-/* line 309, ../../app/styles/main.scss */
+/* line 384, ../../app/styles/main.scss */
 .back nav ul a {
-  padding: 20px;
-  color: #1b1b1e;
+  font-family: "Montserrat", sans-serif;
   text-decoration: none;
+  font-weight: 700;
+  padding: 20px;
+  color: #474F4D;
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  /* line 324, ../../app/styles/main.scss */
+  /* line 401, ../../app/styles/main.scss */
   .container {
     max-width: 730px;
   }
 
   /* Remove the padding we set earlier */
-  /* line 329, ../../app/styles/main.scss */
+  /* line 406, ../../app/styles/main.scss */
   .header,
   .marketing,
   .footer {
@@ -583,16 +668,311 @@ button {
   }
 
   /* Space out the masthead */
-  /* line 336, ../../app/styles/main.scss */
+  /* line 413, ../../app/styles/main.scss */
   .header {
     margin-bottom: 30px;
   }
 
   /* Remove the bottom border on the jumbotron for visual effect */
-  /* line 340, ../../app/styles/main.scss */
+  /* line 417, ../../app/styles/main.scss */
   .jumbotron {
     border-bottom: 0;
   }
 }
+/* New match */
+/* line 429, ../../app/styles/main.scss */
+.inputTeam, .alphaTeam input, .betaTeam input, .timer input, .matchMap input {
+  font-family: "Black Ops One", cursive;
+  font-size: 40px;
+  border: none;
+  border-bottom: 5px solid #fff;
+  background-color: transparent;
+  color: #fff;
+}
 
-/*# sourceMappingURL=main.css.map */
+/* line 438, ../../app/styles/main.scss */
+.alphaTeam {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/teamAlpha.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+/* line 447, ../../app/styles/main.scss */
+.alphaTeam input {
+  margin-top: 160px;
+  margin-left: 20%;
+}
+
+/* line 454, ../../app/styles/main.scss */
+.betaTeam {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/paintball2.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+/* line 463, ../../app/styles/main.scss */
+.betaTeam input {
+  margin-top: 160px;
+}
+
+/* line 469, ../../app/styles/main.scss */
+.timer {
+  margin-top: 100px;
+}
+/* line 471, ../../app/styles/main.scss */
+.timer input {
+  width: 100%;
+  border-bottom: 6px solid #D7DAE1;
+  font-family: "Black Ops One", cursive;
+  font-size: 60px;
+  color: #474F4D;
+}
+
+/* line 481, ../../app/styles/main.scss */
+.circle-container {
+  position: relative;
+  perspective: 1000;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+/* line 488, ../../app/styles/main.scss */
+.circle-container:hover .circle {
+  transform: rotate3d(45, 45, 0, 180deg);
+}
+
+/* line 492, ../../app/styles/main.scss */
+.circle-container:hover .outer-ring {
+  transform: rotate3d(45, 0, 0, 180deg);
+}
+
+/* line 496, ../../app/styles/main.scss */
+.circle-container:hover .outer-outer-ring {
+  transform: rotate3d(0, 45, 0, 180deg);
+}
+
+/* line 500, ../../app/styles/main.scss */
+.circle-container, .circle-front, .circle-back {
+  width: 175px;
+  height: 175px;
+  background-color: transparent;
+}
+
+/* line 506, ../../app/styles/main.scss */
+.circle, .outer-ring, .outer-outer-ring {
+  transition: 0.5s;
+  transform-style: preserve-3d;
+  transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+/* line 512, ../../app/styles/main.scss */
+.circle {
+  position: relative;
+  width: 175px;
+  height: 175px;
+}
+
+/* line 518, ../../app/styles/main.scss */
+.circle-front, .circle-back {
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* line 527, ../../app/styles/main.scss */
+.circle-front {
+  background-color: #fff;
+  z-index: 2;
+}
+
+/* line 532, ../../app/styles/main.scss */
+.circle-front p {
+  margin-top: 1.2em;
+  font-family: "Source Sans Pro", sans-serif !important;
+  font-weight: 700;
+  font-size: 3em;
+  text-align: center;
+  color: #blue;
+}
+
+/* line 541, ../../app/styles/main.scss */
+.circle-front-map p {
+  font-size: 34px;
+}
+
+/* line 545, ../../app/styles/main.scss */
+.circle-back {
+  transform: rotate3d(45, 45, 0, 180deg);
+  background-color: #fff;
+}
+
+/* line 550, ../../app/styles/main.scss */
+.back-logo {
+  width: 60%;
+  display: block;
+  margin: 2em auto;
+}
+
+/* line 556, ../../app/styles/main.scss */
+.outer-ring {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  width: 191px;
+  height: 191px;
+  background-color: rgba(255, 255, 255, 0);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* line 568, ../../app/styles/main.scss */
+.outer-outer-ring {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  width: 211px;
+  height: 211px;
+  background-color: rgba(255, 255, 255, 0);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* line 580, ../../app/styles/main.scss */
+.takeForm label {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  padding-left: 55px;
+  margin: 20px;
+  font-size: 20px;
+}
+
+/* line 590, ../../app/styles/main.scss */
+.takeForm input[type=radio] {
+  display: none;
+}
+
+/* line 594, ../../app/styles/main.scss */
+.takeForm label:before {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  margin-right: 12px;
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+  background-color: #CFCFCF;
+  box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, 0.3), 0px 1px 0px 0px rgba(255, 255, 255, 0.8);
+}
+
+/* line 610, ../../app/styles/main.scss */
+input[type=radio]:checked + label:before {
+  content: "\2022";
+  color: #216869;
+  font-size: 80px;
+  text-align: center;
+  line-height: 23px;
+}
+
+/* New map */
+/* line 625, ../../app/styles/main.scss */
+.obstacles img {
+  margin: 30px 50px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+/* line 631, ../../app/styles/main.scss */
+.bordered {
+  border: 4px solid #49a078;
+  border-radius: 8px;
+}
+
+/* line 636, ../../app/styles/main.scss */
+.matchMap {
+  margin-bottom: 70px;
+}
+/* line 638, ../../app/styles/main.scss */
+.matchMap input {
+  width: 100%;
+  border-bottom: 6px solid #D7DAE1;
+  font-family: "Black Ops One", cursive;
+  font-size: 40px;
+  color: #474F4D;
+}
+/* line 646, ../../app/styles/main.scss */
+.matchMap button {
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  margin-top: 20px;
+  padding: 15px 60px;
+  color: #474F4D;
+  background-color: transparent;
+  border: 3px solid #49a078;
+  transition: all 300ms ease-in-out;
+}
+/* line 655, ../../app/styles/main.scss */
+.matchMap button:hover {
+  border: 3px solid #D7DAE1;
+  background-color: #93A2B0;
+}
+
+/* line 662, ../../app/styles/main.scss */
+.MapChoice {
+  margin-top: 30px;
+}
+/* line 664, ../../app/styles/main.scss */
+.MapChoice h2 {
+  color: #474F4D;
+  font-size: 38px;
+  font-family: "Black Ops One", cursive;
+}
+
+/* Main match begin */
+/* line 678, ../../app/styles/main.scss */
+.mainMatch button {
+  font-size: 20px;
+  padding: 15px 40px;
+}
+
+/* Main match action */
+/* line 689, ../../app/styles/main.scss */
+#time {
+  position: absolute;
+  top: 5px;
+  left: 45%;
+  font-size: 65px;
+  font-family: "Black Ops One", cursive;
+  color: #D7DAE1;
+  z-index: 1000;
+}
+
+/* Statistic */
+/* line 707, ../../app/styles/main.scss */
+.statistic h1 {
+  color: #474F4D;
+  font-family: "Black Ops One", cursive;
+}
+/* line 711, ../../app/styles/main.scss */
+.statistic tr {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 20px;
+}
+/* line 716, ../../app/styles/main.scss */
+.statistic .head h1 {
+  font-size: 40px;
+}
+/* line 719, ../../app/styles/main.scss */
+.statistic .head span {
+  color: #216869;
+  font-size: 55px;
+}

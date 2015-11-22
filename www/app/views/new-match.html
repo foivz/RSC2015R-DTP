@@ -1,0 +1,61 @@
+<div class="container-fluid">
+	<form>
+		<div class="row">
+			<div class="col-md-12 alphaTeam">
+				<div class="col-md-6">
+					<div class="form-group">
+						<input type="text" name="team1" ng-model="newMatch.team1" placeholder="Team 1 Name" required/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 betaTeam">
+				<div class="col-md-6 pull-right">
+					<div class="form-group">
+						<input type="text" name="team2" ng-model="newMatch.team2" placeholder="Team 2 Name" required/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row MapChoice">
+				<h2>Choose map:</h2>
+				<table class="table">
+					<tr ng-repeat="map in newMatch.mapList">
+						<td>
+						<div class="takeForm">
+							<input type="radio" id="{{map.name}}" ng-model="newMatch.map" name="name" value="{{$index}}" required />
+							<label for="{{map.name}}"> {{map.name}} </label>
+						</div>
+						</td>
+					</tr>
+				</table>
+				<!-- <select class="form-control" ng-model="newMatch.map">
+					<option value="" disabled selected>Select Map</option>
+					<option ng-repeat="map in newMatch.mapList" value="{{$index}}">{{map.name}}</option>
+				</select>
+				<br>
+ -->			
+				<div class="form-group timer" class="text-center">
+					<input type="text" class="text-center" name="timer" ng-model="newMatch.timer" placeholder="Game time (min)" required/>
+				</div>
+				<br>
+ 				<br>
+				<div class="circle-container" ng-click="newMatch.AddMatch()">
+					<div class="outer-ring"></div>
+					<div class="circle">
+						<div class="circle-front">
+							<p>START</p>
+						</div>
+						<div class="circle-back">
+							<img class="back-logo" src="images/logo2.png" alt="The Elevation Group Logo" />
+						</div>
+					</div>
+				</div>
+				<div class="alert alert-success" ng-show="newMatch.alert" role="alert">
+					<span class="glyphicon glyphicon-ok"></span> Match created successfully
+				</div>
+				<br><br>
+			</div>
+		</div>
+	</form>
+</div>

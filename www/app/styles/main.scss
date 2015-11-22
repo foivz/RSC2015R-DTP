@@ -2,43 +2,54 @@
 @import "fullpage.js/jquery.fullPage.scss";
 // endbower
 
-$white: #d8dbe2; //rgba(216, 219, 226, 100)
-$whiteHover: #EAEEF5;
-$grey: #a9bcd0; //rgba(169, 188, 208, 100)
-$blue: #58a4b0; //rgba(88, 164, 176, 100)
-$blueHover: #60B2BF;
-$blueGrey: #373f51; //rgba(55, 63, 81, 100)
-$darkGrey: #1b1b1e; //rgba(27, 27, 30, 100)
 
-$heading: 'Montserrat', sans-serif;
-$para: 'Lato', sans-serif;
-$additional: 'Source Sans Pro', sans-serif;
+$darkGrey: #1f2421; //rgba(31, 36, 33, 100)
+$blue: #216869; //rgba(33, 104, 105, 100)
+$darkGreen: #49a078; //rgba(73, 160, 120, 100)
+$lightGreen: #93A2B0; //rgba(156, 197, 161, 100)
+$white: #dce1de; //rgba(220, 225, 222, 100)
+
+$whiteHover:  #D7DAE1;
+$grey:        #474F4D; //rgba(169, 188, 208, 100)
+
+$heading:     'Black Ops One', cursive;
+$tittilium:   'Titillium Web', sans-serif;
+$para:        'Montserrat', sans-serif;
+$additional:  'Source Sans Pro', sans-serif;
 
 h1,h2,h3,h4,h5{
-  font-family: $heading;
+  font-family: $tittilium;
+  color: $darkGreen;
 }
 
 p, input{
   font-family: $para;
   font-size: 20px;
+  color: $grey;
 }
 
 html, body{
     margin:0px;
     padding:0px;
-    background-color: $grey;
+    background-color: #c8ccc0;;
+    background-image: url("http://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
 }
 
 a{
-  color: $blueGrey;
+  color: $white;
   font-family: $heading;
   &:hover{
+    color: $whiteHover;
     text-decoration: none;
   }
 }
 
 button{
-  font-family: $heading;
+  font-family: $tittilium;
+}
+
+.container-fluid{
+  padding: 0px !important;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -52,17 +63,19 @@ button{
 /* GENERAL SETTINGS */
 /* buttons */
 .buttons{
-    background-color: $blue;
-    border: solid 1px $blue;
+    background-color: $white;
+    border: solid 1px $white;
+    color: $darkGreen;
     padding: 20px 0px;
     font-size: 20px;
     margin-top: 30px;
     margin-bottom: 20px;
     transition: all 200ms linear;
     &:hover{
-      background-color: $blueHover;
-      border: 1px solid $blueHover;
-      opacity: 0.8;
+      color: $darkGreen;
+      background-color: $whiteHover;
+      border: 1px solid $whiteHover;
+      opacity: 0.7;
     }
 }
 
@@ -74,10 +87,6 @@ button{
 
 /* introduction */
 #fullpage {
-  h1{
-    font-size: 50px;
-    font-weight: 300;
-  }
   button{
     @extend .buttons;
     padding: 20px 160px;
@@ -85,23 +94,75 @@ button{
 }
 
 .first-section{
-  background-image: url("../images/bg-polygons.svg"), linear-gradient(to top, #58a4b0 0%,#d8dbe2 90%);
-  h1{
+  background: url("../images/paintball22.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  img{
+    font-family: $heading;
     color: $white;
+    font-size: 100px;
+  }
+  h2, h1{
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+    font-family: $para;
+    padding: 10px;
+    color: $white;
+  }
+  .img-container{
+    margin-top: 20%;
+    background-color: rgba(255,255,255, 0.5);
   }
 }
 
+.first-heading{
+  background-color: rgba(255,255,255, 0.1);
+}
+
 .second-section{
-  background-color: $white;
+  background-color: $darkGrey;
+  h1{
+    color: $white;
+    font-weight: 700;
+  }
+  h2{
+    font-family: $additional;
+    color: $whiteHover;
+  }
 }
 
 .third-section{
   background: $grey;
+  font-family: $tittilium;
+  font-size: 22px;
+  color: $whiteHover;
   h1{
+    font-family: $heading;
     color: $whiteHover;
+    font-size: 48px;
+    padding-bottom: 40px;
+  }
+  h4{
+    position:absolute;
+    bottom: 20px;
+    left: 47%;
+    color: $white;
+    border-bottom: 3px solid $white;
+    &:hover{
+      color: $whiteHover;
+    }
   }
   p{
     font-size: 14px;
+  }
+  span{
+    cursor: pointer;
+    transition: all 200ms linear;
+    &:hover{
+      color: $lightGreen;
+    }
   }
 }
 
@@ -114,13 +175,15 @@ button{
 /* Login */
 .login{
   margin-top: 5%;
-  background-color: $white;
+  background-color: $whiteHover;
   border-top: 10px solid $blue;
   padding-bottom: 30px;
+  box-shadow: 5px 5px 5px #C3BCBC;
   h2{
     font-family: $additional;
     font-weight: 300;
     margin: 35px 0;
+    color: $darkGrey;
   }
   input{
     height: auto;
@@ -129,10 +192,21 @@ button{
     border-radius: 3px;
     font-size: 18px;
   }
+  a{
+    font-family: $additional;
+    color: $grey;
+  }
 }
 
 .login button{
   @extend .buttons;
+  background-color: $lightGreen;
+  color: $white;
+  &:hover{
+    background-color:$blue;
+    color: $white;
+  }
+
 }
 
 
@@ -165,7 +239,7 @@ button{
   height: 70px;
   width: 100%;
   margin: 0 auto;
-  background-color: $blueGrey;
+  background-color: $grey;
 
   .menu-container__icon {
     position: relative;
@@ -186,12 +260,13 @@ button{
       display: inline-block;
       font-size: 16px;
       a {
+        font-family: $para;
         color: $white;
         padding-right: 30px;
         transition: all 150ms linear;
         &:hover{
           text-decoration: none;
-          color: $blue;
+          color: $lightGreen;
         }
       }
       span{
@@ -301,15 +376,17 @@ button{
     }
 
     &:hover{
-      background-color: $white;
+      background-color: $lightGreen;
       transition: all 400ms ease-in-out;
     }
   }
 
   a {
-    padding: 20px;
-    color: $darkGrey;
+    font-family: $para;
     text-decoration: none;
+    font-weight: 700;
+    padding: 20px;
+    color: $grey;
   }
 }
 
@@ -339,5 +416,309 @@ button{
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+}
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* New match */
+
+.inputTeam{
+    font-family: $heading;
+    font-size: 40px;
+    border: none;
+    border-bottom: 5px solid #fff;
+    background-color: transparent;
+    color: #fff;
+}
+
+.alphaTeam{
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/teamAlpha.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  input{
+    @extend .inputTeam;
+    margin-top: 160px;
+    margin-left: 20%;
+  }
+}
+
+.betaTeam{
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/paintball2.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  input{
+    @extend .inputTeam;
+    margin-top: 160px;
+  }
+}
+
+.timer{
+  margin-top: 100px;
+  input{
+    @extend .inputTeam;
+    width: 100%;
+    border-bottom: 6px solid $whiteHover;
+    font-family: $heading;
+    font-size: 60px;
+    color: $grey;
+  }
+}
+
+.circle-container {
+  position: relative;
+  perspective: 1000;  
+  margin: 0 auto; 
+  cursor: pointer;
+}
+    
+.circle-container:hover .circle {
+  transform: rotate3d(45, 45, 0, 180deg);
+}
+    
+.circle-container:hover .outer-ring {
+  transform: rotate3d(45, 0, 0, 180deg);
+}
+
+.circle-container:hover .outer-outer-ring {
+  transform: rotate3d(0, 45, 0, 180deg);
+}
+    
+.circle-container, .circle-front, .circle-back {
+  width: 175px;
+  height: 175px;
+  background-color: rgba(0,0,0,0);
+}
+    
+.circle, .outer-ring, .outer-outer-ring {
+  transition: 0.5s;
+  transform-style: preserve-3d;
+  transition-timing-function: cubic-bezier(0.785, 0.135, 0.150, 0.860);
+}
+    
+.circle {
+  position: relative;
+  width: 175px;
+  height: 175px;
+}
+    
+.circle-front, .circle-back {
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+    
+.circle-front {
+  background-color: #fff;
+  z-index: 2;
+}
+    
+.circle-front p {
+  margin-top: 1.2em;
+  font-family: $additional !important;
+  font-weight: 700;
+  font-size: 3em;
+  text-align: center;
+  color: #blue;
+}
+
+.circle-front-map p{
+  font-size: 34px;
+}
+    
+.circle-back {
+  transform: rotate3d(45,45,0,180deg);
+  background-color: #fff;
+}
+    
+.back-logo {
+  width: 60%;
+  display: block;
+  margin: 2em auto;
+}
+    
+.outer-ring {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  width: 191px;
+  height: 191px;
+  background-color: rgba(255,255,255,0);
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+}
+
+.outer-outer-ring {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  width: 211px;
+  height: 211px;
+  background-color: rgba(255,255,255,0);
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+}
+
+.takeForm label{
+  display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 55px;
+    margin: 20px;
+
+    font-size: 20px;
+}
+
+.takeForm input[type=radio] {
+    display: none;
+}
+
+.takeForm label:before {
+    content: "";
+    display: inline-block;
+ 
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+ 
+    margin-right: 12px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    background-color: #CFCFCF;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+}
+
+input[type=radio]:checked + label:before {
+    content: "\2022";
+    color: $blue;
+    font-size: 80px;
+    text-align: center;
+    line-height: 23px;
+}
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* New map */
+.obstacles {
+  img{
+    margin: 30px 50px;
+    padding: 5px;
+    cursor: pointer;
+  }
+}
+.bordered{
+  border: 4px solid $darkGreen;
+  border-radius: 8px;
+}
+
+.matchMap{
+  margin-bottom: 70px;
+  input{
+    @extend .inputTeam;
+    width: 100%;
+    border-bottom: 6px solid $whiteHover;
+    font-family: $heading;
+    font-size: 40px;
+    color: $grey;
+  }
+  button{
+    font-family: $para;
+    font-size: 22px;
+    margin-top: 20px;
+    padding: 15px 60px;
+    color: $grey;
+    background-color: transparent;
+    border: 3px solid $darkGreen;
+    transition: all 300ms ease-in-out;
+    &:hover{
+      border: 3px solid $whiteHover;
+      background-color: $lightGreen;
+    }
+  }
+}
+
+.MapChoice{
+  margin-top: 30px;
+  h2{
+    color: $grey;
+    font-size: 38px;
+    font-family: $heading;
+  }
+}
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* Main match begin */
+
+.mainMatch{
+  button{
+    font-size: 20px;
+    padding: 15px 40px;
+  }
+}
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* Main match action */
+#time{
+  position: absolute;
+  top: 5px;
+  left: 45%;
+  font-size: 65px;
+  font-family: $heading;
+  color: $whiteHover;
+  z-index: 1000;
+}
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* Statistic */
+
+.statistic{
+  h1{
+    color: $grey;
+    font-family: $heading;
+  }
+  tr{
+    font-family: $additional;
+    font-size: 20px;
+  }
+  .head {
+    h1{
+      font-size: 40px;
+    }
+    span{
+      color: $blue;
+      font-size: 55px;
+    }
   }
 }

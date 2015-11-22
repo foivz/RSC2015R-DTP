@@ -54,12 +54,9 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:8.3.0'
     compile 'com.google.android.gms:play-services-location:8.3.0'
 
-    //pubnub voice chat
-    compile 'com.pubnub:pubnub-android:3.7.5'
     // design android
     compile 'com.android.support:design:23.1.1'
-   //animateswitch
-    compile 'com.github.glomadrian:MaterialAnimatedSwitch:1.1@aar'
+
 
     compile project(':model')
     compile project(':core')

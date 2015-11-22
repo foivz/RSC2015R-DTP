@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -60,15 +63,29 @@ public class GameFragment extends Fragment implements
         setRetainInstance(true);
         myTeam = SessionManager.getInstance(this.getContext()).retrieveSession("team", Team.class);
 
-        t = new Timer();
-        t.schedule(locations, 1000, 1000);
+        if(savedInstanceState == null) {
+            t = new Timer();
+            t.schedule(locations, 1000, 1000);
+        }
         buildGoogleApiClient();
     }
+
+    private static View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_game, container, false);
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.fragment_game, container, false);
+        } catch (InflateException e) {
+
+        }
+        return view;
     }
 
     @Override
@@ -101,6 +118,12 @@ public class GameFragment extends Fragment implements
         Person self = SessionManager.getInstance(this.getContext()).retrieveSession("person", Person.class);
         self.setLat(location.getLatitude());
         self.setLng(location.getLongitude());
+        CameraUpdate center=
+                CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),
+                        location.getLongitude()));
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo(18);
+        mMap.moveCamera(center);
+        mMap.animateCamera(zoom);
         ServiceParams params = new ServiceParams(getString(R.string.game_path) + "personLocation", HttpMethod.PUT, self);
         new ServiceAsyncTask(dummy).execute(params);
     }
@@ -167,9 +190,12 @@ public class GameFragment extends Fragment implements
                 Type listType = new TypeToken<ArrayList<Person>>() {
                 }.getType();
                 ArrayList<Person> teamMembers = new Gson().fromJson(response.getJsonResponse(), listType);
-                for(Person p: teamMembers) {
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(p.getLat(),
-                            p.getLng())).title(p.getName() + " " + p.getSurname()));
+                if(teamMembers != null && teamMembers.size() != 0) {
+                    mMap.clear();
+                    for (Person p : teamMembers) {
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(p.getLat(),
+                                p.getLng())).title(p.getName() + " " + p.getSurname()));
+                    }
                 }
             }
             return true;
@@ -193,5 +219,12 @@ public class GameFragment extends Fragment implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onStop() {
+        t.cancel();
+        t.purge();
+        super.onStop();
     }
 }

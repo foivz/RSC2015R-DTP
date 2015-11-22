@@ -1,0 +1,23 @@
+<div class="container statistic">
+	<br>
+	<br>
+	<div class="text-center head">
+		<img src="images/statistic.png" alt="" width="500px">
+		<h1>WINNER IS <span>BLUE</span> TEAM</h1>
+	</div>
+	<br>
+	<br>
+	<h1>Killers and Score</h1>
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th>Kill</th>
+			<th>Death</th>
+		</tr>
+		<tr ng-repeat="stat in statistic.stat">
+			<td>{{stat.name}}</td>
+			<td>{{stat.kill}}</td>
+			<td>{{stat.death}}</td>
+		</tr>
+	</table>
+</div>

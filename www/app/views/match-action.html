@@ -1,0 +1,56 @@
+<span id="time">05:00</span>
+<div class="container-fluid">
+	<div id="matchMap" style="width: 100%; height: 400px;"></div>
+</div>
+<div class="mainMatch">
+	<div class="col-md-4">
+		<h2>{{matchAction.team1.idTeam + " " + matchAction.team1.name}}</h2>
+		<table class="table">
+			<tr>
+				<th>No.</th>
+				<th>Name</th>
+				<th>Kill</th>
+				<th>Death</th>
+			</tr>
+			<tr ng-repeat="people in matchAction.team1People">
+				<td>{{$index+1}}</td>
+				<td>{{people.name + " " + people.surname}}</td>
+				<td>{{people.kill}}</td>
+				<td>{{people.death}}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-4">
+		<h2>{{matchAction.team2.idTeam + " " + matchAction.team2.name}}</h2>
+		<table class="table">
+			<tr>
+				<th>No.</th>
+				<th>Name</th>
+				<th>Kill</th>
+				<th>Death</th>
+			</tr>
+			<tr ng-repeat="people in matchAction.team2People">
+				<td>{{$index+1}}</td>
+				<td>{{people.name + " " + people.surname}}</td>
+				<td>{{people.kill}}</td>
+				<td>{{people.death}}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-4">
+		<h2>Notifications</h2>
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+	<div class="container text-center">
+		<button ng-click="matchAction.EndGame()" class="btn btn-info">END</button>
+	</div>
+	<!-- <button class="btn btn-default"><img src="images/chip.png" width="30px" alt=""> Place a bet</button> -->
+</div>

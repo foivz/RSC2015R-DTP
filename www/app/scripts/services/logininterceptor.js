@@ -13,7 +13,7 @@ angular.module('webAngularTemplateApp')
       var interceptor = {
         request: function(config){
           if($window.sessionStorage['token']){
-            config.headers['x-session-token'] = $window.sessionStorage['access_token'];
+            config.headers['Authorization'] = "Bearer " + $window.sessionStorage['access_token'];
           }
           return config;
         }

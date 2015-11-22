@@ -1,21 +1,57 @@
-<div class="text-center">
+<div class="text-center" ng-controller="MatchCtrl as match">
 	<div id="fullpage">
 		<div class="section first-section">
-			<h1>Application name</h1>
-			<p>Application for doing something nasty</p>
+			<div class="img-container">
+				<img src="images/logo.png" alt="" width="400px">
+			</div>
 		</div>
 		<div class="section second-section">
 			<div class="row">
-				<div class="col-md-4">A</div>
-				<div class="col-md-4">B</div>
-				<div class="col-md-4">C</div>
+				<div class="col-md-4">
+					<img src="images/aim.png" alt="" width="200px">
+					<h2>AIM FOR VICTORY</h2>
+				</div>
+				<div class="col-md-4">
+					<img src="images/paintbal.png" alt="" width="330px">
+					<h2>nešta</h2>
+				</div>
+				<div class="col-md-4">
+					<img src="images/multiplayer.png" alt="" width="200px">
+					<h2>PLAY WITH FRIENDS</h2>
+				</div>
 			</div>
 		</div>
 		<div class="section third-section">
-			<h1>Ready to roll?</h1>
-			<a ng-href="#/login"><button class="btn btn-primary btn-lg"></span> GET STARTED</button></a>
-			<a ng-href="#/register"><p>Don't have an account? Sign up</p></a>
-
+			<h1>WATCH GAME LIVE</h1>
+			<div class="container">
+				<table class="table">
+					<tr class="text-center">
+						<th>No.</th>
+						<th>Team 1</th>
+						<th>Team 2</th>
+						<th>Map</th>
+						<th>WATCH GAME</th>
+					</tr>
+					<tr class="text-left" ng-repeat="match in match.Matches" ng-show="match.ready">
+						<td>{{$index+1}}.</td>
+						<td>{{match.team[0].name}}</td>
+						<td>{{match.team[1].name}}</td>
+						<td>{{match.map.name}}</td>
+						<td>
+							<a href="#main">
+							<span 
+							class="glyphicon glyphicon-play" 
+							match-id-traversal 
+							data-matchID="{{match.idGame}}">
+							</span>
+							</a>
+						</td>
+					</tr>
+				</table>
+				<a href="#/login">
+					<h4>JUDGE LOGIN</h4>
+				</a>
+			</div>
 		</div>
 	</div>
 </div>

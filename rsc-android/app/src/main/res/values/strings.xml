@@ -18,6 +18,9 @@
     <string name="confirm_password">Confirm password</string>
     <string name="submit">Submit</string>
 
+    <string name="leave_match">Leave match?</string>
+    <string name="leave">Leave</string>
+
     <!-- errors -->
     <string name="username_error">Username can only contain letters (min 5, max 45)</string>
     <string name="password_error">"Password too short or too long (min 5, max 45)"</string>
@@ -42,4 +45,7 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_killed">Killed - wait for next round</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
