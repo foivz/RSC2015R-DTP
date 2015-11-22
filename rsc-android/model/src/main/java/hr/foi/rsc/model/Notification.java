@@ -11,7 +11,7 @@ public class Notification implements Serializable {
     String name;
     long idTeam;
     long idPerson;
-    int read;
+    int readed;
 
     public long getIdNotification() {
         return idNotification;
@@ -45,11 +45,11 @@ public class Notification implements Serializable {
         this.idPerson = idPerson;
     }
 
-    public int getRead() {
-        return read;
+    public int getReaded() {
+        return readed;
     }
 
-    public void setRead(int read) {
-        this.read = read;
+    public void setReaded(int readed) {
+        this.readed = readed;
     }
 }

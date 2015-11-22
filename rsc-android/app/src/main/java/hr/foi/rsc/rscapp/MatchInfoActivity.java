@@ -3,10 +3,12 @@ package hr.foi.rsc.rscapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -142,10 +144,17 @@ public class MatchInfoActivity extends AppCompatActivity {
 
         @Override
         public boolean handleResponse(ServiceResponse response) {
-            //if(response.getHttpCode() == 200) {
+            if(response.getHttpCode() == 200) {
+                Log.i("hr.foi.debug", response.getJsonResponse());
+                Game game = new Gson().fromJson(response.getJsonResponse(), Game.class);
+                Intent play = new Intent(getApplicationContext(), PlayGameActivity.class);
+                play.putExtra("gameid", game.getIdGame());
+                play.putExtra("gamecode", game.getCode());
                 stopTimers();
-                startActivity(new Intent(getApplicationContext(), PlayGameActivity.class));
-            //}
+                startActivity(play);
+            } else {
+                Toast.makeText(getApplicationContext(), "Invalid match code", Toast.LENGTH_LONG).show();
+            }
             return true;
         }
 

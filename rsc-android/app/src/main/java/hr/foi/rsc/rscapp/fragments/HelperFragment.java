@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.Timer;
 
 import hr.foi.rsc.rscapp.GameOverActivity;
 import hr.foi.rsc.rscapp.KilledActivity;
@@ -28,9 +31,10 @@ public class HelperFragment extends Fragment {
     TextView seconds;
     TextView minutes;
     ImageButton dead;
+    CountDownTimer m;
     void ajmo(){
 
-        new CountDownTimer(300000, 1000) {
+        m = new CountDownTimer(300000, 1000) {
             boolean vibrating=false;
             public void onTick(long millisUntilFinished) {
                 int secondsLong = (int) (millisUntilFinished / 1000) % 60 ;
@@ -55,6 +59,16 @@ public class HelperFragment extends Fragment {
 
 
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        if(savedInstanceState == null) {
+            ajmo();
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,7 +80,7 @@ public class HelperFragment extends Fragment {
         minutes=(TextView) v.findViewById(R.id.textViewCtrMinutes);
         dead = (ImageButton) v.findViewById(R.id.imgBtnGrobar);
         dead.setOnClickListener(onGroblje);
-        ajmo();
+
         return v;
     }
     View.OnClickListener onGroblje = new View.OnClickListener() {
@@ -79,7 +93,9 @@ public class HelperFragment extends Fragment {
         }
     };
 
-
-
-
+    @Override
+    public void onStop() {
+        m.cancel();
+        super.onStop();
+    }
 }

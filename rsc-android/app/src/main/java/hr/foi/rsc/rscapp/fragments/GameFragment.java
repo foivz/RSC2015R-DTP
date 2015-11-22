@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,15 +63,29 @@ public class GameFragment extends Fragment implements
         setRetainInstance(true);
         myTeam = SessionManager.getInstance(this.getContext()).retrieveSession("team", Team.class);
 
-        t = new Timer();
-        t.schedule(locations, 1000, 1000);
+        if(savedInstanceState == null) {
+            t = new Timer();
+            t.schedule(locations, 1000, 1000);
+        }
         buildGoogleApiClient();
     }
+
+    private static View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_game, container, false);
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.fragment_game, container, false);
+        } catch (InflateException e) {
+
+        }
+        return view;
     }
 
     @Override
@@ -204,5 +219,12 @@ public class GameFragment extends Fragment implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onStop() {
+        t.cancel();
+        t.purge();
+        super.onStop();
     }
 }
