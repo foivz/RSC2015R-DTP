@@ -79,6 +79,7 @@ public class MatchInfoActivity extends AppCompatActivity {
             if(self.isReady() == 0) {
                 item.setIcon(android.R.drawable.presence_online);
                 self.setReady(1);
+                SessionManager.getInstance(this).createSession(self, "person");
             } else {
                 item.setIcon(android.R.drawable.presence_busy);
                 self.setReady(0);
