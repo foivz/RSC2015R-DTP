@@ -2,6 +2,7 @@ package hr.foi.rsc.rscapp.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -69,8 +70,10 @@ public class HelperFragment extends Fragment {
     View.OnClickListener onGroblje = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity().getApplicationContext(), KilledActivity.class);
+            Uri uri = Uri.parse("http://46.101.173.23:8080/game/2/team/3");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
+
         }
 
 
