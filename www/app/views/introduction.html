@@ -6,9 +6,12 @@
 		</div>
 		<div class="section second-section">
 			<div class="row">
-				<div class="col-md-4"><h1>Prvo</h1></div>
-				<div class="col-md-4"><h1>Drugo</h1></div>
-				<div class="col-md-4"><h1>Trece</h1></div>
+				<div class="col-md-4">
+					<img src="images/aim.png" alt="" width="200px">
+					<h2>WATCH LIVE GAMES</h2>
+				</div>
+				<div class="col-md-4"><h2>Drugo</h2></div>
+				<div class="col-md-4"><h2>Trece</h2></div>
 			</div>
 		</div>
 		<div class="section third-section">
@@ -22,7 +25,7 @@
 						<th>Map</th>
 						<th>WATCH GAME</th>
 					</tr>
-					<tr class="text-left" ng-repeat="match in match.Matches">
+					<tr class="text-left" ng-repeat="match in match.Matches" ng-show="match.ready">
 						<td>{{$index+1}}.</td>
 						<td>{{match.team[0].name}}</td>
 						<td>{{match.team[1].name}}</td>
@@ -38,6 +41,9 @@
 						</td>
 					</tr>
 				</table>
+				<a href="#/login">
+					<h4>JUDGE LOGIN</h4>
+				</a>
 			</div>
 		</div>
 	</div>

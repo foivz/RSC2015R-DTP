@@ -53,6 +53,11 @@ angular
         controller: 'MatchActionCtrl',
         controllerAs: 'matchAction'
       })
+      .when('/statistic', {
+        templateUrl: 'views/statistic.html',
+        controller: 'StatisticCtrl',
+        controllerAs: 'statistic'
+      })
       .otherwise({
         redirectTo: '/'
       });
