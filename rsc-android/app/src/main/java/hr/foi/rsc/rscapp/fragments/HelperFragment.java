@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,9 +87,17 @@ public class HelperFragment extends Fragment {
     View.OnClickListener onGroblje = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //slanje requesta za
-            Intent intent = new Intent(getActivity().getApplicationContext(), KilledActivity.class);
-            startActivity(intent);  // poziva se web view - spectate, to bi sad trebalo radit!
+            //slanje requesta za wv
+            try {
+                Intent intent = new Intent(getActivity().getApplicationContext(), KilledActivity.class);
+                startActivity(intent);  // poziva se web view - spectate, to bi sad trebalo radit!
+
+            }
+            catch (Exception e){
+                Log.i("bok", "bok");
+            }
+
+
         }
     };
 

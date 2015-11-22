@@ -1,9 +1,12 @@
 package hr.foi.rsc.rscapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.gesture.GestureOverlayView;
+import android.media.AudioManager;
+import android.os.Vibrator;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -49,12 +52,15 @@ public class PlayGameActivity extends AppCompatActivity {
     Person self;
     Team myTeam;
     ServiceParams params;
+    private AudioManager myAudioManager;
+    private static final int LONG_DELAY = 3500; // 3.5 seconds
+    private static final int SHORT_DELAY = 2000; // 2 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game2);
-
+        myAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new PageAdapter(getSupportFragmentManager()));
@@ -146,12 +152,36 @@ public class PlayGameActivity extends AppCompatActivity {
 
         @Override
         public boolean handleResponse(ServiceResponse response) {
-            Log.e("hr.foi.debug", "HELLO FROM NOTIFICATION (POPUP)" + response.getHttpCode());
-            if(response.getHttpCode() == 200) {
+            try{
+                Log.e("hr.foi.debug", "HELLO FROM NOTIFICATION (POPUP)" + response.getHttpCode());
+                if(response.getHttpCode() == 200) {
 
-                Person wat = new Gson().fromJson(response.getJsonResponse(), Person.class);
-                Toast.makeText(getApplicationContext(), wat.getName() + " " + wat.getSurname()
-                        + ": " + notification.getName(), Toast.LENGTH_LONG).show();
+
+                    // Vibrate for 500 milliseconds
+                    new Thread()
+                    {
+                        Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        public void run() {
+                            v.vibrate(1000);
+                        }
+                    }.start();
+                    new Thread()
+                    {
+                        Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        public void run() {
+                            int currentVolume = myAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                            int maxVolume = myAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                            float percent = 0.7f;
+                            int seventyVolume = (int) (maxVolume*percent);
+                            myAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, seventyVolume, 0);
+                            myAudioManager.playSoundEffect(7,1);
+                        }
+                    }.start();
+                    Person wat = new Gson().fromJson(response.getJsonResponse(), Person.class);
+                    Toast.makeText(getApplicationContext(), wat.getName() + " " + wat.getSurname()
+                            + ": " + notification.getName(), Toast.LENGTH_LONG).show();
+            }} catch (Exception e){
+                return false;
             }
             return true;
         }
