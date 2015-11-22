@@ -3,17 +3,26 @@ package hr.foi.rsc.rscapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import org.springframework.http.HttpMethod;
 
@@ -23,6 +32,7 @@ import java.util.List;
 
 import hr.foi.rsc.core.Input;
 import hr.foi.rsc.core.SessionManager;
+import hr.foi.rsc.core.prompts.InputPrompt;
 import hr.foi.rsc.model.Credentials;
 import hr.foi.rsc.model.Game;
 import hr.foi.rsc.model.Person;
@@ -155,4 +165,33 @@ public class ChooseTeamActivity extends Activity {
         }
     };
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_waiting, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.create_qr) {
+            QRCodeWriter writer = new QRCodeWriter();
+            try {
+                BitMatrix bitMatrix = writer.encode(code, BarcodeFormat.QR_CODE, 512, 512);
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                    }
+                }
+                InputPrompt prompt = new InputPrompt(this, bmp);
+                prompt.prepare("Show this to your teammate", null, 0, null, 0);
+
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
 }
