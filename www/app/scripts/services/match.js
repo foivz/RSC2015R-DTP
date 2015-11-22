@@ -37,8 +37,8 @@ angular.module('webAngularTemplateApp')
           return deferred.promise;
     };
 
-    var AddMatch = function(data){
-          var path = 'http://46.101.173.23:8080/game/' + id;
+    var AddMatch = function(data, id){
+          var path = 'http://46.101.173.23:8080/game/create/' + id;
             $http({
               method: 'POST',
               url: path,
@@ -49,6 +49,21 @@ angular.module('webAngularTemplateApp')
               deferred.reject(data);
             });
             return deferred.promise;
+    };
+
+
+    var FetchMatchTeamsPosition = function(){
+          var path = 'http://46.101.173.23:8080/game/create/' + id;
+              $http({
+                method: 'POST',
+                url: path,
+                data: data
+              }).then(function(result){
+                deferred.resolve(result);
+              }, function(data){
+                deferred.reject(data);
+              });
+              return deferred.promise;
     }
 
     return {

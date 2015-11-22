@@ -631,5 +631,116 @@ button {
     border-bottom: 0;
   }
 }
+/* New match */
+/* line 395, ../../app/styles/main.scss */
+.inputTeam, .alphaTeam input, .betaTeam input, .timer input {
+  font-family: "Black Ops One", cursive;
+  font-size: 40px;
+  border: none;
+  border-bottom: 5px solid #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+/* line 404, ../../app/styles/main.scss */
+.alphaTeam {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/teamAlpha.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+/* line 413, ../../app/styles/main.scss */
+.alphaTeam input {
+  margin-top: 160px;
+  margin-left: 20%;
+}
+
+/* line 420, ../../app/styles/main.scss */
+.betaTeam {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/paintball2.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+/* line 429, ../../app/styles/main.scss */
+.betaTeam input {
+  margin-top: 160px;
+}
+
+/* line 435, ../../app/styles/main.scss */
+.timer {
+  margin-top: 100px;
+}
+/* line 437, ../../app/styles/main.scss */
+.timer input {
+  width: auto;
+  font-family: "Montserrat", sans-serif;
+  font-size: 28px;
+  color: #19381f;
+}
+
+/* New map */
+/* line 454, ../../app/styles/main.scss */
+.obstacles img {
+  margin: 30px 50px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+/* line 460, ../../app/styles/main.scss */
+.bordered {
+  border: 4px solid #4c934c;
+  border-radius: 8px;
+}
+
+/* line 465, ../../app/styles/main.scss */
+.matchMap {
+  margin-bottom: 70px;
+}
+/* line 467, ../../app/styles/main.scss */
+.matchMap input {
+  font-family: "Black Ops One", cursive;
+  font-size: 32px;
+  border: none;
+  width: 100%;
+  background-color: transparent;
+  border-bottom: 5px solid #EAEEF5;
+}
+/* line 475, ../../app/styles/main.scss */
+.matchMap button {
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  margin-top: 20px;
+  padding: 20px 50px;
+  color: #474F4D;
+  background-color: transparent;
+  border: 3px solid #EAEEF5;
+  transition: all 300ms ease-in-out;
+}
+/* line 484, ../../app/styles/main.scss */
+.matchMap button:hover {
+  border: 3px solid #EAEEF5;
+}
+
+/* Main match begin */
+/* line 498, ../../app/styles/main.scss */
+.mainMatch button {
+  font-size: 20px;
+  padding: 15px 40px;
+}
+
+/* Main match action */
+/* line 509, ../../app/styles/main.scss */
+#time {
+  position: absolute;
+  top: 5px;
+  left: 45%;
+  font-size: 65px;
+  font-family: "Black Ops One", cursive;
+  color: #EAEEF5;
+  z-index: 1000;
+}
 
 /*# sourceMappingURL=main.css.map */

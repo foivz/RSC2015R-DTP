@@ -17,14 +17,16 @@
 				<table class="table">
 					<tr class="text-center">
 						<th>No.</th>
-						<th>Game Name</th>
-						<th>Judge</th>
+						<th>Team 1</th>
+						<th>Team 2</th>
+						<th>Map</th>
 						<th>WATCH GAME</th>
 					</tr>
 					<tr class="text-left" ng-repeat="match in match.Matches">
 						<td>{{$index+1}}.</td>
-						<td>{{match.code}}</td>
-						<td>{{match.judge.name + " " + match.judge.surname}}</td>
+						<td>{{match.team[0].name}}</td>
+						<td>{{match.team[1].name}}</td>
+						<td>{{match.map.name}}</td>
 						<td>
 							<a href="#main">
 							<span 

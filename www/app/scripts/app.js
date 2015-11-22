@@ -48,6 +48,11 @@ angular
         controller: 'MapCtrl',
         controllerAs: 'map'
       })
+      .when('/match-action', {
+        templateUrl: 'views/match-action.html',
+        controller: 'MatchActionCtrl',
+        controllerAs: 'matchAction'
+      })
       .otherwise({
         redirectTo: '/'
       });

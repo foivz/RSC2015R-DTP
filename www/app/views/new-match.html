@@ -1,15 +1,36 @@
-<div class="container">
+<div class="container-fluid">
 	<form ng-submit="newMatch.AddMatch()">
-		<div class="form-group">
-			<input type="text" name="team1" ng-model="newMatch.team1" class="form-control" placeholder="Team 1 name" required/>
+		<div class="row">
+			<div class="col-md-12 alphaTeam">
+				<div class="col-md-6">
+					<div class="form-group">
+						<input type="text" name="team1" ng-model="newMatch.team1" placeholder="Team 1 Name" required/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 betaTeam">
+				<div class="col-md-6 pull-right">
+					<div class="form-group">
+						<input type="text" name="team2" ng-model="newMatch.team2" placeholder="Team 2 Name" required/>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="form-group">
-			<input type="password" name="team2" ng-model="newMatch.team2" class="form-control" placeholder="Team 2 name" required/>
+		<div class="form-group text-center timer">
+			<input type="text" name="timer" ng-model="newMatch.timer" placeholder="Game time (minutes)" required/> 
 		</div>
-		<select class="form-control" ng-model="newMatch.map">
-		  <option ng-repeat="maps in newMatch" value="{{maps.idMap}}">{{maps.name}}</option>
-		</select>
-		<br>
-		<button class="btn btn-primary btn-block">CREATE MATCH</button>
+		<div class="container">
+			<select class="form-control" ng-model="newMatch.map">
+				<option value="" disabled selected>Select Map</option>
+				<option ng-repeat="map in newMatch.mapList" value="{{$index}}">{{map.name}}</option>
+			</select>
+			<br>
+			<br>
+			<button class="btn btn-primary btn-block">CREATE MATCH</button>
+			<div class="alert alert-success" ng-show="newMatch.alert" role="alert">
+				<span class="glyphicon glyphicon-ok"></span> Match created successfully
+			</div>
+			<br><br>
+		</div>
 	</form>
 </div>

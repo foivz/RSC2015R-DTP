@@ -384,3 +384,134 @@ button{
     border-bottom: 0;
   }
 }
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* New match */
+
+.inputTeam{
+    font-family: $heading;
+    font-size: 40px;
+    border: none;
+    border-bottom: 5px solid #fff;
+    background-color: transparent;
+    color: #fff;
+}
+
+.alphaTeam{
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/teamAlpha.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  input{
+    @extend .inputTeam;
+    margin-top: 160px;
+    margin-left: 20%;
+  }
+}
+
+.betaTeam{
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/paintball2.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  input{
+    @extend .inputTeam;
+    margin-top: 160px;
+  }
+}
+
+.timer{
+  margin-top: 100px;
+  input{
+    @extend .inputTeam;
+    width: auto;
+    font-family: $para;
+    font-size: 28px;
+    color: $green4;
+  }
+}
+
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* New map */
+.obstacles {
+  img{
+    margin: 30px 50px;
+    padding: 5px;
+    cursor: pointer;
+  }
+}
+.bordered{
+  border: 4px solid $green3;
+  border-radius: 8px;
+}
+
+.matchMap{
+  margin-bottom: 70px;
+  input{
+    font-family: $heading;
+    font-size: 32px;
+    border: none;
+    width: 100%;
+    background-color: transparent;
+    border-bottom: 5px solid $whiteHover;
+  }
+  button{
+    font-family: $para;
+    font-size: 22px;
+    margin-top: 20px;
+    padding: 20px 50px;
+    color: $grey;
+    background-color: transparent;
+    border: 3px solid $whiteHover;
+    transition: all 300ms ease-in-out;
+    &:hover{
+      border: 3px solid $whiteHover;
+    }
+  }
+}
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* Main match begin */
+
+.mainMatch{
+  button{
+    font-size: 20px;
+    padding: 15px 40px;
+  }
+}
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* Main match action */
+#time{
+  position: absolute;
+  top: 5px;
+  left: 45%;
+  font-size: 65px;
+  font-family: $heading;
+  color: $whiteHover;
+  z-index: 1000;
+}

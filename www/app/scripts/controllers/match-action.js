@@ -2,13 +2,14 @@
 
 /**
  * @ngdoc function
- * @name webAngularTemplateApp.controller:MainCtrl
+ * @name webAngularTemplateApp.controller:MatchActionCtrl
  * @description
- * # MainCtrl
+ * # MatchActionCtrl
  * Controller of the webAngularTemplateApp
  */
 angular.module('webAngularTemplateApp')
-  .controller('MainCtrl', ['$rootScope', 'match', '$http', '$location', function ($rootScope, match, $http, $location) {
+  .controller('MatchActionCtrl', ['$rootScope', 'match', '$http', function ($rootScope, match, $http) {
+    
   	var controller = this;
   	controller.team1People = [];
   	controller.team2People = [];
@@ -88,6 +89,7 @@ angular.module('webAngularTemplateApp')
 			controller.team2 = data.team[1];
 			console.log(data);
 			controller.ping();
+			controller.Timer(60 * data.timer, $('#time'));
 		})
 
 	controller.ping = function(){
@@ -115,24 +117,32 @@ angular.module('webAngularTemplateApp')
 		}, 3000);
 	}
 
-	controller.StartMatch = function(){
-		var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/start';
-			$http.post(path)
+	controller.Timer = function(duration, display){
+	    var timer = duration, minutes, seconds;
+	    var secToSend;
+	    setInterval(function () {
+	        minutes = parseInt(timer / 60, 10)
+	        seconds = parseInt(timer % 60, 10);
+
+	        secToSend = minutes*60 + seconds;
+	        path = 'http://46.101.173.23:8080/' + $rootScope.Match.idGame + '/timer/' + secToSend;
+	        console.log(path);
+			$http.put(path)
 				.success(function(data){
 					console.log(data);
-					$location.url('/match-action');
 				}).error(function(data){
 					console.log(data);
-				})
+			})
+
+	        minutes = minutes < 10 ? "0" + minutes : minutes;
+	        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	        display.text(minutes + ":" + seconds);
+
+	        if (--timer < 0) {
+	            timer = duration;
+	        }
+	    }, 1000);
 	}
-	//gameID/team/teamID
-
-	// match.FetchMatchByID($rootScope.Match.idGame)
-	// 	.then(function(data){
-	// 		console.log(data);
-	// 	}, function(){
-	// 		console.log("Error");
-	// 	})
-
 
   }]);
