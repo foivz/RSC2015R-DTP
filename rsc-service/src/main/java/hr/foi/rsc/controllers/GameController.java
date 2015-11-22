@@ -196,6 +196,8 @@ public class GameController {
         
     }
     
+    
+    
     @RequestMapping(value="/{id}/end", method = RequestMethod.GET)
     public ResponseEntity<List<Person>> endGame(@PathVariable("id") long id){
         
