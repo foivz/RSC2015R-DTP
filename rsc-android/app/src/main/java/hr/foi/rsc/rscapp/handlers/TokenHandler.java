@@ -60,8 +60,6 @@ public class TokenHandler extends ResponseHandler {
                         HttpMethod.POST, credentials, sessionToken);
                 new ServiceAsyncTask(LoginHandler).execute(params);
 
-
-
                 //Intent intent = new Intent(this.context, Activity.class);
                 //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 //this.context.startActivity(intent);

@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">RSC</string>
+    <string name="action_qr">QR</string>
+
+    <string name="input_code">Input invite code here</string>
+
+    <string name="judge">Judge</string>
+    <string name="match">Match</string>
+    <string name="players">Teammates</string>
+    <string name="ready_status">Ready status:</string>
+    <string name="action_pro">Change profile</string>
 
     <!-- login and registration form -->
     <string name="first_name">First name</string>
@@ -15,6 +24,8 @@
     <string name="firstname_error">First name can only contain letters (min 3, max 45)</string>
     <string name="lastname_error">Last name can only contain letters (min 3, max 45)</string>
     <string name="matching_password_error">Passwords do not match</string>
+    <string name="code_field_empty">Code field should not be empty</string>
+    <string name="decoding_fail">Decoding result failed</string>
 
     <!-- various -->
     <string name="signin">Sign in</string>
@@ -28,4 +39,10 @@
     <string name="update_profile">Update your profile?</string>
     <string name="update">Update</string>
     <string name="map">Map</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_killed">Killed - wait for next round</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

@@ -8,4 +8,7 @@
     <string name="login_path_token">/person/login</string>
     <string name="signup_path">/person/signup</string>
     <string name="oauth_path">/oath/token</string>
+    <string name="game_path">/game/</string>
+    <string name="game_code_path">/game/getGameCode/</string>
+    <string name="team_path">/team/</string>
 </resources>

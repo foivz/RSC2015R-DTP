@@ -48,6 +48,27 @@ public class PersonController {
         return new ResponseEntity(this.personRepository.findAll(), HttpStatus.OK);
     }
     
+    @RequestMapping(value="/{id}/ready", method = RequestMethod.PUT)
+    public ResponseEntity<Person> setReady(@PathVariable("id") long id){
+        
+         Logger.getLogger("PersonController.java").log(Level.INFO,
+                "Change ready status");
+        Person found=this.personRepository.findByIdPerson(id);
+        
+        if(found!=null){
+            if(found.getReady()==1)
+                found.setReady(0);
+            else
+                found.setReady(1);
+            
+            found=this.personRepository.save(found);
+            return new ResponseEntity(found,HttpStatus.OK);
+        }
+        else
+             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        
+    }
+    
     /**
      * looks up a user and verifies password
      * @param credentials username and password

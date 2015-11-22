@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import java.io.Serializable;
 import hr.foi.rsc.core.SessionManager;
 import hr.foi.rsc.model.Person;
+import hr.foi.rsc.rscapp.JoinActivity;
 import hr.foi.rsc.rscapp.UserProfileActivity;
 import hr.foi.rsc.webservice.ServiceResponse;
 
@@ -37,7 +38,7 @@ public class LoginHandler extends ResponseHandler {
                                 + ", going into ");
 
 
-                Intent intent = new Intent(this.getContext(), UserProfileActivity.class);
+                Intent intent = new Intent(this.getContext(), JoinActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.getContext().startActivity(intent);
                 return true;
