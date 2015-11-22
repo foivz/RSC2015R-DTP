@@ -18,6 +18,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -101,6 +103,12 @@ public class GameFragment extends Fragment implements
         Person self = SessionManager.getInstance(this.getContext()).retrieveSession("person", Person.class);
         self.setLat(location.getLatitude());
         self.setLng(location.getLongitude());
+        CameraUpdate center=
+                CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),
+                        location.getLongitude()));
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo(18);
+        mMap.moveCamera(center);
+        mMap.animateCamera(zoom);
         ServiceParams params = new ServiceParams(getString(R.string.game_path) + "personLocation", HttpMethod.PUT, self);
         new ServiceAsyncTask(dummy).execute(params);
     }
@@ -167,9 +175,12 @@ public class GameFragment extends Fragment implements
                 Type listType = new TypeToken<ArrayList<Person>>() {
                 }.getType();
                 ArrayList<Person> teamMembers = new Gson().fromJson(response.getJsonResponse(), listType);
-                for(Person p: teamMembers) {
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(p.getLat(),
-                            p.getLng())).title(p.getName() + " " + p.getSurname()));
+                if(teamMembers != null && teamMembers.size() != 0) {
+                    mMap.clear();
+                    for (Person p : teamMembers) {
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(p.getLat(),
+                                p.getLng())).title(p.getName() + " " + p.getSurname()));
+                    }
                 }
             }
             return true;

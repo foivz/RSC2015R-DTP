@@ -57,6 +57,11 @@ public class JoinActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_qr_scan) {
+            /*IntentIntegrator integrator = new IntentIntegrator(this);
+            IntentIntegrator.
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+            integrator.setPrompt("Place the QR code inside the viewfinder");
+            startActivityForResult(integrator.createScanIntent(), IntentIntegrator.REQUEST_CODE);*/
             startActivityForResult(IntentIntegrator.createScanIntent(getApplicationContext(), IntentIntegrator.QR_CODE_TYPES,
                     "Place the QR code inside the viewfinder"), IntentIntegrator.REQUEST_CODE);
             return true;
@@ -121,11 +126,9 @@ public class JoinActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // ask for sign out if back is pressed
         DialogInterface.OnClickListener signOutListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SessionManager.getInstance(getApplicationContext()).destroyAll();
                 dialog.dismiss();
                 JoinActivity.super.onBackPressed();
             }
