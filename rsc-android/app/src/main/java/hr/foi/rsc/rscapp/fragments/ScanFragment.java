@@ -37,6 +37,12 @@ import hr.foi.rsc.webservice.ServiceResponseHandler;
  */
 public class ScanFragment extends Fragment {
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,7 +77,7 @@ public class ScanFragment extends Fragment {
                     Team myTeam = SessionManager.getInstance(this.getContext()).retrieveSession("team", Team.class);
                     Person self = SessionManager.getInstance(this.getContext()).retrieveSession("person", Person.class);
                     ServiceParams params = new ServiceParams("/game/" + game.getIdGame() + "/end/"
-                            + myTeam.getIdTeam() + "/user/" + self.getIdPerson(), HttpMethod.POST, null);
+                            + myTeam.getIdTeam() + "/user/" + self.getIdPerson(), HttpMethod.GET, null);
                     new ServiceAsyncTask(handler).execute(params);
 
                 } else {
@@ -93,6 +99,7 @@ public class ScanFragment extends Fragment {
         public boolean handleResponse(ServiceResponse response) {
             Intent intent = new Intent(getActivity().getApplicationContext(), GameOverActivity.class);
             startActivity(intent);
+            getActivity().finish();
             return false;
         }
 

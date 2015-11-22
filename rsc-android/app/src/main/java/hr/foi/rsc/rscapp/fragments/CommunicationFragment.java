@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -43,6 +44,12 @@ public class CommunicationFragment extends Fragment {
     Team myTeam;
     Notification notification;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,90 +63,8 @@ public class CommunicationFragment extends Fragment {
                 return gestureDetector.onTouchEvent(event);
             }
         });
-        Timer task = new Timer();
-        task.schedule(tasker, 1000, 1000);
         return v;
     }
-
-    void showNotification(Notification n) {
-        new ServiceAsyncTask(popup).execute(new ServiceParams("/person/" + n.getIdPerson(), HttpMethod.GET, null));
-        notification = n;
-    }
-
-    ServiceResponseHandler popup = new ServiceResponseHandler() {
-        @Override
-        public void onPreSend() {
-
-        }
-
-        @Override
-        public boolean handleResponse(ServiceResponse response) {
-            if(response.getHttpCode() == 200) {
-                Person wat = new Gson().fromJson(response.getJsonResponse(), Person.class);
-                AlertPrompt prompt = new AlertPrompt(getContext());
-                prompt.prepare(wat.getName() + " " + wat.getSurname() + ": " + notification.getName(), null, 0, null, 0);
-            }
-            return true;
-        }
-
-        @Override
-        public void onPostSend() {
-
-        }
-    };
-
-    TimerTask tasker = new TimerTask() {
-        @Override
-        public void run() {
-            ServiceParams params = new ServiceParams("/notification/" + self.getIdPerson()
-                    + "/team/" + myTeam.getIdTeam(), HttpMethod.GET, null);
-            new ServiceAsyncTask(newNotify).execute(params);
-        }
-    };
-
-    ServiceResponseHandler newNotify = new ServiceResponseHandler() {
-        @Override
-        public void onPreSend() {
-
-        }
-
-        @Override
-        public boolean handleResponse(ServiceResponse response) {
-            if(response.getHttpCode() == 200) {
-                Type listType = new TypeToken<ArrayList<Notification>>() {
-                }.getType();
-                ArrayList<Notification> notifications = new Gson().fromJson(response.getJsonResponse(), listType);
-                for(Notification n : notifications) {
-                    if(n.getIdPerson() != self.getIdPerson()) {
-                        showNotification(n);
-                    }
-                }
-                ServiceParams params = new ServiceParams("/notification/" + self.getIdPerson(), HttpMethod.POST, notifications);
-                new ServiceAsyncTask(new ServiceResponseHandler() {
-                    @Override
-                    public void onPreSend() {
-
-                    }
-
-                    @Override
-                    public boolean handleResponse(ServiceResponse response) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onPostSend() {
-
-                    }
-                }).execute(params);
-            }
-            return true;
-        }
-
-        @Override
-        public void onPostSend() {
-
-        }
-    };
 
     GestureDetector.SimpleOnGestureListener onGesture = new GestureDetector.SimpleOnGestureListener() {
         @Override
@@ -147,13 +72,15 @@ public class CommunicationFragment extends Fragment {
             Log.i("hr.foi.debug", "onDown HELLO");
             int fingers = e.getPointerCount();
             String message;
+            String beautyMessage;
             if(fingers == 2) {
-                message = "enemy_down";
+                beautyMessage = "Enemy_down";
             } else {
-                message = "enemy_spotted";
+                beautyMessage = "Enemy_spotted";
             }
+            Toast.makeText(getContext(), beautyMessage, Toast.LENGTH_SHORT).show();
             sendMessage(new ServiceParams("/notification/"
-                    + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/" + message, HttpMethod.POST, null));
+                    + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/" + beautyMessage, HttpMethod.POST, null));
             return true;
         }
 
@@ -161,16 +88,18 @@ public class CommunicationFragment extends Fragment {
         public boolean onDoubleTap(MotionEvent e) {
 
             Log.i("hr.foi.debug", "onDoubleTap HELLO");
+            Toast.makeText(getContext(), "Roger that", Toast.LENGTH_SHORT).show();
             sendMessage(new ServiceParams("/notification/"
-                    + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/roger_that", HttpMethod.POST, null));
+                    + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/Roger_that", HttpMethod.POST, null));
             return true;
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
             Log.i("hr.foi.debug", "onLongPress HELLO");
+            Toast.makeText(getContext(), "Need backup", Toast.LENGTH_SHORT).show();
             sendMessage(new ServiceParams("/notification/"
-                    + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/need_backup", HttpMethod.POST, null));
+                    + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/Need_backup", HttpMethod.POST, null));
 
             super.onLongPress(e);
         }
@@ -195,4 +124,9 @@ public class CommunicationFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onStop() {
+
+        super.onStop();
+    }
 }
