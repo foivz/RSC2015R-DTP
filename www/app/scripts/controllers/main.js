@@ -89,10 +89,10 @@ angular.module('webAngularTemplateApp')
 			console.log(data);
 			controller.ping();
 		})
-
+	controller.firstPing;
 	controller.ping = function(){
 		console.log("ping ping");
-		setInterval(function(){ 
+		controller.firstPing = setInterval(function(){ 
 			//var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
 			var path = 'http://46.101.173.23:8080/game/2/team/3';
 			$http.get(path)
@@ -120,6 +120,7 @@ angular.module('webAngularTemplateApp')
 			$http.post(path)
 				.success(function(data){
 					console.log(data);
+					clearInterval(controller.firstPing);
 					$location.url('/match-action');
 				}).error(function(data){
 					console.log(data);

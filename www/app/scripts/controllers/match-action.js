@@ -8,7 +8,7 @@
  * Controller of the webAngularTemplateApp
  */
 angular.module('webAngularTemplateApp')
-  .controller('MatchActionCtrl', ['$rootScope', 'match', '$http', function ($rootScope, match, $http) {
+  .controller('MatchActionCtrl', ['$rootScope', 'match', '$http', '$location', function ($rootScope, match, $http, $location) {
     
   	var controller = this;
   	controller.team1People = [];
@@ -87,7 +87,6 @@ angular.module('webAngularTemplateApp')
 			controller.DrawMap(data);
 			controller.team1 = data.team[0];
 			controller.team2 = data.team[1];
-			console.log(data);
 			controller.ping();
 			controller.Timer(60 * data.timer, $('#time'));
 		})
@@ -99,8 +98,6 @@ angular.module('webAngularTemplateApp')
 			var path = 'http://46.101.173.23:8080/game/2/team/3';
 			$http.get(path)
 				.success(function(data){
-					console.log("Tim 1");
-					console.log(data);
 					controller.team1People = data;
 				}).error(function(data){
 					console.log(data);
@@ -108,8 +105,6 @@ angular.module('webAngularTemplateApp')
 			path = 'http://46.101.173.23:8080/game/2/team/2';
 			$http.get(path)
 				.success(function(data){
-					console.log("Tim 2");
-					console.log(data);
 					controller.team2People = data;
 				}).error(function(data){
 					console.log(data);
@@ -125,13 +120,23 @@ angular.module('webAngularTemplateApp')
 	        seconds = parseInt(timer % 60, 10);
 
 	        secToSend = minutes*60 + seconds;
-	        path = 'http://46.101.173.23:8080/' + $rootScope.Match.idGame + '/timer/' + secToSend;
-	        console.log(path);
-			$http.put(path)
+	        var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/timer/' + secToSend;
+	        console.log(secToSend);
+			$http.post(path)
 				.success(function(data){
 					console.log(data);
 				}).error(function(data){
-					console.log(data);
+					//path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/end';
+					path = 'http://46.101.173.23:8080/game/2/end';
+			        console.log(path);
+					$http.get(path)
+						.success(function(data){
+							$rootScope.statistics = data;
+							console.log(data);
+							//$location.url('/new-match');
+						}).error(function(data){
+							console.log("Error end");
+					})
 			})
 
 	        minutes = minutes < 10 ? "0" + minutes : minutes;
