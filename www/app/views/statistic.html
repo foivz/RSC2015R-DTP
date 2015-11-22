@@ -1,0 +1,15 @@
+<div class="container statistic">
+	<h1>Best Killers</h1>
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th>Kill</th>
+			<th>Death</th>
+		</tr>
+		<tr ng-repeat="stat in statistic.stat">
+			<td>{{stat.name}}</td>
+			<td>{{stat.kill}}</td>
+			<td>{{stat.death}}</td>
+		</tr>
+	</table>
+</div>

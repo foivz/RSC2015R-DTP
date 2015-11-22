@@ -3,18 +3,14 @@
 // endbower
 
 
-$yellow: #eee82c; //rgba(238, 232, 44, 100)
-$green1: #91cb3e; //rgba(145, 203, 62, 100)
-$green2: #53a548; //rgba(83, 165, 72, 100)
-$green3: #4c934c; //rgba(76, 147, 76, 100)
-$green4: #19381f; //rgba(25, 56, 31, 100)
+$darkGrey: #1f2421; //rgba(31, 36, 33, 100)
+$blue: #216869; //rgba(33, 104, 105, 100)
+$darkGreen: #49a078; //rgba(73, 160, 120, 100)
+$lightGreen: #93A2B0; //rgba(156, 197, 161, 100)
+$white: #dce1de; //rgba(220, 225, 222, 100)
 
-
-$white:       #d8dbe2; //rgba(216, 219, 226, 100)
-$whiteHover:  #EAEEF5;
+$whiteHover:  #D7DAE1;
 $grey:        #474F4D; //rgba(169, 188, 208, 100)
-$blueHover:   #60B2BF;
-$blueGrey:    #373f51; //rgba(55, 63, 81, 100)
 
 $heading:     'Black Ops One', cursive;
 $tittilium:   'Titillium Web', sans-serif;
@@ -23,7 +19,7 @@ $additional:  'Source Sans Pro', sans-serif;
 
 h1,h2,h3,h4,h5{
   font-family: $tittilium;
-  color: $green4;
+  color: $darkGreen;
 }
 
 p, input{
@@ -35,7 +31,8 @@ p, input{
 html, body{
     margin:0px;
     padding:0px;
-    background-color: $white;
+    background-color: #c8ccc0;;
+    background-image: url("http://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
 }
 
 a{
@@ -68,16 +65,17 @@ button{
 .buttons{
     background-color: $white;
     border: solid 1px $white;
-    color: $green4;
+    color: $darkGreen;
     padding: 20px 0px;
     font-size: 20px;
     margin-top: 30px;
     margin-bottom: 20px;
     transition: all 200ms linear;
     &:hover{
+      color: $darkGreen;
       background-color: $whiteHover;
       border: 1px solid $whiteHover;
-      opacity: 0.8;
+      opacity: 0.7;
     }
 }
 
@@ -96,7 +94,7 @@ button{
 }
 
 .first-section{
-  background: url("../images/paintball2.jpg") no-repeat center center fixed;
+  background: url("../images/paintball22.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -116,9 +114,13 @@ button{
 }
 
 .second-section{
-  background-color: $green4;
+  background-color: $darkGrey;
   h1{
     color: $white;
+    font-weight: 700;
+  }
+  h2{
+    color: $whiteHover;
   }
 }
 
@@ -133,6 +135,16 @@ button{
     font-size: 48px;
     padding-bottom: 40px;
   }
+  h4{
+    position:absolute;
+    bottom: 20px;
+    left: 47%;
+    color: $white;
+    border-bottom: 3px solid $white;
+    &:hover{
+      color: $whiteHover;
+    }
+  }
   p{
     font-size: 14px;
   }
@@ -140,7 +152,7 @@ button{
     cursor: pointer;
     transition: all 200ms linear;
     &:hover{
-      color: $green1;
+      color: $lightGreen;
     }
   }
 }
@@ -154,13 +166,15 @@ button{
 /* Login */
 .login{
   margin-top: 5%;
-  background-color: $white;
-  border-top: 10px solid $green1;
+  background-color: $whiteHover;
+  border-top: 10px solid $darkGreen;
   padding-bottom: 30px;
+  box-shadow: 5px 5px 5px #C3BCBC;
   h2{
     font-family: $additional;
     font-weight: 300;
     margin: 35px 0;
+    color: $darkGrey;
   }
   input{
     height: auto;
@@ -169,10 +183,21 @@ button{
     border-radius: 3px;
     font-size: 18px;
   }
+  a{
+    font-family: $additional;
+    color: $grey;
+  }
 }
 
 .login button{
   @extend .buttons;
+  background-color: $lightGreen;
+  color: $white;
+  &:hover{
+    background-color:$darkGreen;
+    color: $white;
+  }
+
 }
 
 
@@ -205,7 +230,7 @@ button{
   height: 70px;
   width: 100%;
   margin: 0 auto;
-  background-color: $green4;
+  background-color: $grey;
 
   .menu-container__icon {
     position: relative;
@@ -232,7 +257,7 @@ button{
         transition: all 150ms linear;
         &:hover{
           text-decoration: none;
-          color: $green2;
+          color: $lightGreen;
         }
       }
       span{
@@ -342,7 +367,7 @@ button{
     }
 
     &:hover{
-      background-color: $whiteHover;
+      background-color: $lightGreen;
       transition: all 400ms ease-in-out;
     }
   }
@@ -436,13 +461,150 @@ button{
   margin-top: 100px;
   input{
     @extend .inputTeam;
-    width: auto;
-    font-family: $para;
-    font-size: 28px;
-    color: $green4;
+    width: 100%;
+    border-bottom: 6px solid $whiteHover;
+    font-family: $heading;
+    font-size: 60px;
+    color: $grey;
   }
 }
 
+.circle-container {
+  position: relative;
+  perspective: 1000;  
+  margin: 0 auto; 
+  cursor: pointer;
+}
+    
+.circle-container:hover .circle {
+  transform: rotate3d(45, 45, 0, 180deg);
+}
+    
+.circle-container:hover .outer-ring {
+  transform: rotate3d(45, 0, 0, 180deg);
+}
+
+.circle-container:hover .outer-outer-ring {
+  transform: rotate3d(0, 45, 0, 180deg);
+}
+    
+.circle-container, .circle-front, .circle-back {
+  width: 175px;
+  height: 175px;
+  background-color: rgba(0,0,0,0);
+}
+    
+.circle, .outer-ring, .outer-outer-ring {
+  transition: 0.5s;
+  transform-style: preserve-3d;
+  transition-timing-function: cubic-bezier(0.785, 0.135, 0.150, 0.860);
+}
+    
+.circle {
+  position: relative;
+  width: 175px;
+  height: 175px;
+}
+    
+.circle-front, .circle-back {
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+    
+.circle-front {
+  background-color: #fff;
+  z-index: 2;
+}
+    
+.circle-front p {
+  margin-top: 1.2em;
+  font-family: $additional !important;
+  font-weight: 700;
+  font-size: 3em;
+  text-align: center;
+  color: #blue;
+}
+
+.circle-front-map p{
+  font-size: 34px;
+}
+    
+.circle-back {
+  transform: rotate3d(45,45,0,180deg);
+  background-color: #fff;
+}
+    
+.back-logo {
+  width: 60%;
+  display: block;
+  margin: 2em auto;
+}
+    
+.outer-ring {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  width: 191px;
+  height: 191px;
+  background-color: rgba(255,255,255,0);
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+}
+
+.outer-outer-ring {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  width: 211px;
+  height: 211px;
+  background-color: rgba(255,255,255,0);
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+}
+
+.takeForm label{
+  display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 55px;
+    margin: 20px;
+
+    font-size: 20px;
+}
+
+.takeForm input[type=radio] {
+    display: none;
+}
+
+.takeForm label:before {
+    content: "";
+    display: inline-block;
+ 
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+ 
+    margin-right: 12px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    background-color: #CFCFCF;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+}
+
+input[type=radio]:checked + label:before {
+    content: "\2022";
+    color: $blue;
+    font-size: 80px;
+    text-align: center;
+    line-height: 23px;
+}
 
 
 // --------------------------------------------------------------------
@@ -458,35 +620,44 @@ button{
   }
 }
 .bordered{
-  border: 4px solid $green3;
+  border: 4px solid $darkGreen;
   border-radius: 8px;
 }
 
 .matchMap{
   margin-bottom: 70px;
   input{
-    font-family: $heading;
-    font-size: 32px;
-    border: none;
+    @extend .inputTeam;
     width: 100%;
-    background-color: transparent;
-    border-bottom: 5px solid $whiteHover;
+    border-bottom: 6px solid $whiteHover;
+    font-family: $heading;
+    font-size: 40px;
+    color: $grey;
   }
   button{
     font-family: $para;
     font-size: 22px;
     margin-top: 20px;
-    padding: 20px 50px;
+    padding: 15px 60px;
     color: $grey;
     background-color: transparent;
-    border: 3px solid $whiteHover;
+    border: 3px solid $darkGreen;
     transition: all 300ms ease-in-out;
     &:hover{
       border: 3px solid $whiteHover;
+      background-color: $lightGreen;
     }
   }
 }
 
+.MapChoice{
+  margin-top: 30px;
+  h2{
+    color: $grey;
+    font-size: 38px;
+    font-family: $heading;
+  }
+}
 
 // --------------------------------------------------------------------
 // --------------------------------------------------------------------
@@ -514,4 +685,22 @@ button{
   font-family: $heading;
   color: $whiteHover;
   z-index: 1000;
+}
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
+/* Statistic */
+
+.statistic{
+  h1{
+    color: $grey;
+    font-family: $heading;
+  }
+  tr{
+    font-family: $additional;
+    font-size: 20px;
+  }
 }

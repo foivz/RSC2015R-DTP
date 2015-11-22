@@ -13,6 +13,7 @@ angular.module('webAngularTemplateApp')
   	var controller = this;
   	controller.team1People = [];
   	controller.team2People = [];
+  	var firstPing, secPing;
 
   	controller.icons = {
     	house: {
@@ -26,8 +27,17 @@ angular.module('webAngularTemplateApp')
     	},
     	woman: {
     		icon: 'images/marker_woman.png'
+    	},
+    	blue: {
+    		icon: 'images/marker_blue.png'
+    	},
+    	red: {
+    		icon: 'images/marker_red.png'
     	}
     };
+    var map;
+    var markersBlue = [];
+    var markersRed = [];
 
   	controller.DrawMap = function(data){
   		console.log(data.map.startLat + " " + data.map.startLng);
@@ -39,8 +49,7 @@ angular.module('webAngularTemplateApp')
 		        center: latlng,
 		        mapTypeId: google.maps.MapTypeId.SATELLITE
 		    }
-		    var map = new google.maps.Map(document.getElementById('matchMap'), settings);
-
+		    map = new google.maps.Map(document.getElementById('matchMap'), settings);
 
 		    var rectangle = new google.maps.Rectangle({
 			    strokeColor: '#81c784',
@@ -81,6 +90,55 @@ angular.module('webAngularTemplateApp')
 
 	};
 
+	controller.GetMarkers = function(team, teamNumber){
+		controller.clear(null);
+		markersBlue = [];
+		markersRed = [];
+		console.log(team);
+		for(var i = 0; i < team.length; i++){
+			var lat = team[i].lat;
+  			var lng = team[i].lng;
+			var coord = {lat:lat,lng:lng};
+			var marker = new google.maps.Marker({
+				position: coord,
+				map: map,
+				icon: controller.icons[teamNumber].icon
+			})
+			if(teamNumber == 'blue')
+				markersBlue.push(marker);
+			else
+				markersRed.push(marker);
+		};
+		if(teamNumber == 'blue')
+			controller.DrawTeams('blue');
+		else
+			controller.DrawTeams('red');
+	}
+
+	controller.clear = function(map){
+		for (var i = 0; i < markersBlue.length; i++) {
+		    markersBlue[i].setMap(map);
+		}
+		for (var i = 0; i < markersRed.length; i++) {
+		   markersRed[i].setMap(map);
+		}
+	}
+
+	controller.DrawTeams = function(teamNumber){
+		if(teamNumber == 'blue'){
+			for (var i = 0; i < markersBlue.length; i++) {
+				console.log("crtam plavi");	
+			    markersBlue[i].setMap(map);
+			}
+		}
+		else {
+			for (var i = 0; i < markersRed.length; i++) {
+				console.log("crtam crveni");	
+			    markersRed[i].setMap(map);
+			}
+		}
+	}
+
 	$http.get('http://46.101.173.23:8080/game/' + $rootScope.Match.idGame)
 		.success(function(data){
 			controller.data = data;
@@ -93,12 +151,13 @@ angular.module('webAngularTemplateApp')
 
 	controller.ping = function(){
 		console.log("ping ping");
-		setInterval(function(){ 
+		var firstPing = setInterval(function(){ 
 			//var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
 			var path = 'http://46.101.173.23:8080/game/2/team/3';
 			$http.get(path)
 				.success(function(data){
 					controller.team1People = data;
+					controller.GetMarkers(data, 'blue');
 				}).error(function(data){
 					console.log(data);
 				})
@@ -106,6 +165,7 @@ angular.module('webAngularTemplateApp')
 			$http.get(path)
 				.success(function(data){
 					controller.team2People = data;
+					controller.GetMarkers(data, 'red');
 				}).error(function(data){
 					console.log(data);
 				})
@@ -115,13 +175,12 @@ angular.module('webAngularTemplateApp')
 	controller.Timer = function(duration, display){
 	    var timer = duration, minutes, seconds;
 	    var secToSend;
-	    setInterval(function () {
+	    var secPing = setInterval(function () {
 	        minutes = parseInt(timer / 60, 10)
 	        seconds = parseInt(timer % 60, 10);
 
 	        secToSend = minutes*60 + seconds;
 	        var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/timer/' + secToSend;
-	        console.log(secToSend);
 			$http.post(path)
 				.success(function(data){
 					console.log(data);
@@ -133,7 +192,9 @@ angular.module('webAngularTemplateApp')
 						.success(function(data){
 							$rootScope.statistics = data;
 							console.log(data);
-							//$location.url('/new-match');
+							clearInterval(firstPing);
+							clearInterval(secPing);
+							$location.url('/statistic');
 						}).error(function(data){
 							console.log("Error end");
 					})
@@ -150,4 +211,18 @@ angular.module('webAngularTemplateApp')
 	    }, 1000);
 	}
 
+	controller.EndGame = function(){
+		var path = 'http://46.101.173.23:8080/game/2/end';
+		console.log(path);
+		$http.get(path)
+			.success(function(data){
+				$rootScope.statistics = data;
+				console.log(data);
+				clearInterval(firstPing);
+				clearInterval(secPing);
+				$location.url('/statistic');
+				}).error(function(data){
+				console.log("Error end");
+		})
+	}
   }]);

@@ -38,6 +38,7 @@ angular.module('webAngularTemplateApp')
 		        center: latlng,
 		        mapTypeId: google.maps.MapTypeId.SATELLITE
 		    }
+		    console.log(lat + " " + lng);
 		    var map = new google.maps.Map(document.getElementById('matchMap'), settings);
 
 
