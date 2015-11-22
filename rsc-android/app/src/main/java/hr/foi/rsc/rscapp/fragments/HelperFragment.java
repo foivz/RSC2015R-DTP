@@ -86,10 +86,9 @@ public class HelperFragment extends Fragment {
     View.OnClickListener onGroblje = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Uri uri = Uri.parse("http://46.101.173.23:8080/game/2/team/3");
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-
+            //slanje requesta za
+            Intent intent = new Intent(getActivity().getApplicationContext(), KilledActivity.class);
+            startActivity(intent);  // poziva se web view - spectate, to bi sad trebalo radit!
         }
     };
 

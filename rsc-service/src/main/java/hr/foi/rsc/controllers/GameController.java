@@ -14,6 +14,8 @@ import hr.foi.rsc.repositories.PersonRepository;
 import hr.foi.rsc.repositories.TeamMemberRepository;
 import hr.foi.rsc.repositories.TeamRepository;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,8 +65,8 @@ public class GameController {
         return new ResponseEntity(this.gameRepository.findAll(), HttpStatus.OK);
     }
     
-    @RequestMapping(value="/{id}/timer/{sec}", method = RequestMethod.PUT)
-    public ResponseEntity updateUserLocation(@PathVariable("id") long id,@PathVariable("sec") int timer){
+    @RequestMapping(value="/{id}/timer/{sec}", method = RequestMethod.POST)
+    public ResponseEntity updateTimer(@PathVariable("id") long id, @PathVariable("sec") int timer){
         
         Logger.getLogger("GameController.java").log(Level.INFO,
                 "saving timer");
@@ -107,18 +109,75 @@ public class GameController {
         
     }
     
-    @RequestMapping(value="/{id}/end", method = RequestMethod.GET)
-    public ResponseEntity<List<TeamMember>> endGame(@PathVariable("id") long id){
+    
+    
+    
+    @RequestMapping(value="/{id}/end/{idTeam}/user/{idUser}", method = RequestMethod.GET)
+    public ResponseEntity<List<Person>> endGameUser(@PathVariable("id") long id, @PathVariable("idTeam") long idTeam,
+            @PathVariable("idUser") long idUser){
         
         Game game=this.gameRepository.findByIdGame(id);
-        int teamOne = game.getTeam().indexOf(0);
-        int teamTwo = game.getTeam().indexOf(1);
+        game.setStart(0);
+        this.gameRepository.save(game);
+        
+        TeamMember winner=this.teamMemberRespository.findByIdPerson(idUser);
+        winner.setKills(winner.getKills()+2);
+        this.teamMemberRespository.save(winner);
+        
+        long teamOne = game.getTeam().get(0).getIdTeam();
+        long teamTwo = game.getTeam().get(1).getIdTeam();
         
         List<TeamMember> teamCompetitors= new ArrayList<>();
+       
+        List<Long> ids= new ArrayList<>();
+        
         
         teamCompetitors.addAll(this.teamMemberRespository.findByIdTeam(teamOne));
         teamCompetitors.addAll(this.teamMemberRespository.findByIdTeam(teamTwo));
         
+        if(teamOne==idTeam)
+        
+        
+         for(TeamMember a : teamCompetitors){
+             
+            ids.add(a.getIdPerson());
+            
+            org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.INFO,
+                    "Person" + a.getIdPerson());
+            
+        }
+        
+         List<Person> returningPerson=new ArrayList<>();
+         
+         List<Person> person=this.personRepository.findByIdPersonIn(ids);
+         
+         for(Person p: person){
+             for(TeamMember a: teamCompetitors)
+                 if(p.getIdPerson()==a.getIdPerson()){
+                     
+                     if(!returningPerson.contains(p)){
+                          
+                          p.setDeath((int) a.getDeath() );
+                          p.setKill((int) a.getKills() );
+                         
+                          returningPerson.add(p);   
+                          
+                          p.setDeath((int)p.getDeath() +(int)a.getDeath());
+                          p.setKill((int)p.getKill() + (int) a.getKills());
+                         this.personRepository.save(p);
+                         
+                     }
+    
+                 }
+         }
+         
+         
+         Collections.sort(returningPerson, new Comparator<Person>() {
+         @Override public int compare(Person p1, Person p2) {
+            return p1.getKill() - p2.getKill(); // Ascending
+            }
+        });
+         
         
          Logger.getLogger("GameController.java").log(Level.INFO,
                 "Retrurning details of match");
@@ -126,7 +185,8 @@ public class GameController {
         if(teamCompetitors != null){
              Logger.getLogger("GameController.java").log(Level.INFO,
                 "Returning details");
-               return new ResponseEntity(teamCompetitors,HttpStatus.OK);
+             
+               return new ResponseEntity(returningPerson,HttpStatus.OK);
         }
         else{
              Logger.getLogger("GameController.java").log(Level.INFO,
@@ -136,13 +196,117 @@ public class GameController {
         
     }
     
+    @RequestMapping(value="/{id}/end", method = RequestMethod.GET)
+    public ResponseEntity<List<Person>> endGame(@PathVariable("id") long id){
+        
+        Game game=this.gameRepository.findByIdGame(id);
+      
+        
+        long teamOne = game.getTeam().get(0).getIdTeam();
+        long teamTwo = game.getTeam().get(1).getIdTeam();
+        
+        List<TeamMember> teamCompetitors= new ArrayList<>();
+        
+        List<Long> ids= new ArrayList<>();
+        
+        teamCompetitors.addAll(this.teamMemberRespository.findByIdTeam(teamOne));
+        teamCompetitors.addAll(this.teamMemberRespository.findByIdTeam(teamTwo));
+        
+        
+        
+         for(TeamMember a : teamCompetitors){
+             
+            ids.add(a.getIdPerson());
+            org.jboss.logging.Logger.getLogger("GameController.java").log(org.jboss.logging.Logger.Level.INFO,
+                    "Person" + a.getIdPerson());
+            
+        }
+        
+         List<Person> returningPerson=new ArrayList<>();
+         
+         List<Person> person=this.personRepository.findByIdPersonIn(ids);
+         
+         for(Person p: person){
+             for(TeamMember a: teamCompetitors)
+                 if(p.getIdPerson()==a.getIdPerson()){
+                     
+                     if(!returningPerson.contains(p)){
+                          
+                          p.setDeath((int) a.getDeath() );
+                          p.setKill((int) a.getKills() );
+                         
+                          returningPerson.add(p);   
+                          
+                          p.setDeath((int)p.getDeath() +(int)a.getDeath());
+                          p.setKill((int)p.getKill() + (int) a.getKills());
+                          this.personRepository.save(p);
+                         
+                     }
+    
+                 }
+         }
+         
+         
+         Collections.sort(returningPerson, new Comparator<Person>() {
+         @Override public int compare(Person p1, Person p2) {
+            return p1.getKill() - p2.getKill(); // Ascending
+            }
+        });
+         
+        
+         Logger.getLogger("GameController.java").log(Level.INFO,
+                "Retrurning details of match");
+        
+        if(teamCompetitors != null){
+             Logger.getLogger("GameController.java").log(Level.INFO,
+                "Returning details");
+               return new ResponseEntity(returningPerson,HttpStatus.OK);
+        }
+        else{
+             Logger.getLogger("GameController.java").log(Level.INFO,
+                "Cannot return details");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        
+    }
+    
+    
+    @RequestMapping(value="/{id}/person/{idTeam}/team")
+    public ResponseEntity kill(@PathVariable("id") long idUser, @PathVariable("idTeam") long idTeam){
+        
+        TeamMember kill=this.teamMemberRespository.findByIdTeamAndIdPerson(idTeam, idUser);
+        
+        kill.setDeath(kill.getDeath()+1);
+        this.teamMemberRespository.save(kill);
+        
+        return new ResponseEntity(HttpStatus.OK);
+        
+    }
+    
+    @RequestMapping(value = "person/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Person> retrieveByIdPerson(@PathVariable("id") long id) {
+        Logger.getLogger("PersonController.java").log(Level.INFO,
+                "GET on /person/" + id + " -- ");
+        Person found = this.personRepository.findByIdPerson(id);
+        if(found != null) {
+            Logger.getLogger("PersonController.java").log(Level.INFO,
+                    "User found for id " + id + ", returning " + found.toString());
+            return new ResponseEntity(found, HttpStatus.OK);
+        } else {
+            
+         
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    
     @RequestMapping(value = "/isReady/{id}", method = RequestMethod.GET)
     public ResponseEntity isReady(@PathVariable("id") long id){
         
         Game game=this.gameRepository.findByIdGame(id);
         
         if(game.getStart()==1)
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(game,HttpStatus.OK);
         else
             return new ResponseEntity(HttpStatus.NOT_FOUND);    
     }
