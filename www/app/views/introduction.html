@@ -13,7 +13,7 @@
 				</div>
 				<div class="col-md-4">
 					<img src="images/paintbal.png" alt="" width="330px">
-					<h2>nešta</h2>
+					<h2>BATTLE FOR FLAG</h2>
 				</div>
 				<div class="col-md-4">
 					<img src="images/multiplayer.png" alt="" width="200px">
@@ -32,13 +32,13 @@
 						<th>Map</th>
 						<th>WATCH GAME</th>
 					</tr>
-					<tr class="text-left" ng-repeat="match in match.Matches" ng-show="match.ready">
+					<tr class="text-left" ng-repeat="match in match.Matches" ng-show="match.start">
 						<td>{{$index+1}}.</td>
 						<td>{{match.team[0].name}}</td>
 						<td>{{match.team[1].name}}</td>
 						<td>{{match.map.name}}</td>
 						<td>
-							<a href="#main">
+							<a href="#/match-action">
 							<span 
 							class="glyphicon glyphicon-play" 
 							match-id-traversal 

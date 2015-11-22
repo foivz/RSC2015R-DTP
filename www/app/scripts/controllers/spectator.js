@@ -8,7 +8,7 @@
  * Controller of the webAngularTemplateApp
  */
 angular.module('webAngularTemplateApp')
-  .controller('MatchActionCtrl', ['$rootScope', 'match', '$http', '$location', function ($rootScope, match, $http, $location) {
+  .controller('SpectatorCtrl', ['$rootScope', 'match', '$http', '$location', function ($rootScope, match, $http, $location) {
     
   	var controller = this;
   	controller.team1People = [];
@@ -38,8 +38,6 @@ angular.module('webAngularTemplateApp')
     var map;
     var markersBlue = [];
     var markersRed = [];
-    controller.notifications = [];
-    controller.data = [];
 
   	controller.DrawMap = function(data){
   		console.log(data.map.startLat + " " + data.map.startLng);
@@ -170,48 +168,7 @@ angular.module('webAngularTemplateApp')
 				}).error(function(data){
 					console.log(data);
 				})
-
-			path = 'http://46.101.173.23:8080/notification/' + controller.team1.idTeam + '/teamnotifications';
-			$http.get(path)
-				.success(function(data){
-					console.log("Notifikacije 1");
-					console.log(data);
-					controller.data = data;
-					for(var i=0; i<data.length; i++){
-						path = 'http://46.101.173.23:8080/game/person/' + controller.data[i].idPerson;
-						$http.get(path)
-							.success(function(person){
-								console.log(controller.data[i].name + " " + person.name);
-								controller.notifications.push({notif: controller.data[i].name, person: person.name});
-							}).error(function(data){
-								console.log(data);
-							})
-					}
-				}).error(function(data){
-					console.log(data);
-				})
-
-			path = 'http://46.101.173.23:8080/notification/' + controller.team2.idTeam + '/teamnotifications';
-			$http.get(path)
-				.success(function(data){
-					console.log("Notifikacije 2");
-					console.log(data);
-					controller.data = data;
-					for(var i=0; i<controller.data.length; i++){
-						path = 'http://46.101.173.23:8080/game/person/' + controller.data[i].idPerson;
-						$http.get(path)
-							.success(function(person){
-								console.log(controller.data[i].name + " " + person.name);
-								controller.notifications.push({notif: controller.data[i].name, person: person.name});
-							}).error(function(data){
-								console.log(data);
-							})
-					}
-				}).error(function(data){
-					console.log(data);
-				})
-
-		}, 3000);
+		}, 500);
 	}
 
 	controller.Timer = function(duration, display){
@@ -249,7 +206,7 @@ angular.module('webAngularTemplateApp')
 	        if (--timer < 0) {
 	            timer = duration;
 	        }
-	    }, 3000);
+	    }, 500);
 	}
 
 	controller.EndGame = function(){

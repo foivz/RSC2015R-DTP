@@ -2,7 +2,9 @@ package hr.foi.rsc.core.prompts;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import hr.foi.rsc.core.Input;
 
@@ -12,6 +14,8 @@ import hr.foi.rsc.core.Input;
  */
 public class InputPrompt extends AlertPrompt {
 
+    ImageView map;
+
     /**
      * default constructor
      * @param context current application context
@@ -20,14 +24,16 @@ public class InputPrompt extends AlertPrompt {
         super(context);
     }
 
+    public InputPrompt(Context context, ImageView map) {
+        super(context);
+        this.map = map;
+    }
+
     @Override
     public void prepare(int title, DialogInterface.OnClickListener positive, int positiveMessage,
                         DialogInterface.OnClickListener negative, int negativeMessage) {
-        super.prepare(title, positive, positiveMessage, negative, negativeMessage);
-
-        // dialog input
-        Input input = new Input(new EditText(this.context), Input.TEXT_MAIN_PATTERN,
-                "Input should only contain letters (min 3, max 45)");
-        this.builder.setView(input.getEditText());
+        this.builder.setTitle(title)
+                .setPositiveButton(positiveMessage, positive)
+                .setNegativeButton(negativeMessage, negative).setView(map);
     }
 }

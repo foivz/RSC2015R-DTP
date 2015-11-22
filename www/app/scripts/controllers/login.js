@@ -25,7 +25,7 @@ angular.module('webAngularTemplateApp')
 		
 		auth.login(credentials)
 			.then(function(data){
-				$location.path('/main');
+				$location.path('/map');
 			},
 			function(data){
 				console.log("Error");

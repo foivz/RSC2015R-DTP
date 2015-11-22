@@ -3,6 +3,7 @@
 </div>
 <div class="mainMatch">
 	<div class="col-md-6">
+		<h3>Code: {{main.data.code}}</h3>
 		<h2>{{main.team1.idTeam + " " + main.team1.name}}</h2>
 		<table class="table">
 			<tr>
@@ -25,6 +26,7 @@
 		</table>
 	</div>
 	<div class="col-md-6">
+		<br><br>
 		<h2>{{main.team2.idTeam + " " + main.team2.name}}</h2>
 		<table class="table">
 			<tr>
@@ -46,8 +48,12 @@
 			</tr>
 		</table>
 	</div>
-	<div class="container text-center">
-		<button ng-click="main.StartMatch()" class="btn btn-info">START</button>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<div class="container text-center">
+				<button ng-click="main.StartMatch()" class="btn btn-info">START</button>
+			</div>
+		</div>
 	</div>
 	<!-- <button class="btn btn-default"><img src="images/chip.png" width="30px" alt=""> Place a bet</button> -->
 </div>

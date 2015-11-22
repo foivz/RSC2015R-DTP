@@ -48,7 +48,7 @@
             android:layout_width="128dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text=""
+            android:text="Dummy"
             android:id="@+id/textView2"
             android:layout_weight="0.08"
             android:layout_gravity="center_horizontal"

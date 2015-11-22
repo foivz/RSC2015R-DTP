@@ -44,8 +44,19 @@ public class AlertPrompt implements Prompt {
                 .setNegativeButton(negativeMessage, negative);
     }
 
+    public void prepare(String title, DialogInterface.OnClickListener positive, String positiveMessage,
+                        DialogInterface.OnClickListener negative, String negativeMessage) {
+        this.builder.setTitle(title)
+                .setPositiveButton(positiveMessage, positive)
+                .setNegativeButton(negativeMessage, negative);
+    }
+
     @Override
     public void showPrompt() {
         this.builder.create().show();
+    }
+
+    public AlertDialog.Builder getBuilder() {
+        return builder;
     }
 }

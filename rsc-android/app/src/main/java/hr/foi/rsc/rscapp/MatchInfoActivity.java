@@ -1,17 +1,25 @@
 package hr.foi.rsc.rscapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import org.springframework.http.HttpMethod;
 
@@ -22,6 +30,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import hr.foi.rsc.core.SessionManager;
+import hr.foi.rsc.core.prompts.InputPrompt;
 import hr.foi.rsc.model.Game;
 import hr.foi.rsc.model.Person;
 import hr.foi.rsc.model.Team;
@@ -79,17 +88,47 @@ public class MatchInfoActivity extends AppCompatActivity {
             if(self.isReady() == 0) {
                 item.setIcon(android.R.drawable.presence_online);
                 self.setReady(1);
+                SessionManager.getInstance(this).createSession(self, "person");
             } else {
                 item.setIcon(android.R.drawable.presence_busy);
                 self.setReady(0);
+                SessionManager.getInstance(this).createSession(self, "person");
             }
             params = new ServiceParams(getString(R.string.persons_path)
                     + self.getIdPerson() + "/ready", HttpMethod.PUT, null);
             new ServiceAsyncTask(readyChange).execute(params);
             return true;
+        } else if(item.getItemId() == R.id.create_qr) {
+            QRCodeWriter writer = new QRCodeWriter();
+            try {
+                BitMatrix bitMatrix = writer.encode(getIntent().getExtras().getString("code"), BarcodeFormat.QR_CODE, 512, 512);
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                    }
+                }
+                ImageView view = new ImageView(getApplicationContext());
+                view.setImageBitmap(bmp);
+                InputPrompt prompt = new InputPrompt(this, view);
+                prompt.prepare("Show this to your teammate or enemy", listenerClick, "OK", listenerClick, "OK");
+                prompt.showPrompt();
+
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
+
+    DialogInterface.OnClickListener listenerClick = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+        }
+    };
 
     ServiceResponseHandler readyChange = new ServiceResponseHandler() {
         @Override

@@ -12,6 +12,7 @@ angular.module('webAngularTemplateApp')
   	var controller = this;
   	controller.team1People = [];
   	controller.team2People = [];
+  	controller.notifications = [];
 
   	controller.icons = {
     	house: {
@@ -92,23 +93,17 @@ angular.module('webAngularTemplateApp')
 		})
 	controller.firstPing;
 	controller.ping = function(){
-		console.log("ping ping");
 		controller.firstPing = setInterval(function(){ 
-			//var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
-			var path = 'http://46.101.173.23:8080/game/2/team/3';
+			var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
 			$http.get(path)
 				.success(function(data){
-					console.log("Tim 1");
-					console.log(data);
 					controller.team1People = data;
 				}).error(function(data){
 					console.log(data);
 				})
-			path = 'http://46.101.173.23:8080/game/2/team/2';
+			path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team2.idTeam;
 			$http.get(path)
 				.success(function(data){
-					console.log("Tim 2");
-					console.log(data);
 					controller.team2People = data;
 				}).error(function(data){
 					console.log(data);
@@ -127,7 +122,6 @@ angular.module('webAngularTemplateApp')
 					console.log(data);
 				})
 	}
-	//gameID/team/teamID
 
 	// match.FetchMatchByID($rootScope.Match.idGame)
 	// 	.then(function(data){

@@ -87,7 +87,7 @@ angular.module('webAngularTemplateApp')
 					}    						
 			  	});
 	};
-	controller.DrawMap(46.311390, 16.334515);
+	controller.DrawMap(46.307978, 16.338117);
 
 	controller.drawMarker = function(map, coord){
 		var marker = new google.maps.Marker({
