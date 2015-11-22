@@ -21,8 +21,10 @@ import org.springframework.http.HttpMethod;
 
 import hr.foi.rsc.core.SessionManager;
 import hr.foi.rsc.model.Game;
+import hr.foi.rsc.model.Person;
 import hr.foi.rsc.model.Team;
 import hr.foi.rsc.rscapp.ChooseTeamActivity;
+import hr.foi.rsc.rscapp.GameOverActivity;
 import hr.foi.rsc.rscapp.R;
 import hr.foi.rsc.rscapp.ScanActivity;
 import hr.foi.rsc.webservice.ServiceAsyncTask;
@@ -67,8 +69,9 @@ public class ScanFragment extends Fragment {
                     // TODO url
                     Game game = SessionManager.getInstance(this.getContext()).retrieveSession("game", Game.class);
                     Team myTeam = SessionManager.getInstance(this.getContext()).retrieveSession("team", Team.class);
+                    Person self = SessionManager.getInstance(this.getContext()).retrieveSession("person", Person.class);
                     ServiceParams params = new ServiceParams("/game/" + game.getIdGame() + "/end/"
-                            + myTeam.getIdTeam(), HttpMethod.POST, null);
+                            + myTeam.getIdTeam() + "/user/" + self.getIdPerson(), HttpMethod.POST, null);
                     new ServiceAsyncTask(handler).execute(params);
 
                 } else {
@@ -88,6 +91,8 @@ public class ScanFragment extends Fragment {
 
         @Override
         public boolean handleResponse(ServiceResponse response) {
+            Intent intent = new Intent(getActivity().getApplicationContext(), GameOverActivity.class);
+            startActivity(intent);
             return false;
         }
 

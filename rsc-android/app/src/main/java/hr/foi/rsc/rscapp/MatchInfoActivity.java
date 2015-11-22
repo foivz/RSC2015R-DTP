@@ -168,7 +168,7 @@ public class MatchInfoActivity extends AppCompatActivity {
     TimerTask startMatchTimerTask = new TimerTask() {
         @Override
         public void run() {
-            ServiceParams params = new ServiceParams(getString(R.string.game_path) + "/isReady/"
+            ServiceParams params = new ServiceParams(getString(R.string.game_path) + "isReady/"
                     + game.getIdGame(), HttpMethod.GET, null);
             new ServiceAsyncTask(startMatch).execute(params);
         }

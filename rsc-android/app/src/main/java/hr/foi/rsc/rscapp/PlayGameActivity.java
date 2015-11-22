@@ -16,8 +16,12 @@ import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.springframework.http.HttpMethod;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import hr.foi.rsc.core.SessionManager;
 import hr.foi.rsc.core.prompts.AlertPrompt;
+import hr.foi.rsc.model.Game;
 import hr.foi.rsc.model.Person;
 import hr.foi.rsc.model.Team;
 import hr.foi.rsc.rscapp.R;
@@ -31,6 +35,8 @@ import hr.foi.rsc.webservice.ServiceResponseHandler;
 public class PlayGameActivity extends AppCompatActivity {
 
     GestureDetector gestureDetector;
+    Timer gameStatus;
+    Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,15 @@ public class PlayGameActivity extends AppCompatActivity {
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new PageAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(pager);
+
+        SessionManager.getInstance(this).retrieveSession("game", Game.class);
+        gameStatus = new Timer();
+        gameStatus.schedule(getStatus, 1000, 1000);
+    }
+
+    void cancelTimers() {
+        gameStatus.cancel();
+        gameStatus.purge();
     }
 
     @Override
@@ -49,6 +64,7 @@ public class PlayGameActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                cancelTimers();
                 PlayGameActivity.super.onBackPressed();
             }
         };
@@ -57,4 +73,31 @@ public class PlayGameActivity extends AppCompatActivity {
                 R.string.leave, null, R.string.cancel);
         signOutPrompt.showPrompt();
     }
+
+    TimerTask getStatus = new TimerTask() {
+        @Override
+        public void run() {
+            ServiceParams params = new ServiceParams("/game/isReady/" + game.getIdGame(), HttpMethod.GET, null);
+            new ServiceAsyncTask(new ServiceResponseHandler() {
+                @Override
+                public void onPreSend() {
+
+                }
+
+                @Override
+                public boolean handleResponse(ServiceResponse response) {
+                    if(response.getHttpCode() == 404) {
+                        Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
+                        startActivity(intent);
+                    }
+                    return false;
+                }
+
+                @Override
+                public void onPostSend() {
+
+                }
+            }).execute(params);
+        }
+    };
 }
