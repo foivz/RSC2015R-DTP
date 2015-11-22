@@ -21,6 +21,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                style="@style/TextLabel"
                 android:id="@+id/firstNameInputLayout">
 
                 <EditText
@@ -35,6 +36,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                style="@style/TextLabel"
                 android:id="@+id/lastNameInputLayout">
 
                 <EditText
@@ -48,6 +50,7 @@
             <!-- Username -->
             <android.support.design.widget.TextInputLayout
                 android:layout_height="match_parent"
+                style="@style/TextLabel"
                 android:layout_width="match_parent"
                 android:id="@+id/usernameInputLayout">
 
@@ -63,6 +66,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                style="@style/TextLabel"
                 android:id="@+id/passwordInputLayout">
 
                 <EditText
@@ -78,6 +82,7 @@
             <android.support.design.widget.TextInputLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
+                style="@style/TextLabel"
             android:id="@+id/confirmPasswordInputLayout">
 
                 <EditText

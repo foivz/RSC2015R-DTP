@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RSC</string>
+    <string name="app_name">Trigger</string>
     <string name="action_qr">QR</string>
 
     <string name="input_code">Input invite code here</string>

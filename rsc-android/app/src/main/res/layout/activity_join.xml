@@ -12,10 +12,19 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Join a match"
+            android:id="@+id/textView16"
+            android:layout_marginBottom="20dp" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:id="@+id/txtCodeLayout"
+            style="@style/TextLabel"
             android:layout_marginBottom="20dp">
 
             <EditText
@@ -32,5 +41,6 @@
             android:id="@+id/submit_code"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
 </RelativeLayout>

@@ -152,6 +152,7 @@ public class MatchInfoActivity extends AppCompatActivity {
                 play.putExtra("gamecode", game.getCode());
                 stopTimers();
                 startActivity(play);
+                finish();
             } else {
 
             }
