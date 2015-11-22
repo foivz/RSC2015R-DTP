@@ -109,10 +109,10 @@ public class NotificationController {
          public ResponseEntity<List<Notification>> retriveTeamNotification(@PathVariable("idTeam") long idTeam){
              
              List<Notification> notf=this.notificationRepository.findByIdTeam(idTeam);
-             List<Notification> notfReturn=null;
+             List<Notification> notfReturn=new ArrayList<>();
              
             if(notf.size()>7){
-                for(int i=notf.size()-1; i>notf.size()-6;i--){
+                for(int i=notf.size()-1; i>notf.size()-5;i--){
                 notfReturn.add(notf.get(i));
                 }
                 return new ResponseEntity(notfReturn,HttpStatus.OK);
@@ -135,8 +135,8 @@ public class NotificationController {
              
              for(TeamMember m: members){
                  
-                  if(m.getIdPerson() == idPerson)
-                      continue;
+                  if(m.getIdPerson() == idPerson){
+                      
                  
                   notf=new Notification();
                   notf.setIdPerson(m.getIdPerson());
@@ -144,6 +144,7 @@ public class NotificationController {
                   notf.setReaded(0);
                   notf.setName(message);
                   this.notificationRepository.save(notf);
+                  }
                   
              }
              
