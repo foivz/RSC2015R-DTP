@@ -21,7 +21,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,9 +41,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ibCtmBlue"
                 android:src="@drawable/winnersblue"
+                android:background="@drawable/selector"
                 android:adjustViewBounds="true"
                 android:cropToPadding="false"
-                android:background="@drawable/image_button_style"
                 android:scaleType="fitXY"
                 android:layout_marginBottom="10dp"
                 android:padding="5dp" />
@@ -61,9 +62,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ibCtmRed"
                 android:src="@drawable/winnersred"
+                android:background="@drawable/selector"
                 android:adjustViewBounds="true"
                 android:cropToPadding="false"
-                android:background="@drawable/image_button_style"
                 android:scaleType="fitXY"
                 android:layout_marginBottom="10dp"
                 android:padding="5dp" />
