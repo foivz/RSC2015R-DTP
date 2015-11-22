@@ -29,7 +29,7 @@ public class HelperFragment extends Fragment {
     TextView minutes;
     ImageButton dead;
     void ajmo(){
-
+        
         new CountDownTimer(300000, 1000) {
             boolean vibrating=false;
             public void onTick(long millisUntilFinished) {

@@ -141,6 +141,7 @@ public class ChooseTeamActivity extends Activity {
                 Intent intent = new Intent(getApplicationContext(), MatchInfoActivity.class);
                 intent.putExtra("code", code);
                 startActivity(intent);
+                finish();
                 return true;
             } else {
                 Toast.makeText(getApplicationContext(), "Please try again!", Toast.LENGTH_LONG).show();

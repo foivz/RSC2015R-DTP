@@ -2,13 +2,14 @@
 
 /**
  * @ngdoc function
- * @name webAngularTemplateApp.controller:MainCtrl
+ * @name webAngularTemplateApp.controller:MatchActionCtrl
  * @description
- * # MainCtrl
+ * # MatchActionCtrl
  * Controller of the webAngularTemplateApp
  */
 angular.module('webAngularTemplateApp')
-  .controller('MainCtrl', ['$rootScope', 'match', '$http', '$location', function ($rootScope, match, $http, $location) {
+  .controller('MatchActionCtrl', ['$rootScope', 'match', '$http', '$location', function ($rootScope, match, $http, $location) {
+    
   	var controller = this;
   	controller.team1People = [];
   	controller.team2People = [];
@@ -86,19 +87,17 @@ angular.module('webAngularTemplateApp')
 			controller.DrawMap(data);
 			controller.team1 = data.team[0];
 			controller.team2 = data.team[1];
-			console.log(data);
 			controller.ping();
+			controller.Timer(60 * data.timer, $('#time'));
 		})
-	controller.firstPing;
+
 	controller.ping = function(){
 		console.log("ping ping");
-		controller.firstPing = setInterval(function(){ 
+		setInterval(function(){ 
 			//var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
 			var path = 'http://46.101.173.23:8080/game/2/team/3';
 			$http.get(path)
 				.success(function(data){
-					console.log("Tim 1");
-					console.log(data);
 					controller.team1People = data;
 				}).error(function(data){
 					console.log(data);
@@ -106,8 +105,6 @@ angular.module('webAngularTemplateApp')
 			path = 'http://46.101.173.23:8080/game/2/team/2';
 			$http.get(path)
 				.success(function(data){
-					console.log("Tim 2");
-					console.log(data);
 					controller.team2People = data;
 				}).error(function(data){
 					console.log(data);
@@ -115,25 +112,42 @@ angular.module('webAngularTemplateApp')
 		}, 3000);
 	}
 
-	controller.StartMatch = function(){
-		var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/start';
+	controller.Timer = function(duration, display){
+	    var timer = duration, minutes, seconds;
+	    var secToSend;
+	    setInterval(function () {
+	        minutes = parseInt(timer / 60, 10)
+	        seconds = parseInt(timer % 60, 10);
+
+	        secToSend = minutes*60 + seconds;
+	        var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/timer/' + secToSend;
+	        console.log(secToSend);
 			$http.post(path)
 				.success(function(data){
 					console.log(data);
-					clearInterval(controller.firstPing);
-					$location.url('/match-action');
 				}).error(function(data){
-					console.log(data);
-				})
+					//path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/end';
+					path = 'http://46.101.173.23:8080/game/2/end';
+			        console.log(path);
+					$http.get(path)
+						.success(function(data){
+							$rootScope.statistics = data;
+							console.log(data);
+							//$location.url('/new-match');
+						}).error(function(data){
+							console.log("Error end");
+					})
+			})
+
+	        minutes = minutes < 10 ? "0" + minutes : minutes;
+	        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	        display.text(minutes + ":" + seconds);
+
+	        if (--timer < 0) {
+	            timer = duration;
+	        }
+	    }, 1000);
 	}
-	//gameID/team/teamID
-
-	// match.FetchMatchByID($rootScope.Match.idGame)
-	// 	.then(function(data){
-	// 		console.log(data);
-	// 	}, function(){
-	// 		console.log("Error");
-	// 	})
-
 
   }]);

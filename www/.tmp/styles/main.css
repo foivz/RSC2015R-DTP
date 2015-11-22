@@ -253,41 +253,49 @@ html.fp-enabled,
   height: auto !important;
 }
 
-/* line 17, ../../app/styles/main.scss */
+/* line 24, ../../app/styles/main.scss */
 h1, h2, h3, h4, h5 {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+  color: #19381f;
 }
 
-/* line 21, ../../app/styles/main.scss */
+/* line 29, ../../app/styles/main.scss */
 p, input {
-  font-family: "Lato", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
+  color: #474F4D;
 }
 
-/* line 26, ../../app/styles/main.scss */
+/* line 35, ../../app/styles/main.scss */
 html, body {
   margin: 0px;
   padding: 0px;
-  background-color: #a9bcd0;
+  background-color: #d8dbe2;
 }
 
-/* line 32, ../../app/styles/main.scss */
+/* line 41, ../../app/styles/main.scss */
 a {
-  color: #373f51;
-  font-family: "Montserrat", sans-serif;
+  color: #d8dbe2;
+  font-family: "Black Ops One", cursive;
 }
-/* line 35, ../../app/styles/main.scss */
+/* line 44, ../../app/styles/main.scss */
 a:hover {
+  color: #EAEEF5;
   text-decoration: none;
 }
 
-/* line 40, ../../app/styles/main.scss */
+/* line 50, ../../app/styles/main.scss */
 button {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+}
+
+/* line 54, ../../app/styles/main.scss */
+.container-fluid {
+  padding: 0px !important;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
-/* line 45, ../../app/styles/main.scss */
+/* line 59, ../../app/styles/main.scss */
 .header,
 .marketing,
 .footer {
@@ -297,76 +305,102 @@ button {
 
 /* GENERAL SETTINGS */
 /* buttons */
-/* line 54, ../../app/styles/main.scss */
+/* line 68, ../../app/styles/main.scss */
 .buttons, #fullpage button, .login button {
-  background-color: #58a4b0;
-  border: solid 1px #58a4b0;
+  background-color: #d8dbe2;
+  border: solid 1px #d8dbe2;
+  color: #19381f;
   padding: 20px 0px;
   font-size: 20px;
   margin-top: 30px;
   margin-bottom: 20px;
   transition: all 200ms linear;
 }
-/* line 62, ../../app/styles/main.scss */
+/* line 77, ../../app/styles/main.scss */
 .buttons:hover, #fullpage button:hover, .login button:hover {
-  background-color: #60B2BF;
-  border: 1px solid #60B2BF;
+  background-color: #EAEEF5;
+  border: 1px solid #EAEEF5;
   opacity: 0.8;
 }
 
 /* introduction */
-/* line 77, ../../app/styles/main.scss */
-#fullpage h1 {
-  font-size: 50px;
-  font-weight: 300;
-}
-/* line 81, ../../app/styles/main.scss */
+/* line 92, ../../app/styles/main.scss */
 #fullpage button {
   padding: 20px 160px;
 }
 
-/* line 87, ../../app/styles/main.scss */
+/* line 98, ../../app/styles/main.scss */
 .first-section {
-  background-image: url("../images/bg-polygons.svg"), linear-gradient(to top, #58a4b0 0%, #d8dbe2 90%);
+  background: url("../images/paintball2.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
-/* line 89, ../../app/styles/main.scss */
+/* line 104, ../../app/styles/main.scss */
 .first-section h1 {
+  margin-top: 400px;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-family: "Black Ops One", cursive;
+  color: #d8dbe2;
+  font-size: 100px;
+}
+/* line 111, ../../app/styles/main.scss */
+.first-section h2 {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px;
   color: #d8dbe2;
 }
 
-/* line 94, ../../app/styles/main.scss */
+/* line 118, ../../app/styles/main.scss */
 .second-section {
-  background-color: #d8dbe2;
+  background-color: #19381f;
+}
+/* line 120, ../../app/styles/main.scss */
+.second-section h1 {
+  color: #d8dbe2;
 }
 
-/* line 98, ../../app/styles/main.scss */
+/* line 125, ../../app/styles/main.scss */
 .third-section {
-  background: #a9bcd0;
-}
-/* line 100, ../../app/styles/main.scss */
-.third-section h1 {
+  background: #474F4D;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 22px;
   color: #EAEEF5;
 }
-/* line 103, ../../app/styles/main.scss */
+/* line 130, ../../app/styles/main.scss */
+.third-section h1 {
+  font-family: "Black Ops One", cursive;
+  color: #EAEEF5;
+  font-size: 48px;
+  padding-bottom: 40px;
+}
+/* line 136, ../../app/styles/main.scss */
 .third-section p {
   font-size: 14px;
 }
+/* line 139, ../../app/styles/main.scss */
+.third-section span {
+  cursor: pointer;
+  transition: all 200ms linear;
+}
+/* line 142, ../../app/styles/main.scss */
+.third-section span:hover {
+  color: #91cb3e;
+}
 
 /* Login */
-/* line 115, ../../app/styles/main.scss */
+/* line 155, ../../app/styles/main.scss */
 .login {
   margin-top: 5%;
   background-color: #d8dbe2;
-  border-top: 10px solid #58a4b0;
+  border-top: 10px solid #91cb3e;
   padding-bottom: 30px;
 }
-/* line 120, ../../app/styles/main.scss */
+/* line 160, ../../app/styles/main.scss */
 .login h2 {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 300;
   margin: 35px 0;
 }
-/* line 125, ../../app/styles/main.scss */
+/* line 165, ../../app/styles/main.scss */
 .login input {
   height: auto;
   background-color: rgba(240, 240, 240, 0.8);
@@ -376,27 +410,27 @@ button {
 }
 
 /* Registration */
-/* line 145, ../../app/styles/main.scss */
+/* line 185, ../../app/styles/main.scss */
 .register {
   margin-bottom: 100px;
 }
 
-/* line 149, ../../app/styles/main.scss */
+/* line 189, ../../app/styles/main.scss */
 .pass-opacity {
   cursor: pointer;
 }
 
 /* Navigation */
-/* line 162, ../../app/styles/main.scss */
+/* line 202, ../../app/styles/main.scss */
 .menu-container {
   position: relative;
   display: block;
   height: 70px;
   width: 100%;
   margin: 0 auto;
-  background-color: #373f51;
+  background-color: #19381f;
 }
-/* line 170, ../../app/styles/main.scss */
+/* line 210, ../../app/styles/main.scss */
 .menu-container .menu-container__icon {
   position: relative;
   height: 40px;
@@ -406,42 +440,43 @@ button {
   cursor: pointer;
   transition: all 200ms ease-in-out;
 }
-/* line 179, ../../app/styles/main.scss */
+/* line 219, ../../app/styles/main.scss */
 .menu-container .menu-container__app {
   position: absolute;
   right: 50px;
   top: 20px;
   color: #d8dbe2;
 }
-/* line 184, ../../app/styles/main.scss */
+/* line 224, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login {
   display: relative;
   display: inline-block;
   font-size: 16px;
 }
-/* line 188, ../../app/styles/main.scss */
+/* line 228, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login a {
+  font-family: "Montserrat", sans-serif;
   color: #d8dbe2;
   padding-right: 30px;
   transition: all 150ms linear;
 }
-/* line 192, ../../app/styles/main.scss */
+/* line 233, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login a:hover {
   text-decoration: none;
-  color: #58a4b0;
+  color: #53a548;
 }
-/* line 197, ../../app/styles/main.scss */
+/* line 238, ../../app/styles/main.scss */
 .menu-container .menu-container__app .menu-container__app-login span {
   padding-right: 2px;
 }
 
 /* Navigation -- icon */
-/* line 205, ../../app/styles/main.scss */
+/* line 246, ../../app/styles/main.scss */
 .menu-container__icon:hover > .menu-icon {
   border-top: 6px solid #EAEEF5;
 }
 
-/* line 208, ../../app/styles/main.scss */
+/* line 249, ../../app/styles/main.scss */
 .menu-icon {
   position: absolute;
   border-top: 6px solid #d8dbe2;
@@ -450,40 +485,40 @@ button {
   transition: all 200ms ease-in-out;
 }
 
-/* line 215, ../../app/styles/main.scss */
+/* line 256, ../../app/styles/main.scss */
 .menu-icon--top {
   top: 0;
 }
 
-/* line 218, ../../app/styles/main.scss */
+/* line 259, ../../app/styles/main.scss */
 .menu-icon--middle {
   top: 13px;
 }
 
-/* line 221, ../../app/styles/main.scss */
+/* line 262, ../../app/styles/main.scss */
 .menu-icon--bottom {
   top: 26px;
 }
 
-/* line 225, ../../app/styles/main.scss */
+/* line 266, ../../app/styles/main.scss */
 .menu-rotate {
   transform: rotateY(-180deg);
   transition: all 200ms ease-in-out;
 }
 
-/* line 230, ../../app/styles/main.scss */
+/* line 271, ../../app/styles/main.scss */
 .menu-top-action {
   top: 15px;
   transform: rotate(45deg);
   transition: all 150ms linear;
 }
 
-/* line 235, ../../app/styles/main.scss */
+/* line 276, ../../app/styles/main.scss */
 .menu-middle-action {
   opacity: 0;
 }
 
-/* line 238, ../../app/styles/main.scss */
+/* line 279, ../../app/styles/main.scss */
 .menu-bottom-action {
   top: 15px;
   transform: rotate(-45deg);
@@ -491,24 +526,24 @@ button {
 }
 
 /* Navigation -- Flip */
-/* line 245, ../../app/styles/main.scss */
+/* line 286, ../../app/styles/main.scss */
 .flip-container {
   position: relative;
   width: 100%;
   height: 100%;
   perspective: 1000;
 }
-/* line 251, ../../app/styles/main.scss */
+/* line 292, ../../app/styles/main.scss */
 .flip-container .front {
   z-index: 2;
   transform: rotateY(0deg);
 }
-/* line 255, ../../app/styles/main.scss */
+/* line 296, ../../app/styles/main.scss */
 .flip-container .back {
   transform: rotateY(180deg);
 }
 
-/* line 260, ../../app/styles/main.scss */
+/* line 301, ../../app/styles/main.scss */
 .front, .back {
   backface-visibility: hidden;
   height: 100%;
@@ -516,7 +551,7 @@ button {
   width: 100%;
 }
 
-/* line 267, ../../app/styles/main.scss */
+/* line 308, ../../app/styles/main.scss */
 .flip-inner {
   width: 100%;
   height: 100%;
@@ -530,51 +565,53 @@ button {
   transition: 400ms;
 }
 
-/* line 281, ../../app/styles/main.scss */
+/* line 322, ../../app/styles/main.scss */
 .flip-inner-action {
   transform: rotateY(-180deg);
 }
 
 /*Navigation -- list */
-/* line 287, ../../app/styles/main.scss */
+/* line 328, ../../app/styles/main.scss */
 .back nav ul {
   list-style: none;
   text-align: center;
   font-size: 24px;
   padding-left: 0;
 }
-/* line 293, ../../app/styles/main.scss */
+/* line 334, ../../app/styles/main.scss */
 .back nav ul li {
   padding: 20px;
   width: 100%;
   color: white;
   border-bottom: 2px solid rgba(240, 240, 240, 0.4);
 }
-/* line 299, ../../app/styles/main.scss */
+/* line 340, ../../app/styles/main.scss */
 .back nav ul li:last-child {
   border: none;
 }
-/* line 303, ../../app/styles/main.scss */
+/* line 344, ../../app/styles/main.scss */
 .back nav ul li:hover {
-  background-color: #d8dbe2;
+  background-color: #EAEEF5;
   transition: all 400ms ease-in-out;
 }
-/* line 309, ../../app/styles/main.scss */
+/* line 350, ../../app/styles/main.scss */
 .back nav ul a {
-  padding: 20px;
-  color: #1b1b1e;
+  font-family: "Montserrat", sans-serif;
   text-decoration: none;
+  font-weight: 700;
+  padding: 20px;
+  color: #474F4D;
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  /* line 324, ../../app/styles/main.scss */
+  /* line 367, ../../app/styles/main.scss */
   .container {
     max-width: 730px;
   }
 
   /* Remove the padding we set earlier */
-  /* line 329, ../../app/styles/main.scss */
+  /* line 372, ../../app/styles/main.scss */
   .header,
   .marketing,
   .footer {
@@ -583,16 +620,127 @@ button {
   }
 
   /* Space out the masthead */
-  /* line 336, ../../app/styles/main.scss */
+  /* line 379, ../../app/styles/main.scss */
   .header {
     margin-bottom: 30px;
   }
 
   /* Remove the bottom border on the jumbotron for visual effect */
-  /* line 340, ../../app/styles/main.scss */
+  /* line 383, ../../app/styles/main.scss */
   .jumbotron {
     border-bottom: 0;
   }
+}
+/* New match */
+/* line 395, ../../app/styles/main.scss */
+.inputTeam, .alphaTeam input, .betaTeam input, .timer input {
+  font-family: "Black Ops One", cursive;
+  font-size: 40px;
+  border: none;
+  border-bottom: 5px solid #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+/* line 404, ../../app/styles/main.scss */
+.alphaTeam {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/teamAlpha.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+/* line 413, ../../app/styles/main.scss */
+.alphaTeam input {
+  margin-top: 160px;
+  margin-left: 20%;
+}
+
+/* line 420, ../../app/styles/main.scss */
+.betaTeam {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url(../images/paintball2.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+/* line 429, ../../app/styles/main.scss */
+.betaTeam input {
+  margin-top: 160px;
+}
+
+/* line 435, ../../app/styles/main.scss */
+.timer {
+  margin-top: 100px;
+}
+/* line 437, ../../app/styles/main.scss */
+.timer input {
+  width: auto;
+  font-family: "Montserrat", sans-serif;
+  font-size: 28px;
+  color: #19381f;
+}
+
+/* New map */
+/* line 454, ../../app/styles/main.scss */
+.obstacles img {
+  margin: 30px 50px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+/* line 460, ../../app/styles/main.scss */
+.bordered {
+  border: 4px solid #4c934c;
+  border-radius: 8px;
+}
+
+/* line 465, ../../app/styles/main.scss */
+.matchMap {
+  margin-bottom: 70px;
+}
+/* line 467, ../../app/styles/main.scss */
+.matchMap input {
+  font-family: "Black Ops One", cursive;
+  font-size: 32px;
+  border: none;
+  width: 100%;
+  background-color: transparent;
+  border-bottom: 5px solid #EAEEF5;
+}
+/* line 475, ../../app/styles/main.scss */
+.matchMap button {
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  margin-top: 20px;
+  padding: 20px 50px;
+  color: #474F4D;
+  background-color: transparent;
+  border: 3px solid #EAEEF5;
+  transition: all 300ms ease-in-out;
+}
+/* line 484, ../../app/styles/main.scss */
+.matchMap button:hover {
+  border: 3px solid #EAEEF5;
+}
+
+/* Main match begin */
+/* line 498, ../../app/styles/main.scss */
+.mainMatch button {
+  font-size: 20px;
+  padding: 15px 40px;
+}
+
+/* Main match action */
+/* line 509, ../../app/styles/main.scss */
+#time {
+  position: absolute;
+  top: 5px;
+  left: 45%;
+  font-size: 65px;
+  font-family: "Black Ops One", cursive;
+  color: #EAEEF5;
+  z-index: 1000;
 }
 
 /*# sourceMappingURL=main.css.map */

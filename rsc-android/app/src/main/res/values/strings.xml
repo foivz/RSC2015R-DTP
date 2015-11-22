@@ -18,6 +18,9 @@
     <string name="confirm_password">Confirm password</string>
     <string name="submit">Submit</string>
 
+    <string name="leave_match">Leave match?</string>
+    <string name="leave">Leave</string>
+
     <!-- errors -->
     <string name="username_error">Username can only contain letters (min 5, max 45)</string>
     <string name="password_error">"Password too short or too long (min 5, max 45)"</string>
