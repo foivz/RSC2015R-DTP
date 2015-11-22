@@ -105,6 +105,22 @@ public class NotificationController {
              
          }
          
+         @RequestMapping(value="/{idTeam}/teamnotifications", method = RequestMethod.GET)
+         public ResponseEntity<List<Notification>> retriveTeamNotification(@PathVariable("idTeam") long idTeam){
+             
+             List<Notification> notf=this.notificationRepository.findByIdTeam(idTeam);
+             List<Notification> notfReturn=null;
+             
+            if(notf.size()>7){
+                for(int i=notf.size()-1; i>notf.size()-6;i--){
+                notfReturn.add(notf.get(i));
+                }
+                return new ResponseEntity(notfReturn,HttpStatus.OK);
+            }else
+               return new ResponseEntity(notf,HttpStatus.OK);
+             
+         }
+         
          @RequestMapping(value="/{idTeam}/person/{idPerson}/message/{message}", method = RequestMethod.POST)
          public ResponseEntity setNotification(@PathVariable("idTeam")long idTeam,
                  @PathVariable("idPerson") long idPerson,
