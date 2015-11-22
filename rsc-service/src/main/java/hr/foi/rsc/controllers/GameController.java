@@ -63,6 +63,28 @@ public class GameController {
         return new ResponseEntity(this.gameRepository.findAll(), HttpStatus.OK);
     }
     
+    @RequestMapping(value="/{id}/timer/{sec}", method = RequestMethod.PUT)
+    public ResponseEntity updateUserLocation(@PathVariable("id") long id,@PathVariable("sec") int timer){
+        
+        Logger.getLogger("GameController.java").log(Level.INFO,
+                "saving timer");
+        Game game=this.gameRepository.findByIdGame(id);
+        game.setTimer(timer);
+        this.gameRepository.save(game);
+        Logger.getLogger("GameController.java").log(Level.INFO,
+                "GET on /game -- retrieving full list of games");
+        if(timer==0){
+            Logger.getLogger("GameController.java").log(Level.INFO,
+                "timer 0");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);}
+        else {
+            Logger.getLogger("GameController.java").log(Level.INFO,
+                "timernot 0");
+            return new ResponseEntity(HttpStatus.ACCEPTED);
+        }
+ 
+    }
+    
     
     @RequestMapping(value="/personLocation", method = RequestMethod.PUT)
     public ResponseEntity updateUserLocation(@RequestBody Person person){
@@ -81,10 +103,11 @@ public class GameController {
             
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+                
         
     }
     
-    @RequestMapping(value="/{id}/end")
+    @RequestMapping(value="/{id}/end", method = RequestMethod.GET)
     public ResponseEntity<List<TeamMember>> endGame(@PathVariable("id") long id){
         
         Game game=this.gameRepository.findByIdGame(id);
