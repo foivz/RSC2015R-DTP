@@ -30,7 +30,7 @@ public class HelperFragment extends Fragment {
     ImageButton dead;
     void ajmo(){
 
-        new CountDownTimer(30000, 1000) {
+        new CountDownTimer(300000, 1000) {
             boolean vibrating=false;
             public void onTick(long millisUntilFinished) {
                 seconds.setText(String.format("%d", millisUntilFinished / 1000));
@@ -40,7 +40,7 @@ public class HelperFragment extends Fragment {
                     // Vibrate for 500 milliseconds
                     if(vibrating==false){
                         vibrating=true;
-                        v.vibrate(19000);
+                        v.vibrate(20000);
                     }
                 }
             }
@@ -75,13 +75,9 @@ public class HelperFragment extends Fragment {
             startActivity(intent);
 
         }
-
-
     };
-    void sendRequestDead(){}
-    void pingCounter(){
 
-    }
+
 
 
 }
