@@ -66,8 +66,8 @@
             android:textColor="@color/background_floating_material_dark" />
 
         <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/listViewMatchDetails"
             android:transitionGroup="false"
             tools:listitem="@android:layout/simple_list_item_1"

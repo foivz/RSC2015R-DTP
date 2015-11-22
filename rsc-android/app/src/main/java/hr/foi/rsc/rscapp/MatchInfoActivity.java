@@ -153,7 +153,7 @@ public class MatchInfoActivity extends AppCompatActivity {
                 stopTimers();
                 startActivity(play);
             } else {
-                Toast.makeText(getApplicationContext(), "Invalid match code", Toast.LENGTH_LONG).show();
+
             }
             return true;
         }

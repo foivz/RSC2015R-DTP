@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +21,7 @@ import org.springframework.http.HttpMethod;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -144,8 +146,8 @@ public class PlayGameActivity extends AppCompatActivity {
         public boolean handleResponse(ServiceResponse response) {
             if(response.getHttpCode() == 200) {
                 Person wat = new Gson().fromJson(response.getJsonResponse(), Person.class);
-                AlertPrompt prompt = new AlertPrompt(getApplicationContext());
-                prompt.prepare(wat.getName() + " " + wat.getSurname() + ": " + notification.getName(), null, 0, null, 0);
+                Toast.makeText(getApplicationContext(), wat.getName() + " " + wat.getSurname()
+                        + ": " + notification.getName(), Toast.LENGTH_LONG).show();
             }
             return true;
         }

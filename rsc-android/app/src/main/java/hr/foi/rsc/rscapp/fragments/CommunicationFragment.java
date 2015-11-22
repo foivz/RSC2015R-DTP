@@ -78,7 +78,6 @@ public class CommunicationFragment extends Fragment {
             } else {
                 beautyMessage = "Enemy_spotted";
             }
-            Toast.makeText(getContext(), beautyMessage, Toast.LENGTH_SHORT).show();
             sendMessage(new ServiceParams("/notification/"
                     + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/" + beautyMessage, HttpMethod.POST, null));
             return true;
@@ -88,7 +87,6 @@ public class CommunicationFragment extends Fragment {
         public boolean onDoubleTap(MotionEvent e) {
 
             Log.i("hr.foi.debug", "onDoubleTap HELLO");
-            Toast.makeText(getContext(), "Roger that", Toast.LENGTH_SHORT).show();
             sendMessage(new ServiceParams("/notification/"
                     + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/Roger_that", HttpMethod.POST, null));
             return true;
@@ -97,7 +95,6 @@ public class CommunicationFragment extends Fragment {
         @Override
         public void onLongPress(MotionEvent e) {
             Log.i("hr.foi.debug", "onLongPress HELLO");
-            Toast.makeText(getContext(), "Need backup", Toast.LENGTH_SHORT).show();
             sendMessage(new ServiceParams("/notification/"
                     + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/Need_backup", HttpMethod.POST, null));
 
