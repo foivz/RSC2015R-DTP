@@ -13,6 +13,16 @@ angular.module('webAngularTemplateApp')
     var controller = this;
     controller.mapList = [];
 
+    controller.GenerateQRCode = function(){
+         var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for( var i=0; i < 6; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    }
+
     map.FetchMaps()
     	.then(function(data){
     		console.log(data);
@@ -23,9 +33,11 @@ angular.module('webAngularTemplateApp')
     	});
 
     controller.AddMatch = function(){
+        var code = controller.GenerateQRCode();
+        console.log(controller.mapList);
     	var obj = {
     		timer: controller.timer,
-    		code: "qjaguarKod",
+    		code: code,
     		team: 
 	    		[
     				{ 

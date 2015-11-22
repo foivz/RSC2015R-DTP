@@ -99,18 +99,26 @@ button{
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  h1{
-    margin-top: 400px;
-    background-color: rgba(255,255,255, 0.1);
+  img{
     font-family: $heading;
     color: $white;
     font-size: 100px;
   }
-  h2{
-    background-color: rgba(255,255,255, 0.1);
+  h2, h1{
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+    font-family: $para;
     padding: 10px;
     color: $white;
   }
+  .img-container{
+    margin-top: 20%;
+    background-color: rgba(255,255,255, 0.5);
+  }
+}
+
+.first-heading{
+  background-color: rgba(255,255,255, 0.1);
 }
 
 .second-section{
@@ -120,6 +128,7 @@ button{
     font-weight: 700;
   }
   h2{
+    font-family: $additional;
     color: $whiteHover;
   }
 }
@@ -167,7 +176,7 @@ button{
 .login{
   margin-top: 5%;
   background-color: $whiteHover;
-  border-top: 10px solid $darkGreen;
+  border-top: 10px solid $blue;
   padding-bottom: 30px;
   box-shadow: 5px 5px 5px #C3BCBC;
   h2{
@@ -194,7 +203,7 @@ button{
   background-color: $lightGreen;
   color: $white;
   &:hover{
-    background-color:$darkGreen;
+    background-color:$blue;
     color: $white;
   }
 
@@ -702,5 +711,14 @@ input[type=radio]:checked + label:before {
   tr{
     font-family: $additional;
     font-size: 20px;
+  }
+  .head {
+    h1{
+      font-size: 40px;
+    }
+    span{
+      color: $blue;
+      font-size: 55px;
+    }
   }
 }
