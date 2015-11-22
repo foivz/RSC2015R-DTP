@@ -58,6 +58,11 @@ angular
         controller: 'StatisticCtrl',
         controllerAs: 'statistic'
       })
+      .when('/spectator', {
+        templateUrl: 'views/spectator.html',
+        controller: 'SpectatorCtrl',
+        controllerAs: 'spectator'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -95,6 +100,7 @@ angular.module('webAngularTemplateApp')
   	var controller = this;
   	controller.team1People = [];
   	controller.team2People = [];
+  	controller.notifications = [];
 
   	controller.icons = {
     	house: {
@@ -175,23 +181,17 @@ angular.module('webAngularTemplateApp')
 		})
 	controller.firstPing;
 	controller.ping = function(){
-		console.log("ping ping");
 		controller.firstPing = setInterval(function(){ 
-			//var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
-			var path = 'http://46.101.173.23:8080/game/2/team/3';
+			var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
 			$http.get(path)
 				.success(function(data){
-					console.log("Tim 1");
-					console.log(data);
 					controller.team1People = data;
 				}).error(function(data){
 					console.log(data);
 				})
-			path = 'http://46.101.173.23:8080/game/2/team/2';
+			path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team2.idTeam;
 			$http.get(path)
 				.success(function(data){
-					console.log("Tim 2");
-					console.log(data);
 					controller.team2People = data;
 				}).error(function(data){
 					console.log(data);
@@ -210,7 +210,6 @@ angular.module('webAngularTemplateApp')
 					console.log(data);
 				})
 	}
-	//gameID/team/teamID
 
 	// match.FetchMatchByID($rootScope.Match.idGame)
 	// 	.then(function(data){
@@ -325,7 +324,7 @@ angular.module('webAngularTemplateApp')
 		
 		auth.login(credentials)
 			.then(function(data){
-				$location.path('/main');
+				$location.path('/map');
 			},
 			function(data){
 				console.log("Error");
@@ -748,7 +747,7 @@ angular.module('webAngularTemplateApp')
 					}    						
 			  	});
 	};
-	controller.DrawMap(46.311390, 16.334515);
+	controller.DrawMap(46.307978, 16.338117);
 
 	controller.drawMarker = function(map, coord){
 		var marker = new google.maps.Marker({
@@ -849,7 +848,7 @@ angular.module('webAngularTemplateApp')
       link: function postLink(scope, element, attrs) {
         element.on('click', function(){
         	var id = element.attr('data-matchID');
-        	$rootScope.matchID = id;
+        	$rootScope.Match.idGame = id;
         });
       }
     };
@@ -866,6 +865,291 @@ angular.module('webAngularTemplateApp')
  */
 angular.module('webAngularTemplateApp')
   .controller('MatchActionCtrl', ['$rootScope', 'match', '$http', '$location', function ($rootScope, match, $http, $location) {
+    
+  	var controller = this;
+  	controller.team1People = [];
+  	controller.team2People = [];
+  	var firstPing, secPing;
+
+  	controller.icons = {
+    	house: {
+    		icon: 'images/marker_house.png'
+    	},
+    	flag: {
+    		icon: 'images/marker_flag.png'
+    	},
+    	fence: {
+    		icon: 'images/marker_fence.png'
+    	},
+    	woman: {
+    		icon: 'images/marker_woman.png'
+    	},
+    	blue: {
+    		icon: 'images/marker_blue.png'
+    	},
+    	red: {
+    		icon: 'images/marker_red.png'
+    	}
+    };
+    var map;
+    var markersBlue = [];
+    var markersRed = [];
+    controller.notifications = [];
+    controller.data = [];
+
+  	controller.DrawMap = function(data){
+  		console.log(data.map.startLat + " " + data.map.startLng);
+  			var lat = data.map.startLat;
+  			var lng = data.map.startLng;
+			var latlng = new google.maps.LatLng(lat, lng);
+			var settings = {
+		        zoom: 10,
+		        center: latlng,
+		        mapTypeId: google.maps.MapTypeId.SATELLITE
+		    }
+		    map = new google.maps.Map(document.getElementById('matchMap'), settings);
+
+		    var rectangle = new google.maps.Rectangle({
+			    strokeColor: '#81c784',
+			    strokeOpacity: 0.8,
+			    strokeWeight: 2,
+			    fillColor: '#a5d6a7',
+			    fillOpacity: 0.35,
+			    map: map,
+			    clickable: true,
+			    zIndex: 1,
+			    bounds: {
+			      north: data.map.startLat,
+			      south: data.map.endLat,
+			      east: data.map.endLng,
+			      west: data.map.startLng
+			    }
+			});
+
+		    var lat = data.map.flagLat;
+    		var lng = data.map.flagLng;
+    		var coord = {lat: lat, lng:lng};
+			var marker = new google.maps.Marker({
+				position: coord,
+				map: map,
+				icon: controller.icons['flag'].icon
+			});
+
+		    data.map.mapObstacles.forEach(function(obstacle){
+		    	var lat = obstacle.lat;
+    			var lng = obstacle.lng;
+    			var coord = {lat: lat, lng:lng};
+				var marker = new google.maps.Marker({
+						position: coord,
+						map: map,
+						icon: controller.icons[obstacle.name].icon
+				});
+		    });
+
+	};
+
+	controller.GetMarkers = function(team, teamNumber){
+		controller.clear(null);
+		markersBlue = [];
+		markersRed = [];
+		console.log(team);
+		for(var i = 0; i < team.length; i++){
+			var lat = team[i].lat;
+  			var lng = team[i].lng;
+			var coord = {lat:lat,lng:lng};
+			var marker = new google.maps.Marker({
+				position: coord,
+				map: map,
+				icon: controller.icons[teamNumber].icon
+			})
+			if(teamNumber == 'blue')
+				markersBlue.push(marker);
+			else
+				markersRed.push(marker);
+		};
+		if(teamNumber == 'blue')
+			controller.DrawTeams('blue');
+		else
+			controller.DrawTeams('red');
+	}
+
+	controller.clear = function(map){
+		for (var i = 0; i < markersBlue.length; i++) {
+		    markersBlue[i].setMap(map);
+		}
+		for (var i = 0; i < markersRed.length; i++) {
+		   markersRed[i].setMap(map);
+		}
+	}
+
+	controller.DrawTeams = function(teamNumber){
+		if(teamNumber == 'blue'){
+			for (var i = 0; i < markersBlue.length; i++) {
+				console.log("crtam plavi");	
+			    markersBlue[i].setMap(map);
+			}
+		}
+		else {
+			for (var i = 0; i < markersRed.length; i++) {
+				console.log("crtam crveni");	
+			    markersRed[i].setMap(map);
+			}
+		}
+	}
+
+	$http.get('http://46.101.173.23:8080/game/' + $rootScope.Match.idGame)
+		.success(function(data){
+			controller.data = data;
+			controller.DrawMap(data);
+			controller.team1 = data.team[0];
+			controller.team2 = data.team[1];
+			controller.ping();
+			controller.Timer(60 * data.timer, $('#time'));
+		})
+
+	controller.ping = function(){
+		console.log("ping ping");
+		var firstPing = setInterval(function(){ 
+			var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
+			$http.get(path)
+				.success(function(data){
+					controller.team1People = data;
+					controller.GetMarkers(data, 'blue');
+				}).error(function(data){
+					console.log(data);
+				})
+			path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team2.idTeam;
+			$http.get(path)
+				.success(function(data){
+					controller.team2People = data;
+					controller.GetMarkers(data, 'red');
+				}).error(function(data){
+					console.log(data);
+				})
+
+			path = 'http://46.101.173.23:8080/notification/' + controller.team1.idTeam + '/teamnotifications';
+			$http.get(path)
+				.success(function(data){
+					console.log("Notifikacije 1");
+					console.log(data);
+					controller.data = data;
+					for(var i=0; i<data.length; i++){
+						path = 'http://46.101.173.23:8080/game/person/' + controller.data[i].idPerson;
+						$http.get(path)
+							.success(function(person){
+								console.log(controller.data[i].name + " " + person.name);
+								controller.notifications.push({notif: controller.data[i].name, person: person.name});
+							}).error(function(data){
+								console.log(data);
+							})
+					}
+				}).error(function(data){
+					console.log(data);
+				})
+
+			path = 'http://46.101.173.23:8080/notification/' + controller.team2.idTeam + '/teamnotifications';
+			$http.get(path)
+				.success(function(data){
+					console.log("Notifikacije 2");
+					console.log(data);
+					controller.data = data;
+					for(var i=0; i<controller.data.length; i++){
+						path = 'http://46.101.173.23:8080/game/person/' + controller.data[i].idPerson;
+						$http.get(path)
+							.success(function(person){
+								console.log(controller.data[i].name + " " + person.name);
+								controller.notifications.push({notif: controller.data[i].name, person: person.name});
+							}).error(function(data){
+								console.log(data);
+							})
+					}
+				}).error(function(data){
+					console.log(data);
+				})
+
+		}, 3000);
+	}
+
+	controller.Timer = function(duration, display){
+	    var timer = duration, minutes, seconds;
+	    var secToSend;
+	    var secPing = setInterval(function () {
+	        minutes = parseInt(timer / 60, 10)
+	        seconds = parseInt(timer % 60, 10);
+
+	        secToSend = minutes*60 + seconds;
+	        var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/timer/' + secToSend;
+			$http.post(path)
+				.success(function(data){
+					console.log(data);
+				}).error(function(data){
+					path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/end';
+			        console.log(path);
+					$http.get(path)
+						.success(function(data){
+							$rootScope.statistics = data;
+							console.log(data);
+							clearInterval(firstPing);
+							clearInterval(secPing);
+							$location.url('/statistic');
+						}).error(function(data){
+							console.log("Error end");
+					})
+			})
+
+	        minutes = minutes < 10 ? "0" + minutes : minutes;
+	        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	        display.text(minutes + ":" + seconds);
+
+	        if (--timer < 0) {
+	            timer = duration;
+	        }
+	    }, 3000);
+	}
+
+	controller.EndGame = function(){
+		var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/end';
+		console.log(path);
+		$http.get(path)
+			.success(function(data){
+				$rootScope.statistics = data;
+				console.log(data);
+				clearInterval(firstPing);
+				clearInterval(secPing);
+				$location.url('/statistic');
+				}).error(function(data){
+				console.log("Error end");
+		})
+	}
+  }]);
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name webAngularTemplateApp.controller:StatisticCtrl
+ * @description
+ * # StatisticCtrl
+ * Controller of the webAngularTemplateApp
+ */
+angular.module('webAngularTemplateApp')
+  .controller('StatisticCtrl', ['$rootScope', function ($rootScope) {
+    	var controller = this;
+    	controller.stat = $rootScope.statistics;
+  }]);
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name webAngularTemplateApp.controller:MatchActionCtrl
+ * @description
+ * # MatchActionCtrl
+ * Controller of the webAngularTemplateApp
+ */
+angular.module('webAngularTemplateApp')
+  .controller('SpectatorCtrl', ['$rootScope', 'match', '$http', '$location', function ($rootScope, match, $http, $location) {
     
   	var controller = this;
   	controller.team1People = [];
@@ -1009,8 +1293,7 @@ angular.module('webAngularTemplateApp')
 	controller.ping = function(){
 		console.log("ping ping");
 		var firstPing = setInterval(function(){ 
-			//var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
-			var path = 'http://46.101.173.23:8080/game/2/team/3';
+			var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team1.idTeam;
 			$http.get(path)
 				.success(function(data){
 					controller.team1People = data;
@@ -1018,7 +1301,7 @@ angular.module('webAngularTemplateApp')
 				}).error(function(data){
 					console.log(data);
 				})
-			path = 'http://46.101.173.23:8080/game/2/team/2';
+			path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/team/' + controller.team2.idTeam;
 			$http.get(path)
 				.success(function(data){
 					controller.team2People = data;
@@ -1026,7 +1309,7 @@ angular.module('webAngularTemplateApp')
 				}).error(function(data){
 					console.log(data);
 				})
-		}, 3000);
+		}, 500);
 	}
 
 	controller.Timer = function(duration, display){
@@ -1042,8 +1325,7 @@ angular.module('webAngularTemplateApp')
 				.success(function(data){
 					console.log(data);
 				}).error(function(data){
-					//path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/end';
-					path = 'http://46.101.173.23:8080/game/2/end';
+					path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/end';
 			        console.log(path);
 					$http.get(path)
 						.success(function(data){
@@ -1065,11 +1347,11 @@ angular.module('webAngularTemplateApp')
 	        if (--timer < 0) {
 	            timer = duration;
 	        }
-	    }, 1000);
+	    }, 500);
 	}
 
 	controller.EndGame = function(){
-		var path = 'http://46.101.173.23:8080/game/2/end';
+		var path = 'http://46.101.173.23:8080/game/' + $rootScope.Match.idGame + '/end';
 		console.log(path);
 		$http.get(path)
 			.success(function(data){
@@ -1084,26 +1366,11 @@ angular.module('webAngularTemplateApp')
 	}
   }]);
 
-'use strict';
-
-/**
- * @ngdoc function
- * @name webAngularTemplateApp.controller:StatisticCtrl
- * @description
- * # StatisticCtrl
- * Controller of the webAngularTemplateApp
- */
-angular.module('webAngularTemplateApp')
-  .controller('StatisticCtrl', ['$rootScope', function ($rootScope) {
-    	var controller = this;
-    	controller.stat = $rootScope.statistics;
-  }]);
-
 angular.module('webAngularTemplateApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('views/introduction.html',
-    "<div class=\"text-center\" ng-controller=\"MatchCtrl as match\"> <div id=\"fullpage\"> <div class=\"section first-section\"> <div class=\"img-container\"> <img src=\"images/logo.png\" alt=\"\" width=\"400px\"> </div> </div> <div class=\"section second-section\"> <div class=\"row\"> <div class=\"col-md-4\"> <img src=\"images/aim.png\" alt=\"\" width=\"200px\"> <h2>AIM FOR VICTORY</h2> </div> <div class=\"col-md-4\"> <img src=\"images/paintbal.png\" alt=\"\" width=\"330px\"> <h2>nešta</h2> </div> <div class=\"col-md-4\"> <img src=\"images/multiplayer.png\" alt=\"\" width=\"200px\"> <h2>PLAY WITH FRIENDS</h2> </div> </div> </div> <div class=\"section third-section\"> <h1>WATCH GAME LIVE</h1> <div class=\"container\"> <table class=\"table\"> <tr class=\"text-center\"> <th>No.</th> <th>Team 1</th> <th>Team 2</th> <th>Map</th> <th>WATCH GAME</th> </tr> <tr class=\"text-left\" ng-repeat=\"match in match.Matches\" ng-show=\"match.ready\"> <td>{{$index+1}}.</td> <td>{{match.team[0].name}}</td> <td>{{match.team[1].name}}</td> <td>{{match.map.name}}</td> <td> <a href=\"#main\"> <span class=\"glyphicon glyphicon-play\" match-id-traversal data-matchid=\"{{match.idGame}}\"> </span> </a> </td> </tr> </table> <a href=\"#/login\"> <h4>JUDGE LOGIN</h4> </a> </div> </div> </div> </div> <script>jQuery(document).ready(function($) {\n" +
+    "<div class=\"text-center\" ng-controller=\"MatchCtrl as match\"> <div id=\"fullpage\"> <div class=\"section first-section\"> <div class=\"img-container\"> <img src=\"images/logo.png\" alt=\"\" width=\"400px\"> </div> </div> <div class=\"section second-section\"> <div class=\"row\"> <div class=\"col-md-4\"> <img src=\"images/aim.png\" alt=\"\" width=\"200px\"> <h2>AIM FOR VICTORY</h2> </div> <div class=\"col-md-4\"> <img src=\"images/paintbal.png\" alt=\"\" width=\"330px\"> <h2>BATTLE FOR FLAG</h2> </div> <div class=\"col-md-4\"> <img src=\"images/multiplayer.png\" alt=\"\" width=\"200px\"> <h2>PLAY WITH FRIENDS</h2> </div> </div> </div> <div class=\"section third-section\"> <h1>WATCH GAME LIVE</h1> <div class=\"container\"> <table class=\"table\"> <tr class=\"text-center\"> <th>No.</th> <th>Team 1</th> <th>Team 2</th> <th>Map</th> <th>WATCH GAME</th> </tr> <tr class=\"text-left\" ng-repeat=\"match in match.Matches\" ng-show=\"match.start\"> <td>{{$index+1}}.</td> <td>{{match.team[0].name}}</td> <td>{{match.team[1].name}}</td> <td>{{match.map.name}}</td> <td> <a href=\"#/match-action\"> <span class=\"glyphicon glyphicon-play\" match-id-traversal data-matchid=\"{{match.idGame}}\"> </span> </a> </td> </tr> </table> <a href=\"#/login\"> <h4>JUDGE LOGIN</h4> </a> </div> </div> </div> </div> <script>jQuery(document).ready(function($) {\n" +
     "\t\t$('#fullpage').fullpage();\n" +
     "\t});</script>"
   );
@@ -1115,22 +1382,22 @@ angular.module('webAngularTemplateApp').run(['$templateCache', function($templat
 
 
   $templateCache.put('views/main.html',
-    "<div class=\"container-fluid\"> <div id=\"matchMap\" style=\"width: 100%; height: 400px\"></div> </div> <div class=\"mainMatch\"> <div class=\"col-md-6\"> <h2>{{main.team1.idTeam + \" \" + main.team1.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> <th>Ready to rumble</th> </tr> <tr ng-repeat=\"people in main.team1People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> <td> <span class=\"glyphicon glyphicon-ok\" ng-show=\"people.ready\"></span> <span class=\"glyphicon glyphicon-time\" ng-hide=\"people.ready\"></span> </td> </tr> </table> </div> <div class=\"col-md-6\"> <h2>{{main.team2.idTeam + \" \" + main.team2.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> <th>Ready to rumble</th> </tr> <tr ng-repeat=\"people in main.team2People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> <td> <span class=\"glyphicon glyphicon-ok\" ng-show=\"people.ready\"></span> <span class=\"glyphicon glyphicon-time\" ng-hide=\"people.ready\"></span> </td> </tr> </table> </div> <div class=\"container text-center\"> <button ng-click=\"main.StartMatch()\" class=\"btn btn-info\">START</button> </div> <!-- <button class=\"btn btn-default\"><img src=\"images/chip.png\" width=\"30px\" alt=\"\"> Place a bet</button> --> </div>"
+    "<div class=\"container-fluid\"> <div id=\"matchMap\" style=\"width: 100%; height: 400px\"></div> </div> <div class=\"mainMatch\"> <div class=\"col-md-6\"> <h3>Code: {{main.data.code}}</h3> <h2>{{main.team1.idTeam + \" \" + main.team1.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> <th>Ready to rumble</th> </tr> <tr ng-repeat=\"people in main.team1People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> <td> <span class=\"glyphicon glyphicon-ok\" ng-show=\"people.ready\"></span> <span class=\"glyphicon glyphicon-time\" ng-hide=\"people.ready\"></span> </td> </tr> </table> </div> <div class=\"col-md-6\"> <br><br> <h2>{{main.team2.idTeam + \" \" + main.team2.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> <th>Ready to rumble</th> </tr> <tr ng-repeat=\"people in main.team2People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> <td> <span class=\"glyphicon glyphicon-ok\" ng-show=\"people.ready\"></span> <span class=\"glyphicon glyphicon-time\" ng-hide=\"people.ready\"></span> </td> </tr> </table> </div> <div class=\"row\"> <div class=\"col-md-12 text-center\"> <div class=\"container text-center\"> <button ng-click=\"main.StartMatch()\" class=\"btn btn-info\">START</button> </div> </div> </div> <!-- <button class=\"btn btn-default\"><img src=\"images/chip.png\" width=\"30px\" alt=\"\"> Place a bet</button> --> </div>"
   );
 
 
   $templateCache.put('views/map.html',
-    "<div class=\"container-fluid matchMap\"> <div id=\"matchMap\" style=\"width: 100%; height: 400px\"></div> <div class=\"container\"> <div class=\"obstacles\"> <img ng-click=\"map.setIcon('flag')\" ng-class=\"{'bordered' : map.icon == 'flag'}\" src=\"images/icon_flag.png\" width=\"70px\" alt=\"\"> <img ng-click=\"map.setIcon('house')\" ng-class=\"{'bordered' : map.icon == 'house'}\" src=\"images/icon_house.png\" width=\"70px\" alt=\"\"> <img ng-click=\"map.setIcon('fence')\" ng-class=\"{'bordered' : map.icon == 'fence'}\" src=\"images/icon_fence.png\" width=\"70px\" alt=\"\"> <img ng-click=\"map.setIcon('woman')\" ng-class=\"{'bordered' : map.icon == 'woman'}\" src=\"images/icon_woman.png\" width=\"70px\" alt=\"\"> </div> <form> <br> <input type=\"text\" class=\"text-center\" ng-model=\"map.mapName\" name=\"username\" placeholder=\"Map name\" required> <br> <br> <br> <br> <div class=\"circle-container\" ng-click=\"map.AddMap()\"> <div class=\"outer-ring\"></div> <div class=\"circle\"> <div class=\"circle-front circle-front-map\"> <p>CREATE MAP</p> </div> <div class=\"circle-back\"> <img class=\"back-logo\" src=\"images/logo2.png\" alt=\"The Elevation Group Logo\"> </div> </div> </div> </form></div> <br>  </div> "
+    "<div class=\"container-fluid matchMap\"> <div id=\"matchMap\" style=\"width: 100%; height: 400px\"></div> <div class=\"container\"> <div class=\"obstacles\"> <img ng-click=\"map.setIcon('flag')\" ng-class=\"{'bordered' : map.icon == 'flag'}\" src=\"images/icon_flag.png\" width=\"70px\" alt=\"\"> <img ng-click=\"map.setIcon('house')\" ng-class=\"{'bordered' : map.icon == 'house'}\" src=\"images/icon_house.png\" width=\"70px\" alt=\"\"> <img ng-click=\"map.setIcon('fence')\" ng-class=\"{'bordered' : map.icon == 'fence'}\" src=\"images/icon_fence.png\" width=\"70px\" alt=\"\"> <img ng-click=\"map.setIcon('woman')\" ng-class=\"{'bordered' : map.icon == 'woman'}\" src=\"images/icon_woman.png\" width=\"70px\" alt=\"\"> </div> <form> <br> <input type=\"text\" class=\"text-center\" ng-model=\"map.mapName\" name=\"username\" placeholder=\"Map name\" required> <br> <br> <br> <br> <div class=\"circle-container\" ng-click=\"map.AddMap()\"> <div class=\"outer-ring\"></div> <div class=\"circle\"> <div class=\"circle-front circle-front-map\"> <p>CREATE MAP</p> </div> <div class=\"circle-back\"> <img class=\"back-logo\" src=\"images/logo2.png\" alt=\"The Elevation Group Logo\"> </div> </div> </div> <div class=\"alert alert-success\" ng-show=\"map.alert\" role=\"alert\"><span class=\"glyphicon glyphicon-ok\"></span> Map added succesfully</div> </form></div> <br>  </div> "
   );
 
 
   $templateCache.put('views/match-action.html',
-    "<span id=\"time\">05:00</span> <div class=\"container-fluid\"> <div id=\"matchMap\" style=\"width: 100%; height: 400px\"></div> </div> <div class=\"mainMatch\"> <div class=\"col-md-4\"> <h2>{{matchAction.team1.idTeam + \" \" + matchAction.team1.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> </tr> <tr ng-repeat=\"people in matchAction.team1People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> </tr> </table> </div> <div class=\"col-md-4\"> <h2>{{matchAction.team2.idTeam + \" \" + matchAction.team2.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> </tr> <tr ng-repeat=\"people in matchAction.team2People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> </tr> </table> </div> <div class=\"col-md-4\"> <h2>Notifications</h2> <table class=\"table\"> <tr> <th>Name</th> <th>Description</th> </tr> <tr> <td></td> </tr> </table> </div> <div class=\"container text-center\"> <button ng-click=\"matchAction.EndGame()\" class=\"btn btn-info\">END</button> </div> <!-- <button class=\"btn btn-default\"><img src=\"images/chip.png\" width=\"30px\" alt=\"\"> Place a bet</button> --> </div>"
+    "<span id=\"time\">05:00</span> <div class=\"container-fluid\"> <div id=\"matchMap\" style=\"width: 100%; height: 400px\"></div> </div> <div class=\"mainMatch\"> <div class=\"col-md-4\"> <h2>{{matchAction.team1.idTeam + \" \" + matchAction.team1.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> </tr> <tr ng-repeat=\"people in matchAction.team1People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> </tr> </table> </div> <div class=\"col-md-4\"> <h2>{{matchAction.team2.idTeam + \" \" + matchAction.team2.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> </tr> <tr ng-repeat=\"people in matchAction.team2People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> </tr> </table> </div> <div class=\"col-md-4\"> <h2>Live Action</h2> <table class=\"table\"> <tr> <th>Name</th> <th>Description</th> </tr> <tr ng-repeat=\"not in matchAction.notifications\"> <td>{{not.person}}</td> <td>{{not.notif}}</td> </tr> </table> </div> <div class=\"row\"> <div class=\"col-md-12\"> <div class=\"container text-center\"> <button ng-click=\"matchAction.EndGame()\" class=\"btn btn-info\">END</button> </div> </div> </div> <!-- <button class=\"btn btn-default\"><img src=\"images/chip.png\" width=\"30px\" alt=\"\"> Place a bet</button> --> </div>"
   );
 
 
   $templateCache.put('views/new-match.html',
-    "<div class=\"container-fluid\"> <form> <div class=\"row\"> <div class=\"col-md-12 alphaTeam\"> <div class=\"col-md-6\"> <div class=\"form-group\"> <input type=\"text\" name=\"team1\" ng-model=\"newMatch.team1\" placeholder=\"Team 1 Name\" required> </div> </div> </div> <div class=\"col-md-12 betaTeam\"> <div class=\"col-md-6 pull-right\"> <div class=\"form-group\"> <input type=\"text\" name=\"team2\" ng-model=\"newMatch.team2\" placeholder=\"Team 2 Name\" required> </div> </div> </div> </div> <div class=\"container\"> <div class=\"row MapChoice\"> <h2>Choose map:</h2> <table class=\"table\"> <tr ng-repeat=\"map in newMatch.mapList\"> <td> <div class=\"takeForm\"> <input type=\"radio\" id=\"{{map.name}}\" ng-model=\"newMatch.map\" name=\"name\" value=\"{{$index}}\" required> <label for=\"{{map.name}}\"> {{map.name}} </label> </div> </td> </tr> </table> <!-- <select class=\"form-control\" ng-model=\"newMatch.map\">\n" +
+    "<div class=\"container-fluid\"> <form> <div class=\"row\"> <div class=\"col-md-12 alphaTeam\"> <div class=\"col-md-4\"> <div class=\"form-group\"> <input type=\"text\" name=\"team1\" ng-model=\"newMatch.team1\" placeholder=\"Team 1 Name\" required> </div> </div> </div> <div class=\"col-md-12 betaTeam\"> <div class=\"col-md-4 col-md-offset-5\"> <div class=\"form-group\"> <input type=\"text\" name=\"team2\" ng-model=\"newMatch.team2\" placeholder=\"Team 2 Name\" required> </div> </div> </div> </div> <div class=\"container\"> <div class=\"row MapChoice\"> <h2>Choose map:</h2> <table class=\"table\"> <tr ng-repeat=\"map in newMatch.mapList\"> <td> <div class=\"takeForm\"> <input type=\"radio\" id=\"{{map.name}}\" ng-model=\"newMatch.map\" name=\"name\" value=\"{{$index}}\" required> <label for=\"{{map.name}}\"> {{map.name}} </label> </div> </td> </tr> </table> <!-- <select class=\"form-control\" ng-model=\"newMatch.map\">\n" +
     "\t\t\t\t\t<option value=\"\" disabled selected>Select Map</option>\n" +
     "\t\t\t\t\t<option ng-repeat=\"map in newMatch.mapList\" value=\"{{$index}}\">{{map.name}}</option>\n" +
     "\t\t\t\t</select>\n" +
@@ -1144,13 +1411,18 @@ angular.module('webAngularTemplateApp').run(['$templateCache', function($templat
   );
 
 
+  $templateCache.put('views/spectator.html',
+    "<span id=\"time\">05:00</span> <div class=\"container-fluid\"> <div id=\"matchMap\" style=\"width: 100%; height: 400px\"></div> </div> <div class=\"mainMatch\"> <div class=\"col-md-4\"> <h2>{{matchAction.team1.idTeam + \" \" + matchAction.team1.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> </tr> <tr ng-repeat=\"people in matchAction.team1People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> </tr> </table> </div> <div class=\"col-md-4\"> <h2>{{matchAction.team2.idTeam + \" \" + matchAction.team2.name}}</h2> <table class=\"table\"> <tr> <th>No.</th> <th>Name</th> <th>Kill</th> <th>Death</th> </tr> <tr ng-repeat=\"people in matchAction.team2People\"> <td>{{$index+1}}</td> <td>{{people.name + \" \" + people.surname}}</td> <td>{{people.kill}}</td> <td>{{people.death}}</td> </tr> </table> </div> <div class=\"col-md-4\"> <h2>Notifications</h2> <table class=\"table\"> <tr> <th>Name</th> <th>Description</th> </tr> <tr> <td></td> </tr> </table> </div> <!-- <button class=\"btn btn-default\"><img src=\"images/chip.png\" width=\"30px\" alt=\"\"> Place a bet</button> --> </div>"
+  );
+
+
   $templateCache.put('views/statistic.html',
-    "<div class=\"container statistic\"> <br> <br> <div class=\"text-center head\"> <img src=\"images/statistic.png\" alt=\"\" width=\"500px\"> <h1>WINNER IS <span>BLUE</span> TEAM</h1> </div> <br> <br> <h1>Killers and Score</h1> <table class=\"table\"> <tr> <th>Name</th> <th>Kill</th> <th>Death</th> </tr> <tr ng-repeat=\"stat in statistic.stat\"> <td>{{stat.name}}</td> <td>{{stat.kill}}</td> <td>{{stat.death}}</td> </tr> </table> </div>"
+    "<div class=\"container statistic\"> <br> <br> <div class=\"text-center head\"> <img src=\"images/statistic.png\" alt=\"\" width=\"500px\"> <h1>WINNER IS <span>ALPHA</span> TEAM</h1> </div> <br> <br> <h1>Killers and Score</h1> <table class=\"table\"> <tr> <th>Name</th> <th>Kill</th> <th>Death</th> </tr> <tr ng-repeat=\"stat in statistic.stat\"> <td>{{stat.name}}</td> <td>{{stat.kill}}</td> <td>{{stat.death}}</td> </tr> </table> </div>"
   );
 
 
   $templateCache.put('views/wrapper.html',
-    "<div class=\"menu-container\"> <div class=\"menu-container__icon\" ng-click=\"nav.ToggleNavigation();\" ng-class=\"{'menu-rotate': nav.toggle}\"> <!-- ng-show=\"nav.CheckLogin()\" --> <div class=\"menu-icon menu-icon--top\" ng-class=\"{'menu-top-action': nav.toggle}\"></div> <div class=\"menu-icon menu-icon--middle\" ng-class=\"{'menu-middle-action': nav.toggle}\"></div> <div class=\"menu-icon menu-icon--bottom\" ng-class=\"{'menu-bottom-action': nav.toggle}\"></div> </div> <div class=\"menu-container__app\"> <div class=\"menu-container__app-login\"> <!-- <a href=\"#register\" ng-hide=\"nav.CheckLogin()\">\n" +
+    "<div class=\"menu-container\"> <div class=\"menu-container__icon\" ng-click=\"nav.ToggleNavigation();\" ng-class=\"{'menu-rotate': nav.toggle}\" ng-show=\"nav.CheckLogin()\"> <div class=\"menu-icon menu-icon--top\" ng-class=\"{'menu-top-action': nav.toggle}\"></div> <div class=\"menu-icon menu-icon--middle\" ng-class=\"{'menu-middle-action': nav.toggle}\"></div> <div class=\"menu-icon menu-icon--bottom\" ng-class=\"{'menu-bottom-action': nav.toggle}\"></div> </div> <div class=\"menu-container__app\"> <div class=\"menu-container__app-login\"> <!-- <a href=\"#register\" ng-hide=\"nav.CheckLogin()\">\n" +
     "        <span class=\"glyphicon glyphicon-user\"></span> Register\n" +
     "      </a> --> <a href=\"#login\" ng-hide=\"nav.CheckLogin()\"> <span class=\"glyphicon glyphicon-log-in\"></span> Judge </a> <a href=\"#login\" logout ng-show=\"nav.CheckLogin()\"> <span class=\"glyphicon glyphicon-log-out\"></span> Log out </a> </div> </div> </div> <div class=\"flip-container\"> <div class=\"flip-inner\" ng-class=\"{'flip-inner-action': nav.toggle}\"> <div class=\"front\"> <div class=\"content\"> <div ng-view=\"\"></div> </div> </div> <div class=\"back\"> <nav> <ul> <li><a href=\"#new-match\" ng-click=\"nav.ToggleNavigation();\">NEW MATCH</a></li> <li><a href=\"#map\" ng-click=\"nav.ToggleNavigation();\">MAP</a></li> <li ng-show=\"nav.CheckLogin()\"> <a href=\"#login\" logout> Log out </a> </li> </ul> </nav> </div> <!-- back --> </div> <!-- flip-inner --> </div> <!-- flip-container -->"
   );

@@ -8,25 +8,26 @@
 			<img ng-click="map.setIcon('woman')" ng-class="{'bordered' : map.icon == 'woman'}" src="images/icon_woman.png" width="70px" alt="">
 		</div>
 		<form>
-				<br>
-				<input type="text" class="text-center" ng-model="map.mapName" name="username" placeholder="Map name" required/>
-				<br>
-				<br>
-				<br>
-				<br>
-				<div class="circle-container" ng-click="map.AddMap()">
-					<div class="outer-ring"></div>
-					<div class="circle">
-						<div class="circle-front circle-front-map">
-							<p>CREATE MAP</p>
-						</div>
-						<div class="circle-back">
-							<img class="back-logo" src="images/logo2.png" alt="The Elevation Group Logo" />
-						</div>
+			<br>
+			<input type="text" class="text-center" ng-model="map.mapName" name="username" placeholder="Map name" required/>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div class="circle-container" ng-click="map.AddMap()">
+				<div class="outer-ring"></div>
+				<div class="circle">
+					<div class="circle-front circle-front-map">
+						<p>CREATE MAP</p>
+					</div>
+					<div class="circle-back">
+						<img class="back-logo" src="images/logo2.png" alt="The Elevation Group Logo" />
 					</div>
 				</div>
-				</div>
-				<br>
-		</form>
-	</div>
+			</div>
+			<div class="alert alert-success" ng-show="map.alert" role="alert"><span class="glyphicon glyphicon-ok"></span> Map added succesfully</div>
+		</div>
+		<br>
+	</form>
+</div>
 </div>

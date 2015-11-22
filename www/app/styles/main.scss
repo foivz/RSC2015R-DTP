@@ -128,8 +128,8 @@ button{
     font-weight: 700;
   }
   h2{
-    font-family: $additional;
-    color: $whiteHover;
+    font-family: $para;
+    color: $white;
   }
 }
 
@@ -438,7 +438,7 @@ button{
 .alphaTeam{
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 350px;
   background: url(../images/teamAlpha.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -446,7 +446,8 @@ button{
   background-size: cover;
   input{
     @extend .inputTeam;
-    margin-top: 160px;
+    font-size: 60px;
+    margin-top: 180px;
     margin-left: 20%;
   }
 }
@@ -454,7 +455,7 @@ button{
 .betaTeam{
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 350px;
   background: url(../images/paintball2.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -462,7 +463,8 @@ button{
   background-size: cover;
   input{
     @extend .inputTeam;
-    margin-top: 160px;
+    font-size: 60px;
+    margin-top: 180px;
   }
 }
 
@@ -487,6 +489,9 @@ button{
     
 .circle-container:hover .circle {
   transform: rotate3d(45, 45, 0, 180deg);
+  .circle-front p{
+    color: transparent;
+  }
 }
     
 .circle-container:hover .outer-ring {
@@ -513,6 +518,7 @@ button{
   position: relative;
   width: 175px;
   height: 175px;
+  margin-bottom: 80px;
 }
     
 .circle-front, .circle-back {
@@ -520,8 +526,8 @@ button{
   box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
   backface-visibility: hidden;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -2px;
+  left: -2px;
 }
     
 .circle-front {
@@ -536,6 +542,7 @@ button{
   font-size: 3em;
   text-align: center;
   color: #blue;
+  transition: all 300ms ease-in-out;
 }
 
 .circle-front-map p{
@@ -677,7 +684,18 @@ input[type=radio]:checked + label:before {
 .mainMatch{
   button{
     font-size: 20px;
-    padding: 15px 40px;
+    padding: 15px 120px;
+    background-color: $darkGrey;
+    border: 2px solid $darkGrey;
+    transition: all 300ms linear;
+    &:hover{
+      background-color: $grey;
+      border: 2px solid $darkGrey;
+    }
+  }
+  table tr{
+    font-size: 20px;
+    font-family: $para;
   }
 }
 

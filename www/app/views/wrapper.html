@@ -3,8 +3,8 @@
     class="menu-container__icon" 
     ng-click="nav.ToggleNavigation();" 
     ng-class="{'menu-rotate': nav.toggle}" 
+    ng-show="nav.CheckLogin()"
     >
-    <!-- ng-show="nav.CheckLogin()" -->
     <div class="menu-icon menu-icon--top" ng-class="{'menu-top-action': nav.toggle}"></div>
     <div class="menu-icon menu-icon--middle" ng-class="{'menu-middle-action': nav.toggle}"></div>
     <div class="menu-icon menu-icon--bottom" ng-class="{'menu-bottom-action': nav.toggle}"></div>

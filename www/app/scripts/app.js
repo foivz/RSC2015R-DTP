@@ -58,6 +58,11 @@ angular
         controller: 'StatisticCtrl',
         controllerAs: 'statistic'
       })
+      .when('/spectator', {
+        templateUrl: 'views/spectator.html',
+        controller: 'SpectatorCtrl',
+        controllerAs: 'spectator'
+      })
       .otherwise({
         redirectTo: '/'
       });
