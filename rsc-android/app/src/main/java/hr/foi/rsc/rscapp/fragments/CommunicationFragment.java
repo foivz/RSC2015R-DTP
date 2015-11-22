@@ -43,6 +43,7 @@ public class CommunicationFragment extends Fragment {
     Person self;
     Team myTeam;
     Notification notification;
+    View v;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class CommunicationFragment extends Fragment {
         gestureDetector = new GestureDetector(this.getContext(), onGesture);
         self = SessionManager.getInstance(this.getContext()).retrieveSession("person", Person.class);
         myTeam = SessionManager.getInstance(this.getContext()).retrieveSession("team", Team.class);
-        View v = inflater.inflate(R.layout.fragment_communication, container, false);
+        v = inflater.inflate(R.layout.fragment_communication, container, false);
         v.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -69,15 +70,20 @@ public class CommunicationFragment extends Fragment {
     GestureDetector.SimpleOnGestureListener onGesture = new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
+            v.setOnTouchListener(null);
             Log.i("hr.foi.debug", "onDown HELLO");
-            int fingers = e.getPointerCount();
-            String message;
             String beautyMessage;
-            if(fingers == 2) {
-                beautyMessage = "Enemy_down";
-            } else {
                 beautyMessage = "Enemy_spotted";
-            }
+            sendMessage(new ServiceParams("/notification/"
+                    + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/" + beautyMessage, HttpMethod.POST, null));
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            v.setOnTouchListener(null);
+            Log.i("hr.foi.debug", "onDown HELLO");
+            String beautyMessage = "Enemy_down";
             sendMessage(new ServiceParams("/notification/"
                     + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/" + beautyMessage, HttpMethod.POST, null));
             return true;
@@ -85,7 +91,7 @@ public class CommunicationFragment extends Fragment {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-
+            v.setOnTouchListener(null);
             Log.i("hr.foi.debug", "onDoubleTap HELLO");
             sendMessage(new ServiceParams("/notification/"
                     + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/Roger_that", HttpMethod.POST, null));
@@ -94,6 +100,7 @@ public class CommunicationFragment extends Fragment {
 
         @Override
         public void onLongPress(MotionEvent e) {
+            v.setOnTouchListener(null);
             Log.i("hr.foi.debug", "onLongPress HELLO");
             sendMessage(new ServiceParams("/notification/"
                     + myTeam.getIdTeam() + "/person/" + self.getIdPerson() + "/message/Need_backup", HttpMethod.POST, null));
@@ -110,6 +117,12 @@ public class CommunicationFragment extends Fragment {
 
                 @Override
                 public boolean handleResponse(ServiceResponse response) {
+                    v.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return gestureDetector.onTouchEvent(event);
+                        }
+                    });
                     return false;
                 }
 

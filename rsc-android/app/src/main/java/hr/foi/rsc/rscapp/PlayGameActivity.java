@@ -132,7 +132,9 @@ public class PlayGameActivity extends AppCompatActivity {
 
     Notification notification;
     void showNotification(Notification n) {
-        new ServiceAsyncTask(popup).execute(new ServiceParams("/person/" + n.getIdPerson(), HttpMethod.GET, null));
+
+        Log.e("hr.foi.debug", "HELLO FROM NOTIFICATION (SHOOW)" + n.getIdPerson());
+        new ServiceAsyncTask(popup).execute(new ServiceParams("/game/person/" + n.getIdPerson(), HttpMethod.GET, null));
         notification = n;
     }
 
@@ -144,7 +146,9 @@ public class PlayGameActivity extends AppCompatActivity {
 
         @Override
         public boolean handleResponse(ServiceResponse response) {
+            Log.e("hr.foi.debug", "HELLO FROM NOTIFICATION (POPUP)" + response.getHttpCode());
             if(response.getHttpCode() == 200) {
+
                 Person wat = new Gson().fromJson(response.getJsonResponse(), Person.class);
                 Toast.makeText(getApplicationContext(), wat.getName() + " " + wat.getSurname()
                         + ": " + notification.getName(), Toast.LENGTH_LONG).show();
@@ -171,6 +175,9 @@ public class PlayGameActivity extends AppCompatActivity {
                 }.getType();
                 ArrayList<Notification> notifications = new Gson().fromJson(response.getJsonResponse(), listType);
                 for(Notification n : notifications) {
+
+
+                    Log.e("hr.foi.debug", "HELLO FROM NOTIFICATION " + n.getIdPerson() + " " + self.getIdPerson());
                     if(n.getIdPerson() != self.getIdPerson()) {
                         showNotification(n);
                     }
