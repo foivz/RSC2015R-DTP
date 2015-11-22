@@ -29,12 +29,14 @@ public class HelperFragment extends Fragment {
     TextView minutes;
     ImageButton dead;
     void ajmo(){
-        
+
         new CountDownTimer(300000, 1000) {
             boolean vibrating=false;
             public void onTick(long millisUntilFinished) {
-                seconds.setText(String.format("%d", millisUntilFinished / 1000));
-                minutes.setText(String.format("%d", millisUntilFinished / 1000/60));
+                int secondsLong = (int) (millisUntilFinished / 1000) % 60 ;
+                int minutesLong = (int) ((millisUntilFinished / (1000*60)) % 60);
+                seconds.setText(String.format("%d", secondsLong));
+                minutes.setText(String.format("%d",minutesLong));
                 if(millisUntilFinished/1000 < 20){
                     Vibrator v = (Vibrator) getActivity().getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                     // Vibrate for 500 milliseconds
@@ -58,7 +60,7 @@ public class HelperFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        // setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
+        setRetainInstance(true);
         View v = inflater.inflate(R.layout.fragment_helper, container, false);
         seconds=(TextView) v.findViewById(R.id.txtViewCtrSeconds);
         minutes=(TextView) v.findViewById(R.id.textViewCtrMinutes);
