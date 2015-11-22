@@ -14,7 +14,7 @@ import hr.foi.rsc.core.Input;
  */
 public class InputPrompt extends AlertPrompt {
 
-    Bitmap map;
+    ImageView map;
 
     /**
      * default constructor
@@ -24,7 +24,7 @@ public class InputPrompt extends AlertPrompt {
         super(context);
     }
 
-    public InputPrompt(Context context, Bitmap map) {
+    public InputPrompt(Context context, ImageView map) {
         super(context);
         this.map = map;
     }
@@ -32,11 +32,8 @@ public class InputPrompt extends AlertPrompt {
     @Override
     public void prepare(int title, DialogInterface.OnClickListener positive, int positiveMessage,
                         DialogInterface.OnClickListener negative, int negativeMessage) {
-        super.prepare(title, positive, positiveMessage, negative, negativeMessage);
-
-        // dialog input
-        ImageView image = new ImageView(context);
-        image.setImageBitmap(map);
-        this.builder.setView(image);
+        this.builder.setTitle(title)
+                .setPositiveButton(positiveMessage, positive)
+                .setNegativeButton(negativeMessage, negative).setView(map);
     }
 }
